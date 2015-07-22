@@ -1,0 +1,7 @@
+[submodule "vendor/connectal"]
+	path = vendor/connectal
+	url = https://github.com/cambridgehackers/connectal.git
+[submodule "vendor/riscv-gnu-toolchain"]
+	path = vendor/riscv-gnu-toolchain
+    url = https://github.com/riscv/riscv-gnu-toolchain.git
+    ignore=untracked
