@@ -1,0 +1,55 @@
+BUILD_DIR=$(RISCV_BUILD)/procs/$(PROC)
+CONNECTALDIR?=$(RISCV_VENDOR_CONNECTAL)
+
+include $(CONNECTALDIR)/Makefile.connectal
+
+gen.%:
+ifeq ($(BOARD),)
+	$(eval BOARD := $*)
+endif
+	+BOARD=$(BOARD) PROJECTDIR=$(BUILD_DIR)/$* $(MAKE) --no-print-directory gentarget prebuild $(VARIANT_PROJECTS)
+
+build.%: gen.%
+	$(MAKE) -C $(BUILD_DIR)/$* --no-print-directory all
+
+verilog.%: gen.%
+	$(MAKE) -C $(BUILD_DIR)/$* --no-print-directory verilog
+
+run.%:
+	@$(MAKE) -C $(RISCV_HOME)/programs/$(PROG) --no-print-directory run PROC_BUILD_DIR=$(BUILD_DIR)/$*
+
+#	$(MAKE) -C $(BUILD_DIR)/$* --no-print-directory run
+
+clean.%:
+	rm -rf $(BUILD_DIR)/$*
+
+build:
+	@echo "Makefile: please invoke with make build.boardname"
+
+run:
+	@echo "Makefile: please invoke with make run.boardname"
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+gentarget:: process_autotop generate_altera_custom
+	@[ -e $(CONNECTALDIR)/scripts/syntax/parsetab.py ] || make -C $(CONNECTALDIR) scripts/syntax/parsetab.py
+	$(Q)[ -e $(IPDIR) ] || mkdir -p $(IPDIR)
+	$(Q)[ -e $(PROJECTDIR)/generatedbsv ] || mkdir -p $(PROJECTDIR)/generatedbsv
+	$(Q)[ -e $(PROJECTDIR)/jni ] || mkdir -p $(PROJECTDIR)/jni
+ifeq ($(USE_PRINTF),1)
+	$(CONNECTALDIR)/scripts/preprocess_trace.py $(PROJECTDIR) $(BSVFILES)
+endif
+	$(Q)$(CONNECTALDIR)/scripts/makefilegen.py -B$(BOARD) --project-dir $(PROJECTDIR) --bsvpath $(RISCV_HOME)/procs/$(PROC)/../lib \
+	$(foreach interfaces, $(INTERFACES), -interfaces $(interfaces)) \
+	$(foreach f, $(CPPFILES), --source $f) \
+	$(foreach f, $(CPPFILES2), --source2 $f) \
+	$(foreach f, $(PINOUT_FILE), --pinout $f) \
+	$(foreach f, $(PIN_BINDINGS), --pin-binding $f) \
+	$(foreach f, $(PRTOP_FILE), --prtop $f) \
+	$(foreach f, $(VARIANT_LIST), --prvariant $f) \
+	$(foreach f, $(RECONFIG_MODULE), --reconfig $f) \
+	$(foreach f, $(S2H_INTERFACES), -interfaces $(word 1, $(subst /,, $(subst :, , $f)))) \
+	$(foreach f, $(H2S_INTERFACES), $(foreach g, $(subst $(comma), , $(word 2, $(subst :, , $f))), -interfaces $g)) \
+	$(foreach f, $(PORTAL_DUMP_MAP), --dump_map $f) \
+        $(CONNECTALFLAGS) $(BSVFILES) $(GENTOP) $(PRINTF_EXTRA) $(VERBOSE_SWITCH)

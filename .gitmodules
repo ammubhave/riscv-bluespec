@@ -5,3 +5,6 @@
 	path = vendor/riscv-gnu-toolchain
     url = https://github.com/riscv/riscv-gnu-toolchain.git
     ignore=untracked
+[submodule "vendor/riscv-fesvr"]
+	path = vendor/riscv-fesvr
+	url = https://github.com/riscv/riscv-fesvr.git
