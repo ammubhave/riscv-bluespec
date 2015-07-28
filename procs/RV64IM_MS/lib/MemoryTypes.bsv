@@ -1,7 +1,8 @@
 import Types::*;
 import Vector::*;
 
-typedef Data Line;
+typedef Bit#(512) MemLine;
+
 typedef Data MemResp;
 
 typedef enum{Ld, St} MemOp deriving(Eq,Bits);
@@ -12,7 +13,7 @@ typedef struct{
     Data  data;
 } MemReq deriving(Eq, Bits);
 
-typedef 64 WideLineSz;
+typedef 512 WideLineSz;
 typedef Bit#(WideLineSz) WideLine;
 typedef WideLine WideMemResp;
 
@@ -43,3 +44,33 @@ typedef Bit#(TLog#(NumTokens)) Token;
 
 typedef 16 LoadBufferSz;
 typedef Bit#(TLog#(LoadBufferSz)) LoadBufferIndex;
+
+interface MemoryToHost;
+  method ActionValue#(Tuple2#(MemPort, MemReq)) req;
+  method Action resp(Tuple2#(MemPort, MemResp) r);
+endinterface
+
+(* synthesize *)
+module mkDummyMemoryToHost(MemoryToHost);
+  method ActionValue#(Tuple2#(MemPort, MemReq)) req if(False);
+    return ?;
+  endmethod
+
+  method Action resp(Tuple2#(MemPort, MemResp) r);
+  endmethod
+endmodule
+
+interface WideMemoryToHost;
+  method ActionValue#(Tuple2#(MemPort, WideMemReq)) req;
+  method Action resp(Tuple2#(MemPort, WideMemResp) r);
+endinterface
+
+(* synthesize *)
+module mkDummyWideMemoryToHost(WideMemoryToHost);
+  method ActionValue#(Tuple2#(MemPort, WideMemReq)) req if(False);
+    return ?;
+  endmethod
+
+  method Action resp(Tuple2#(MemPort, WideMemResp) r);
+  endmethod
+endmodule

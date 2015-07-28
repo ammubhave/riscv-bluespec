@@ -23,7 +23,7 @@ interface CsrFile;
   method Action wr(CsrState csrState);
 
   method Action hostToCsrf(Bool isfromhost, Data val);
-  method ActionValue#(Data) csrfToHost;
+  method ActionValue#(Data) csrfToCop;
 endinterface
 
 module mkCsrFile(CsrFile);
@@ -167,7 +167,7 @@ module mkCsrFile(CsrFile);
     else mtohostReg <= val;
   endmethod
 
-  method ActionValue#(Data) csrfToHost;
+  method ActionValue#(Data) csrfToCop;
     csrFifo.deq;
     return csrFifo.first;
   endmethod

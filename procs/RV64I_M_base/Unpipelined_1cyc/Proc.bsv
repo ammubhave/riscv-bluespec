@@ -87,7 +87,7 @@ module mkProc#(ProcIndication indication)(Proc);
   endrule
 
   rule csrfToCop;
-    let ret <- csrf.csrfToCop;
+    let ret <- csrf.csrfToHost;
     //cop.csrfToCop(ret);
     indication.to_host(ret);
   endrule

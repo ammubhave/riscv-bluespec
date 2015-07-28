@@ -43,5 +43,18 @@ make install
 
 You need to install Connectal tools and dependencies before you can compile and run any of the Bluespec files. Follow the installation instructions at `vendor/connectal/README.md` to get started.
 
-## Running Linux
+## Running Programs
 
+All runnable programs reside in the `programs` directory. You will first need to compile the programs. The following example uses the `assembly` program.
+
+```
+cd programs/assembly
+make
+```
+This will compile the programs and generate all the required dump and vmh files to execute on a processor. Now `cd` to the directory where your processor files. The following example uses the `RV64I_M_base/Unpipelined_1cyc` processor running on the bluesim simulator.
+
+```
+cd procs/RV64I_M_base/Unpipelined_1cyc
+make run.bluesim PROG=assembly
+```
+Replace PROG=assembly with the program you want to run. This command will call `make run` using the Makefile in directory of your program.

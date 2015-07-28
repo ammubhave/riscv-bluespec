@@ -41,7 +41,7 @@ VPATH += $(asm_build_dir)
 %.out_PHONY: $(addprefix $(asm_build_dir)/, %.vmh)
 	@echo $<
 	@ln -sf $< $(PROC_BUILD_DIR)/memory.vmh
-	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run > $(asm_build_dir)/$@
+	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run > $(asm_build_dir)/$(@:.out_PHONY=.out)
 	@tput sgr0; tput bold
 
 #	@mkdir -p $(build_dir)/$(RISCV_SIMULATOR)/assembly
@@ -102,7 +102,7 @@ tests_out = $(addsuffix .out_PHONY, $(tests))
 
 run: $(tests_out)
 
-junk += $(tests) $(tests_dump) $(tests_vmh) $(tests_out)
+junk += $(tests) $(tests_dump) $(tests_vmh) $(tests_out:.out_PHONY=.out)
 
 #------------------------------------------------------------
 # Default
