@@ -22,8 +22,11 @@ interface CsrFile;
   method CsrState rd(Maybe#(CSR) csr);
   method Action wr(CsrState csrState);
 
+  method PagingInfo ptbrI;
+  method PagingInfo ptbrD;
+
   method Action hostToCsrf(Bool isfromhost, Data val);
-  method ActionValue#(Data) csrfToCop;
+  method ActionValue#(Data) csrfToHost;
 endinterface
 
 module mkCsrFile(CsrFile);
@@ -32,6 +35,28 @@ module mkCsrFile(CsrFile);
   Reg#(Data) timeReg <- mkConfigReg(0);
   Reg#(Data) instretReg <- mkConfigReg(0);
   Reg#(Data) statsReg <- mkConfigReg(0);
+
+  // Supervisor-Level CSRs
+  Reg#(Data) stvecReg <- mkConfigReg(0);
+  Reg#(Data) stimecmpReg <- mkConfigReg(0);
+  Reg#(Data) stimeReg <- mkConfigReg(0);
+  Reg#(Data) sscratchReg <- mkConfigReg(?);
+  Reg#(Data) sepcReg <- mkConfigReg(0);
+  Reg#(Data) scauseReg <- mkConfigReg(?);
+  Reg#(Data) sbadaddrReg <- mkConfigReg(?);
+  Reg#(Data) sipReg <- mkConfigReg(0);
+  Reg#(Data) sptbrReg <- mkConfigReg(?);
+  Reg#(Data) sasidReg <- mkConfigReg(?);
+
+  // Hypervisor-Level CSRs
+  Reg#(Data) htvecReg <- mkConfigReg(?);
+  Reg#(Data) htdelegReg <- mkConfigReg(0);
+  Reg#(Data) htimecmpReg <- mkConfigReg(?);
+  Reg#(Data) htimeReg <- mkConfigReg(0);
+  Reg#(Data) hscratchReg <- mkConfigReg(?);
+  Reg#(Data) hepcReg <- mkConfigReg(?);
+  Reg#(Data) hcauseReg <- mkConfigReg(?);
+  Reg#(Data) hbadaddr <- mkConfigReg(?);
 
   // Machine-Level CSRs
   Reg#(Data) mhartidReg <- mkConfigReg(0);
@@ -47,6 +72,10 @@ module mkCsrFile(CsrFile);
   Reg#(Data) mepcReg <- mkConfigReg(0);
   Reg#(Data) mcauseReg <- mkConfigReg(0);
   Reg#(Data) mbadaddrReg <- mkConfigReg(?);
+  Reg#(Data) mibaseReg <- mkConfigReg(0);
+  Reg#(Data) miboundReg <- mkConfigReg(0);
+  Reg#(Data) mdbaseReg <- mkConfigReg(0);
+  Reg#(Data) mdboundReg <- mkConfigReg(0);
   Reg#(Data) mtohostReg <- mkConfigReg(0);
   Reg#(Data) mfromhostReg <- mkConfigReg(1);
 
@@ -54,9 +83,10 @@ module mkCsrFile(CsrFile);
 
   Fifo#(2,  Data) csrFifo <- mkCFFifo;
 
+  (* no_implicit_conditions *)
   rule count;
      cycleReg <= cycleReg + 1;
-     $display("\nCycle %d ---------------------------------------------------- %d", cycleReg, instretReg);
+     $display("\nCycle %d ---------------------------------------------------- %x", cycleReg, instretReg);
   endrule
 
   function Data read(CSR idx);
@@ -67,6 +97,18 @@ module mkCsrFile(CsrFile);
       CSRinstret: instretReg;
       CSRstats: statsReg;
 
+      CSRsstatus: {mstatusReg[valueOf(DataSz)-1], 'b0, mstatusReg[16:12], 7'b0, mstatusReg[4:3], 2'b0, mstatusReg[0]};
+      CSRstvec: stvecReg;
+      CSRsie: {'b0, mieReg[5], 3'b0, mieReg[1], 1'b0};
+      CSRstimecmp: stimecmpReg;
+      CSRstime: (instretReg >> timeShamt);
+      CSRsscratch: sscratchReg;
+      CSRsepc: sepcReg;
+      CSRscause: scauseReg;
+      CSRsbadaddr: sbadaddrReg;
+      CSRsip: {'b0, mipReg[5], 3'b0, mipReg[1], 1'b0};
+      CSRsptbr: sptbrReg;
+      CSRsasid: 0;
       CSRcyclew: cycleReg;
       CSRtimew: (instretReg >> timeShamt);
       CSRinstretw: instretReg;
@@ -75,7 +117,7 @@ module mkCsrFile(CsrFile);
 
       //           RV64           ZYXWVUTSRQPONMLKJIHGFEDCBA
       CSRmcpuid: {2'b10, 'b0, 26'b00000001000000000100000000};
-      //               Anonymous   
+      //               Anonymous
       CSRmimpid: {'b0, 16'h8000};
       CSRmhartid: mhartidReg;
       CSRmstatus: mstatusReg;
@@ -89,7 +131,11 @@ module mkCsrFile(CsrFile);
       CSRmcause: mcauseReg;
       CSRmbadaddr: mbadaddrReg;
       CSRmip: mipReg;
-      CSRmtohost: mtohostReg;
+      CSRmbase, CSRmdbase: mdbaseReg;
+      CSRmbound, CSRmdbound: mdboundReg;
+      CSRmibase: mibaseReg;
+      CSRmibound: miboundReg;
+      CSRmtohost: 0;//mtohostReg;
       CSRmfromhost: mfromhostReg;
 
       CSRsendipi: 0;
@@ -102,6 +148,8 @@ module mkCsrFile(CsrFile);
     CsrState csrState = ?;
     csrState.mstatus = mstatusReg;
     csrState.mtvec = mtvecReg;
+    csrState.sepc = sepcReg;
+    csrState.hepc = hepcReg;
     csrState.mepc = mepcReg;
     csrState.mcause = mcauseReg;
     csrState.csr = csr;
@@ -112,13 +160,55 @@ module mkCsrFile(CsrFile);
     return csrState;
   endmethod
 
+  method PagingInfo ptbrI;
+    return case (mstatusReg[21:17])
+      vmMbare: PagingInfo{isPaged: False, base: 0, bound: -1};
+      vmMbb: PagingInfo{isPaged: False, base: mdbaseReg, bound: mdboundReg};
+      vmMbbid: PagingInfo{isPaged: False, base: mibaseReg, bound: miboundReg};
+      vmSv32, vmSv39, vmSv48, vmSv57, vmSv64:
+        case (mstatusReg[2:1])
+          prvM: PagingInfo{isPaged: False, base: 0, bound: -1};
+          default: PagingInfo{isPaged: True, base: sptbrReg, bound: ?};
+        endcase
+    endcase;
+  endmethod
+
+  method PagingInfo ptbrD;
+    return case (mstatusReg[21:17])
+      vmMbare: PagingInfo{isPaged: False, base: 0, bound: -1};
+      vmMbb, vmMbbid: PagingInfo{isPaged: False, base: mdbaseReg, bound: mdboundReg};
+      vmSv32, vmSv39, vmSv48, vmSv57, vmSv64:
+        case (mstatusReg[2:1])
+          prvM: PagingInfo{isPaged: False, base: 0, bound: -1};
+          default: PagingInfo{isPaged: True, base: sptbrReg, bound: ?};
+        endcase
+    endcase;
+  endmethod
+
   method Action wr(CsrState csrState);
     if (isValid(csrState.csr)) begin
       let idx = validValue(csrState.csr);
       let val = csrState.data;
       $display("csr %h <= %h", idx, val);
       case (idx)
+        //CSRuarch14: csrFifo.enq(tuple2(18, val)); // Write an integer to stderr
+        //CSRuarch15: csrFifo.enq(tuple2(19, val)); // Write a char to stderr
         CSRstats: statsReg <= val;
+
+        CSRstvec: stvecReg <= val & ~3;
+        CSRsie:
+        begin
+          Data mask = _MIP_SSIP | _MIP_STIP;
+          mieReg <= (mieReg & ~mask) | (val & mask);
+        end
+        CSRstimecmp:
+        begin
+          mipReg <= mipReg & ~_MIP_STIP;
+          stimecmpReg <= val;
+        end
+        CSRsscratch: sscratchReg <= val;
+        CSRsip: mipReg <= (mipReg & ~_MIP_SSIP) | (val & _MIP_SSIP);
+        CSRsptbr: sptbrReg <= val;
 
         CSRmtdeleg: mtdelegReg <= val;
         CSRmie:
@@ -133,28 +223,47 @@ module mkCsrFile(CsrFile);
           Data mask = _MIP_SSIP | _MIP_MSIP;
           mipReg <= (mipReg & ~mask) | (val & mask);
         end
+        CSRmbase:
+        begin
+          mibaseReg <= val;
+          mdbaseReg <= val;
+        end
+        CSRmbound:
+        begin
+          miboundReg <= val;
+          mdboundReg <= val;
+        end
+        CSRmibase: mibaseReg <= val;
+        CSRmibound: miboundReg <= val;
+        CSRmdbase: mdbaseReg <= val;
+        CSRmdbound: mdboundReg <= val;
         CSRmtohost:
         begin
           //$fwrite(stderr, "mtohost: %b\n", val);
           //mtohostReg <= val;
-          mtohostReg <= val;
+          mfromhostReg <= val;
           csrFifo.enq(val); // Finish code
         end
         CSRmfromhost: mfromhostReg <= val;
       endcase
 
       mstatusReg <= case (idx)
+        CSRsstatus: ((mstatusReg & signExtend(32'hFFFE0FC6)) | (val & 'h1F019));
         CSRmstatus: (val & 'h3F0FFF);
         default: csrState.mstatus;
       endcase;
 
       mtvecReg <= (idx == CSRmtvec ? val : csrState.mtvec);
+      sepcReg <= (idx == CSRsepc ? val : csrState.sepc);
+      hepcReg <= (idx == CSRhepc ? val : csrState.hepc);
       mepcReg <= (idx == CSRmepc ? val : csrState.mepc);
       mcauseReg <= (idx == CSRmcause ? val : csrState.mcause);
     end else begin
       mstatusReg <= csrState.mstatus;
       $display("mstatus == %h", csrState.mstatus);
       mtvecReg <= csrState.mtvec;
+      sepcReg <= csrState.sepc;
+      hepcReg <= csrState.hepc;
       mepcReg <= csrState.mepc;
       mcauseReg <= csrState.mcause;
     end
@@ -167,7 +276,7 @@ module mkCsrFile(CsrFile);
     else mtohostReg <= val;
   endmethod
 
-  method ActionValue#(Data) csrfToCop;
+  method ActionValue#(Data) csrfToHost;
     csrFifo.deq;
     return csrFifo.first;
   endmethod

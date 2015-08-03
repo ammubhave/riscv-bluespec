@@ -1,8 +1,8 @@
 import Types::*;
 import Vector::*;
+import ClientServer::*;
 
-typedef Bit#(512) MemLine;
-
+typedef Data Line;
 typedef Data MemResp;
 
 typedef enum{Ld, St} MemOp deriving(Eq,Bits);
@@ -13,7 +13,7 @@ typedef struct{
     Data  data;
 } MemReq deriving(Eq, Bits);
 
-typedef 512 WideLineSz;
+typedef 64 WideLineSz;
 typedef Bit#(WideLineSz) WideLine;
 typedef WideLine WideMemResp;
 
@@ -28,6 +28,10 @@ typedef struct {
   Addr addr;
   WideLine data;
 } WideMemReq deriving(Eq, Bits);
+
+interface WideMem;
+    interface Server#(WideMemReq, WideMemResp) to_proc;
+endinterface
 
 typedef enum {InstMem, DataMem} MemPort deriving (Bits, Eq);
 

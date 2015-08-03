@@ -1,20 +1,33 @@
 #include <errno.h>
 #include <stdio.h>
-#include "dmaManager.h"
+#include <bitset>
+#include <cassert>
 #include "ProcIndication.h"
 #include "ProcRequest.h"
 #include "GeneratedTypes.h"
+#include "VmhLoadImage.h"
 
 static ProcRequestProxy *procRequestProxy = 0;
+/*
+const size_t mem_buffer_sz = 64; // 512 Bytes
+const size_t mem_buffer_words = mem_buffer_sz / sizeof(uint64_t);
 
-int memAlloc;
-uint64_t* memBuffer = NULL;
-size_t mem_sz = 512;// 8*512;// (1 >> 10)*sizeof(uint64_t);
-
+uint64_t (*mem)[mem_buffer_words] = NULL;
+const  size_t mem_sz = 64*1024*1024; // 64 MB
+*/
 static void call_from_host(bool isfromhost, uint64_t v)
 {
     procRequestProxy->from_host(isfromhost, v);
 }
+/*
+static void call_imem_resp(uint64_t data)
+{
+    procRequestProxy->imem_resp(data);
+}
+static void call_dmem_resp(uint64_t data)
+{
+    procRequestProxy->dmem_resp(data);
+}*/
 
 class ProcIndication : public ProcIndicationWrapper
 {
@@ -44,13 +57,31 @@ public:
         }
         call_from_host(false, 0);
     }
+
+   /* virtual void imem_req(uint8_t op, uint64_t addr, uint64_t data) {
+        if (op == false) { // Ld
+            printf("imem_req ld: %p %p", (void*)addr, (void*)mem[addr / 8][0]);
+            call_imem_resp(mem[addr / 8][0]);
+        } else {
+            mem[addr / 8][0] = data;
+        }
+    }
+
+    virtual void dmem_req(uint8_t op, uint64_t addr, uint64_t data) {
+        if (op == false) { // Ld
+            call_dmem_resp(mem[addr / 8][0]);
+        } else {
+            mem[addr / 8][0] = data;
+        }
+    }
+*/
     ProcIndication(unsigned int id) : ProcIndicationWrapper(id) {}
 };
 
-static void call_start(uint64_t startpc, unsigned int mp)
+static void call_start(uint64_t startpc)
 {
-    printf("Starting... %p %p\n", (void*)startpc, (void*)(uint64_t)mp);
-    procRequestProxy->start(startpc, mp);
+    printf("Starting... %p\n", (void*)startpc);
+    procRequestProxy->start(startpc);
 }
 
 int main(int argc, const char **argv)
@@ -60,13 +91,10 @@ int main(int argc, const char **argv)
 
     ProcIndication procIndication(IfcNames_ProcIndicationH2S);
     procRequestProxy = new ProcRequestProxy(IfcNames_ProcRequestS2H);
-    DmaManager *dma = platformInit();
-    memAlloc = portalAlloc(mem_sz, 0);
-    memBuffer = (uint64_t*)portalMmap(memAlloc, mem_sz);
 
-    portalCacheFlush(memAlloc, memBuffer, mem_sz, 1);
-    unsigned int ref_memAlloc = dma->reference(memAlloc);
-    sleep(1);
+    /*mem = (uint64_t(*)[mem_buffer_words]) malloc(mem_sz);
+
+    assert(vmhLoadImage("memory.vmh", (uint64_t*)mem, mem_sz) && "Failed to load VMH image");*/
 
     int status = setClockFrequency(0, requestedFrequency, &actualFrequency);
     printf("Requested main clock frequency %5.2f, actual clock frequency %5.2f MHz status=%d errno=%d\n",
@@ -75,7 +103,7 @@ int main(int argc, const char **argv)
       status, (status != 0) ? errno : 0);
 
     uint64_t startpc = 0x200;
-    call_start(startpc, ref_memAlloc);
-    while (1) ;
+    call_start(startpc);
+    while (1);
     return 0;
 }

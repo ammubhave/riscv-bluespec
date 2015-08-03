@@ -1,0 +1,9 @@
+#=======================================================================
+# Makefrag for rv64ui tests
+#-----------------------------------------------------------------------
+##
+
+console_my_tests = \
+	print_string \
+
+console_p_tests = $(addprefix console-, $(console_my_tests))

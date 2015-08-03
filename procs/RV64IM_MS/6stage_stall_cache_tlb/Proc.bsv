@@ -1,90 +1,58 @@
+import Cache::*;
+import ClientServer::*;
+import Connectable::*;
 import Types::*;
 import ProcTypes::*;
-import MemTypes::*;
+import MemoryTypes::*;
 import RFile::*;
 import CsrFile::*;
-//import FullWideMemory::*;
-import FullMemory::*;
 import Decode::*;
 import Exec::*;
 import ExecPriv::*;
-import Cop::*;
 import Fifo::*;
+import GetPut::*;
 import Ehr::*;
 import Scoreboard::*;
 import AddrPred::*;
 import Tlb::*;
-//import WideCache::*;
 import Connectable::*;
+import RegfileMemory::*;
+import MemUtil::*;
 import Vector::*;
 
-import ConnectalMemory::*;
-import MemTypes::*;
-import MemreadEngine::*;
-import MemwriteEngine::*;
+interface ProcRequest;
+  method Action start(Bit#(64) startpc);
+  method Action from_host(Bool isfromhost, Bit#(64) v);
+//  method Action imem_resp(Bit#(64) data);
+//  method Action dmem_resp(Bit#(64) data);
+endinterface
+
+interface ProcIndication;
+  method Action to_host(Bit#(64) v);
+//  method Action imem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+//  method Action dmem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+endinterface
 
 interface Proc;
   interface ProcRequest request;
-  interface Vector#(1, MemReadClient#(64)) dmaReadClient;
-  interface Vector#(1, MemWriteClient#(64)) dmaWriteClient;
 endinterface
-
-typedef struct {
-  Addr pc;
-  Addr ppc;
-  Bool epoch;
-  Instruction inst;
-  Maybe#(Exception) cause;
-} Fetch2Decode deriving (Bits, Eq);
-
-typedef struct {
-  Addr pc;
-  Addr ppc;
-  Bool epoch;
-  DecodedInst dInst;
-  Maybe#(Exception) cause;
-} Decode2RegRead deriving (Bits, Eq);
-
-typedef struct {
-  Addr pc;
-  Addr ppc;
-  Bool epoch;
-  DecodedInst dInst;
-  Data rVal1;
-  Data rVal2;
-  CsrState csrState;
-  Maybe#(Exception) cause;
-} RegRead2Exec deriving (Bits, Eq);
-
-typedef struct {
-  Bool poisoned;
-  IType iType;
-  Maybe#(RIndx) dst;
-  Data data;
-  CsrState csrState;
-  Addr addr;
-  ByteEn byteEn;
-  Bool unsignedLd;
-} Exec2Mem deriving (Bits, Eq);
-
-typedef struct {
-  Bool poisoned;
-  IType iType;
-  Maybe#(RIndx) dst;
-  Data data;
-  CsrState csrState;
-} Mem2Wb deriving (Bits, Eq);
 
 module mkProc#(ProcIndication indication)(Proc);
   Reg#(Addr) pc <- mkRegU;
 
   RFile      rf <- mkRFile;
   CsrFile  csrf <- mkCsrFile;
-  //WideMemory    mem <- mkWideMemory;
-  Memory    mem <- mkMemory;
-  Cop       cop <- mkCop;
+
+  WideMem wideMem <- mkRegfileMemory;
+  Vector#(2, WideMem) wideMems <- mkSplitWideMem( wideMem );
+  Cache      iMem <- mkCache;
+  Cache      dMem <- mkCache;
+  mkConnection(wideMems[0].to_proc, iMem.to_mem);
+  mkConnection(wideMems[1].to_proc, dMem.to_mem);
+
+  Reg#(Bool) started <- mkReg(False);
   AddrPred addrPred <- mkBtb;
-  
+
   Fifo#(2, Fetch2Decode)   f2d <- mkCFFifo;
   Fifo#(2, Decode2RegRead) d2rf <- mkCFFifo;
   Fifo#(2, RegRead2Exec)   rf2ex <- mkCFFifo;
@@ -93,8 +61,8 @@ module mkProc#(ProcIndication indication)(Proc);
 
   Tlb iTlb <- mkTlb;
   Tlb dTlb <- mkTlb;
-  //WideCache iCache <- mkWideCache;
-  //WideCache dCache <- mkWideCache;
+  mkConnection(iMem.to_proc, iTlb.to_mem);
+  mkConnection(dMem.to_proc, dTlb.to_mem);
 
   Fifo#(1, Tuple3#(Addr, Addr, Bool)) f12f2 <- mkBypassFifo;
   Fifo#(1, Exec2Mem) m12m2 <- mkBypassFifo;
@@ -106,8 +74,8 @@ module mkProc#(ProcIndication indication)(Proc);
   Ehr#(2, Bool)         privIn <- mkEhr(False);
   Reg#(Bool)            stallFetch <- mkReg(False);
 
-  rule doFetch1(cop.started && 
-                (!execRedirect.notEmpty || 
+  rule doFetch1(started &&
+                (!execRedirect.notEmpty ||
                  (execRedirect.notEmpty &&
                     (!isSystem(tpl_1(execRedirect.first).brType) ||
                      (isSystem(tpl_1(execRedirect.first).brType) && !ex2m.notEmpty && !m12m2.notEmpty)))));
@@ -139,15 +107,15 @@ module mkProc#(ProcIndication indication)(Proc);
       let ppc = addrPred.predPc(pc);
       pc <= ppc;
 
-      iTlb.req(MemReq{op: Ld, addr: pc, byteEn: replicate(True), data: ?});
+      iTlb.to_proc.request.put(MemReq{op: Ld, addr: pc, byteEn: replicate(True), data: ?});
       f12f2.enq(tuple3(pc, ppc, fEpoch));
 
       $display("Fetch1: pc: %h epoch: %d", pc, fEpoch);
     end
   endrule
 
-  rule doFetch2(cop.started);
-    match {.inst_data, .cause} <- iTlb.resp;
+  rule doFetch2;
+    match {.inst_data, .cause} <- iTlb.to_proc.response.get;
     match {.pc, .ppc, .fEpoch} = f12f2.first;
 
     Instruction inst = truncate(gatherLoad(pc, unpack(zeroExtend(4'b1111)), True, inst_data));
@@ -223,7 +191,7 @@ module mkProc#(ProcIndication indication)(Proc);
       if(eInst.iType == Unsupported || isValid(cause))
       begin
         $fwrite(stderr, "Executing unsupported instruction at pc: %x. Exiting\n", pc);
-        $finish;
+        $finish();
       end
 
       if(eInst.iType == J || eInst.iType == Jr || eInst.iType == Br || isSystem(eInst.iType)/* || eInst.iType == Priv*/)
@@ -251,12 +219,12 @@ module mkProc#(ProcIndication indication)(Proc);
     begin
       if(iType == Ld)
       begin
-        dTlb.req(MemReq{op: Ld, addr: addr, byteEn: byteEn, data: ?});
+        dTlb.to_proc.request.put(MemReq{op: Ld, addr: addr, byteEn: byteEn, data: ?});
       end
       else if(iType == St)
       begin
         match {.byteEn_st, .data_st} = scatterStore(addr, byteEn, data);
-        dTlb.req(MemReq{op: St, addr: addr, byteEn: byteEn_st, data: data_st});
+        dTlb.to_proc.request.put(MemReq{op: St, addr: addr, byteEn: byteEn_st, data: data_st});
       end
     end
 
@@ -278,10 +246,10 @@ module mkProc#(ProcIndication indication)(Proc);
     begin
       if(iType == Ld || iType == Lr)
       begin
-        match {.d, .mcause} <- dTlb.resp;
+        match {.d, .mcause} <- dTlb.to_proc.response.get;
         if (isValid(mcause)) begin
           $fwrite(stderr, "Load access exception at %x. Exiting\n", addr);
-          $finish;
+          $finish();
         end
         data = gatherLoad(addr, byteEn, unsignedLd, d);
       end
@@ -310,42 +278,46 @@ module mkProc#(ProcIndication indication)(Proc);
     m2wb.deq;
   endrule
 
-  rule csrfToCop;
-    let ret <- csrf.csrfToCop;
-    cop.csrfToCop(ret);
-  endrule
-
-  /*mkConnection(iCache.req, iTlb.memReq);
-  mkConnection(iCache.resp, iTlb.memResp);
-  mkConnection(dCache.req, dTlb.memReq);
-  mkConnection(dCache.resp, dTlb.memResp);
-
-  mkConnection(mem.iReq, iCache.memReq);
-  mkConnection(mem.iResp, iCache.memResp);
-  mkConnection(mem.dReq, dCache.memReq);
-  mkConnection(mem.dResp, dCache.memResp);*/
-  mkConnection(mem.iReq, iTlb.memReq);
-  mkConnection(mem.iResp, iTlb.memResp);
-  mkConnection(mem.dReq, dTlb.memReq);
-  mkConnection(mem.dResp, dTlb.memResp);
-
   rule csrfToHost;
     let ret <- csrf.csrfToHost;
     indication.to_host(ret);
   endrule
 
+/*
+  rule iMemToHost;
+    let d <- iMem.to_mem.request.get;
+    if (d.op == Ld) begin
+      indication.imem_req(0, d.addr, d.data);
+    end else begin
+      indication.imem_req(1, d.addr, d.data);
+    end
+  endrule
+
+  rule dMemToHost;
+    let d <- dMem.to_mem.request.get;
+    if (d.op == Ld) begin
+      indication.dmem_req(0, d.addr, d.data);
+    end else begin
+      indication.dmem_req(1, d.addr, d.data);
+    end
+  endrule
+*/
   interface ProcRequest request;
-    method Action start(Bit#(64) startpc, Bit#(32) mp);
-      cop.start;
+    method Action start(Bit#(64) startpc);
+      started <= True;
       pc <= startpc;
-      memPointer <= mp;
     endmethod
-    
+
     method Action from_host(Bool isfromhost, Bit#(64) v);
       csrf.hostToCsrf(isfromhost, v);
     endmethod
-  endinterface
+/*
+    method Action imem_resp(Bit#(64) data);
+      iMem.to_mem.response.put(data);
+    endmethod
 
-  interface MemReadClient dmaReadClient = cons(re.dmaClient, nil);
-  interface MemWriteClient dmaWriteClient = cons(we.dmaClient, nil);
+    method Action dmem_resp(Bit#(64) data);
+      dMem.to_mem.response.put(data);
+    endmethod*/
+  endinterface
 endmodule

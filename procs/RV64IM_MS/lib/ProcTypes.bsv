@@ -444,7 +444,7 @@ function Fmt showInst(Instruction inst);
     Jalr:
       ret = fshow("jalr ") + fshow(rd) + fshow(" ") + fshow(rs1) + fshow(" ") + fshow(immI);
 
-    Branch:    
+    Branch:
     begin
       ret = case(funct3)
         fnBEQ: fshow("beq");
@@ -525,34 +525,81 @@ function Fmt showInst(Instruction inst);
       endcase
     end
     /*
-    opLB: 
+    opLB:
       ret = fshow("lb ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLH: 
+
+    opLH:
       ret = fshow("lh ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLW: 
+
+    opLW:
       ret = fshow("lw ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLBU: 
+
+    opLBU:
       ret = fshow("lbu ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLHU: 
+
+    opLHU:
       ret = fshow("lhu ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
+
     opSB:
       ret = fshow("sb ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
-    
+
     opSH:
       ret = fshow("sh ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
-    
+
     opSW:
       ret = fshow("sw ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
 */
-    default: 
+    default:
       ret = fshow("nop");
   endcase
 
   return ret;
-  
+
 endfunction
+
+
+typedef struct {
+  Addr pc;
+  Addr ppc;
+  Bool epoch;
+  Instruction inst;
+  Maybe#(Exception) cause;
+} Fetch2Decode deriving (Bits, Eq);
+
+typedef struct {
+  Addr pc;
+  Addr ppc;
+  Bool epoch;
+  DecodedInst dInst;
+  Maybe#(Exception) cause;
+} Decode2RegRead deriving (Bits, Eq);
+
+typedef struct {
+  Addr pc;
+  Addr ppc;
+  Bool epoch;
+  DecodedInst dInst;
+  Data rVal1;
+  Data rVal2;
+  CsrState csrState;
+  Maybe#(Exception) cause;
+} RegRead2Exec deriving (Bits, Eq);
+
+typedef struct {
+  Bool poisoned;
+  IType iType;
+  Maybe#(RIndx) dst;
+  Data data;
+  CsrState csrState;
+  Addr addr;
+  ByteEn byteEn;
+  Bool unsignedLd;
+} Exec2Mem deriving (Bits, Eq);
+
+typedef struct {
+  Bool poisoned;
+  IType iType;
+  Maybe#(RIndx) dst;
+  Data data;
+  CsrState csrState;
+} Mem2Wb deriving (Bits, Eq);

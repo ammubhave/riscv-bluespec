@@ -9,34 +9,26 @@ import ExecPriv::*;
 import GetPut :: *;
 import IMemory::*;
 import MemoryTypes::*;
-import Pipe::*;
 import ProcTypes::*;
 import RFile::*;
 import Types::*;
 import Vector::*;
 
-import ConnectalMemory::*;
-import MemTypes::*;
-import MemreadEngine::*;
-import MemwriteEngine::*;
-
 interface ProcRequest;
-  method Action start(Bit#(64) startpc, Bit#(32) imp, Bit#(32) dmp);
+  method Action start(Bit#(64) startpc);
   method Action from_host(Bool isfromhost, Bit#(64) v);
-  method Action imem_resp;
-  method Action dmem_resp;
+  method Action imem_resp(Bit#(64) data);
+  method Action dmem_resp(Bit#(64) data);
 endinterface
 
 interface ProcIndication;
   method Action to_host(Bit#(64) v);
-  method Action imem_req(Bit#(64) addr);
-  method Action dmem_req(Bit#(64) addr);
+  method Action imem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+  method Action dmem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
 endinterface
 
 interface Proc;
   interface ProcRequest request;
-  interface Vector#(1, MemReadClient#(WideLineSz)) dmaReadClient;
-  interface Vector#(1, MemWriteClient#(WideLineSz)) dmaWriteClient;
 endinterface
 
 typedef enum {Fetch1, Fetch2, Execute1, Execute2} State deriving (Bits, Eq);
@@ -49,14 +41,7 @@ module mkProc#(ProcIndication indication)(Proc);
   Cache      dMem <- mkCache;
   Reg#(Bool) started <- mkReg(False);
 
-  MemreadEngine#(WideLineSz,1,2)  re <- mkMemreadEngine;
-  MemwriteEngine#(WideLineSz,2,2) we <- mkMemwriteEngine;
-  Reg#(SGLId)   imemPointer <- mkReg(0);
-  Reg#(SGLId)   dmemPointer <- mkReg(0);
-  Reg#(Maybe#(WideMemReq))  imemHostBusy <- mkReg(Invalid);
-  Reg#(Maybe#(WideMemReq))  dmemHostBusy <- mkReg(Invalid);
-
-  Reg#(State)    state <- mkReg(Fetch1);
+  Reg#(State) state <- mkReg(Fetch1);
   Reg#(ExecInst) ei <- mkRegU;
 
   rule doFetch1(started && state == Fetch1);
@@ -145,62 +130,40 @@ module mkProc#(ProcIndication indication)(Proc);
     indication.to_host(ret);
   endrule
 
-  mkConnection(toGet(re.dataPipes[0]), iMem.to_mem.response);
-  mkConnection(toGet(re.dataPipes[1]), dMem.to_mem.response);
-
   rule iMemToHost;
     let d <- iMem.to_mem.request.get;
-    if (d.op == St) begin
-      we.writeServers[0].request.put(MemengineCmd{tag:0, sglId:imemPointer, base:0, len: 64, burstLen: 1});
-      imemHostBusy <= Valid(d);
+    if (d.op == Ld) begin
+      indication.imem_req(0, d.addr, d.data);
     end else begin
-      indication.imem_req(d.addr);
+      indication.imem_req(1, d.addr, d.data);
     end
   endrule
 
   rule dMemToHost;
     let d <- dMem.to_mem.request.get;
-    if (d.op == St) begin
-      we.writeServers[1].request.put(MemengineCmd{tag:0, sglId:dmemPointer, base:0, len: 64, burstLen: 1});
-      dmemHostBusy <= Valid(d);
+    if (d.op == Ld) begin
+      indication.dmem_req(0, d.addr, d.data);
     end else begin
-      indication.dmem_req(d.addr);
+      indication.dmem_req(1, d.addr, d.data);
     end
   endrule
 
-  rule iMemDataPipeClear;
-    let rv <- we.writeServers[0].response.get;
-    indication.imem_req(validValue(imemHostBusy).addr);
-    imemHostBusy <= Invalid;
-  endrule
-
-  rule dMemDataPipeClear;
-    let rv <- we.writeServers[1].response.get;
-    indication.dmem_req(validValue(dmemHostBusy).addr);
-    dmemHostBusy <= Invalid;
-  endrule
-
   interface ProcRequest request;
-    method Action start(Bit#(64) startpc, Bit#(32) imp, Bit#(32) dmp);
+    method Action start(Bit#(64) startpc);
       started <= True;
       pc <= startpc;
-      imemPointer <= imp;
-      dmemPointer <= dmp;
     endmethod
 
     method Action from_host(Bool isfromhost, Bit#(64) v);
       csrf.hostToCsrf(isfromhost, v);
     endmethod
 
-    method Action imem_resp;
-      re.readServers[0].request.put(MemengineCmd{sglId: imemPointer, base: 0, len: 64, burstLen: 1});
+    method Action imem_resp(Bit#(64) data);
+      iMem.to_mem.response.put(data);
     endmethod
 
-    method Action dmem_resp;
-      re.readServers[1].request.put(MemengineCmd{sglId: dmemPointer, base: 0, len: 64, burstLen: 1});
+    method Action dmem_resp(Bit#(64) data);
+      dMem.to_mem.response.put(data);
     endmethod
   endinterface
-
-  interface MemReadClient dmaReadClient = cons(re.dmaClient, nil);
-  interface MemWriteClient dmaWriteClient = cons(we.dmaClient, nil);
 endmodule

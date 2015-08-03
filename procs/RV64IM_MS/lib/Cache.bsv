@@ -12,18 +12,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 import ClientServer::*;
 import Fifo::*;
+import GetPut::*;
 import MemoryTypes::*;
 import RegFile::*;
 import Types::*;
 import Vector::*;
 
 interface Cache;
-  //method Action req(MemReq r);
-  //method ActionValue#(Data) resp;
-  interface Server#(MemReq, Data) to_proc;
-  interface Client#(MemengineCmd, MemLine) to_mem;
-  //method ActionValue#(MemengineCmd) memReq;
-  //method Action memResp(MemLine r);
+  interface Server#(MemReq, MemResp) to_proc;
+  interface Client#(WideMemReq, WideMemResp) to_mem;
 endinterface
 
 typedef 1024 CacheEntries;
@@ -46,8 +43,8 @@ module mkCache(Cache);
 
   Reg#(CacheStatus) status <- mkReg(Ready);
 
-  Fifo#(2, MemReq) memReqQ <- mkCFFifo;
-  Fifo#(2, Line) memRespQ <- mkCFFifo;
+  Fifo#(2, WideMemReq) memReqQ <- mkCFFifo;
+  Fifo#(2, WideMemResp) memRespQ <- mkCFFifo;
 
   function CacheIndex getIdx(Addr addr) = truncate(addr >> valueOf(IndxShamt));
   function CacheTag getTag(Addr addr) = truncateLSB(addr);
@@ -68,18 +65,18 @@ module mkCache(Cache);
     begin
       let addr = {validValue(tag), idx, 3'b0};
       let data = dataArray.sub(idx);
-      memReqQ.enq(MemReq{op: St, addr: addr, byteEn: replicate(True), data: data});
+      memReqQ.enq(WideMemReq{op: St, addr: addr, byteEn: replicate(True), data: data});
       status <= SendFillReq;
     end
     else
     begin
-      memReqQ.enq(miss);
+      memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
       status <= WaitFillResp;
     end
   endrule
 
   rule sendFillReq(status == SendFillReq);
-    memReqQ.enq(miss);
+    memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
     status <= WaitFillResp;
   endrule
 
@@ -95,70 +92,68 @@ module mkCache(Cache);
     status <= Ready;
   endrule
 
-  interface Server#(MemReq, Data) to_proc;
-    interface Put#(MemReq) request;
-    endinterface;
-    method Action request(Bit#(64) startpc, Bit#(32) mp);
-      cop.start;
-      pc <= startpc;
-      memPointer <= mp;
-    endmethod
-    
-    method Action from_host(Bool isfromhost, Bit#(64) v);
-      csrf.hostToCsrf(isfromhost, v);
-    endmethod
+  interface Server to_proc;
+    interface Put request;
+      method Action put(MemReq r) if(status == Ready && inited);
+        let idx = getIdx(r.addr);
+        let tag = getTag(r.addr);
+        let currTag = tagArray.sub(idx);
+        let hit = Valid (tag) == currTag;
+        let data = dataArray.sub(idx);
+        if(r.op == Ld)
+        begin
+          if(hit)
+          begin
+            hitQ.enq(data);
+          end
+          else
+          begin
+            miss <= r;
+            status <= StartMiss;
+          end
+        end
+        else
+        begin
+          if(hit)
+          begin
+            Vector#(NumBytes, Bit#(8)) bytes = unpack(data);
+            Vector#(NumBytes, Bit#(8)) bytesIn = unpack(r.data);
+            for(Integer i = 0; i < valueOf(NumBytes); i = i + 1)
+            begin
+              if(r.byteEn[i])
+                bytes[i] = bytesIn[i];
+            end
+            dataArray.upd(idx, pack(bytes));
+            dirtyArray.upd(idx, True);
+          end
+          else
+          begin
+            memReqQ.enq(WideMemReq{op: r.op, addr: r.addr, byteEn: r.byteEn, data: r.data});
+          end
+        end
+      endmethod
+    endinterface
+
+    interface Get response;
+      method ActionValue#(Data) get();
+        hitQ.deq;
+        return hitQ.first;
+      endmethod
+    endinterface
   endinterface
 
-  method Action req(MemReq r) if(status == Ready && inited);
-    let idx = getIdx(r.addr);
-    let tag = getTag(r.addr);
-    let currTag = tagArray.sub(idx);
-    let hit = Valid (tag) == currTag;
-    let data = dataArray.sub(idx);
-    if(r.op == Ld)
-    begin
-      if(hit)
-      begin
-        hitQ.enq(data);
-      end
-      else
-      begin
-        miss <= r;
-        status <= StartMiss;
-      end
-    end
-    else
-    begin
-      if(hit)
-      begin
-        Vector#(NumBytes, Bit#(8)) bytes = unpack(data);
-        Vector#(NumBytes, Bit#(8)) bytesIn = unpack(r.data);
-        for(Integer i = 0; i < valueOf(NumBytes); i = i + 1)
-        begin
-          if(r.byteEn[i])
-            bytes[i] = bytesIn[i];
-        end
-        dataArray.upd(idx, pack(bytes));
-        dirtyArray.upd(idx, True);
-      end
-      else
-      begin
-        memReqQ.enq(r);
-      end
-    end
-  endmethod
+  interface Client to_mem;
+    interface Get request;
+      method ActionValue#(WideMemReq) get();
+        memReqQ.deq;
+        return memReqQ.first;
+      endmethod
+    endinterface
 
-  method ActionValue#(Data) resp;
-    hitQ.deq;
-    return hitQ.first;
-  endmethod
-
-  method ActionValue#(MemReq) memReq;
-    memReqQ.deq;
-    return memReqQ.first;
-  endmethod
-
-  method Action memResp(Line r);
-    memRespQ.enq(r);
-  endmethod
+    interface Put response;
+      method Action put(WideMemResp r);
+        memRespQ.enq(r);
+      endmethod
+    endinterface
+  endinterface
 endmodule

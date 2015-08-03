@@ -31,7 +31,7 @@ module mkProc#(ProcIndication indication)(Proc);
   IMemory  iMem <- mkIMemory;
   DMemory  dMem <- mkDMemory;
   Cop       cop <- mkCop;
-  
+
   rule doProc(cop.started);
     Instruction inst = truncate(gatherLoad(pc, unpack(zeroExtend(4'b1111)), True, iMem.req(pc)));
 
@@ -42,7 +42,7 @@ module mkProc#(ProcIndication indication)(Proc);
     // trace - print the instruction
     $display("pc: %h inst: (%h) expanded: ", pc, inst, showInst(inst));
 
-    // read register values 
+    // read register values
     let rVal1 = rf.rd1(validValue(dInst.src1));
     let rVal2 = rf.rd2(validValue(dInst.src2));
     let csrState = csrf.rd(dInst.csr);
@@ -97,16 +97,9 @@ module mkProc#(ProcIndication indication)(Proc);
       cop.start;
       pc <= startpc;
     endmethod
-    
+
     method Action from_host(Bool isfromhost, Bit#(64) v);
       csrf.hostToCsrf(isfromhost, v);
     endmethod
  endinterface
-  
-  /*method ActionValue#(Tuple2#(RIndx, Data)) cpuToHost;
-    let ret <- cop.cpuToHost;
-    $display("sending %d %d", tpl_1(ret), tpl_2(ret));
-    return ret;
-  endmethod
-  */
 endmodule

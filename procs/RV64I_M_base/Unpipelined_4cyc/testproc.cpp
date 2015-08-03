@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <bitset>
 #include <cassert>
-#include "dmaManager.h"
 #include "ProcIndication.h"
 #include "ProcRequest.h"
 #include "GeneratedTypes.h"
@@ -10,53 +9,53 @@
 
 static ProcRequestProxy *procRequestProxy = 0;
 
-int imemAlloc;
-int dmemAlloc;
-uint64_t* imemBuffer = NULL;
-uint64_t* dmemBuffer = NULL;
-uint64_t imemAddr = 0;
-uint64_t dmemAddr = 0;
 const size_t mem_buffer_sz = 64; // 512 Bytes
 const size_t mem_buffer_words = mem_buffer_sz / sizeof(uint64_t);
 
-uint64_t (*mem)[mem_buffer_words] = NULL;
+uint64_t (*mem)/*[mem_buffer_words]*/ = NULL;
 const  size_t mem_sz = 64*1024*1024; // 64 MB
 
 static void call_from_host(bool isfromhost, uint64_t v)
 {
     procRequestProxy->from_host(isfromhost, v);
 }
-static void call_imem_resp()
+static void call_imem_resp(uint64_t data)
 {
-    procRequestProxy->imem_resp();
+    procRequestProxy->imem_resp(data);
 }
-static void call_dmem_resp()
+static void call_dmem_resp(uint64_t data)
 {
-    procRequestProxy->dmem_resp();
+    procRequestProxy->dmem_resp(data);
 }
 
 class ProcIndication : public ProcIndicationWrapper
 {
 public:
     virtual void to_host(uint64_t v) {
+        uint64_t magic_mem[8] __attribute__((aligned(64))) = (void*)((uint64_t)mem + v);
+
         uint8_t device = v >> 56;
         uint8_t cmd = v >> 48;
-        uint64_t payload = v & 0xFFFFFFFFFFFFULL;
+        uint64_t payload = v << 16 >> 16;
+
+        if (payload & 0x1) {
+            if (arg0 == 0)
+                fprintf(stderr, "PASSED\n");
+            else
+                fprintf(stderr, "FAILED %d\n", (int)payload);
+            exit(0);
+        }
+
         switch (device) {
-            case 0: // dev EXIT
-                switch (cmd) {
-                    case 0: // cmd EXIT
-                        if (payload == 0)
-                            fprintf(stderr, "PASSED\n");
-                        else
-                            fprintf(stderr, "FAILED %d\n", (int)payload);
-                        exit(0);
-                }
-                break;
-            case 1: // dev CONSOLE
-                switch (cmd) {
-                    case 1: // cmd PUT CHAR
-                        fprintf(stderr, "%c", (char)payload);
+            case 0: // dev FRONT END
+                long which = magic_mem[0];
+                long arg0 = magic_mem[1];
+                long arg1 = magic_mem[2];
+                long arg2 = magic_mem[3];
+
+                switch (which) {
+                    case SYS_write: // SYS_write
+                        fprintf(stderr, "%s", (char*)((uint64_t)mem + arg1));
                         break;
                 }
                 break;
@@ -64,29 +63,30 @@ public:
         call_from_host(false, 0);
     }
 
-    virtual void imem_req(uint64_t addr, ) {
-        memcpy(&mem[imemAddr / sizeof(imemBuffer)], imemBuffer, mem_buffer_sz);
-        memcpy(imemBuffer, &mem[addr / sizeof(imemBuffer)], mem_buffer_sz);
-        portalCacheFlush(imemAlloc, imemBuffer, mem_buffer_sz, 1);
-        imemAddr = addr;
-        call_imem_resp();
+    virtual void imem_req(uint8_t op, uint64_t addr, uint64_t data) {
+        if (op == false) { // Ld
+            printf("imem_req ld: %p %p %p %p %p", (void*)addr, (void*)(addr / 8), (void*)mem[addr / 8], (void*)mem[0], (void*)mem[64]);
+            call_imem_resp(mem[addr / 8]);
+        } else {
+            mem[addr / 8] = data;
+        }
     }
 
-    virtual void dmem_req(uint64_t addr) {
-        memcpy(&mem[dmemAddr / sizeof(dmemBuffer)], dmemBuffer, mem_buffer_sz);
-        memcpy(dmemBuffer, &mem[addr / sizeof(dmemBuffer)], mem_buffer_sz);
-        portalCacheFlush(dmemAlloc, dmemBuffer, mem_buffer_sz, 1);
-        dmemAddr = addr;
-        call_dmem_resp();
+    virtual void dmem_req(uint8_t op, uint64_t addr, uint64_t data) {
+        if (op == false) { // Ld
+            call_dmem_resp(mem[addr / 8]);
+        } else {
+            mem[addr / 8] = data;
+        }
     }
 
     ProcIndication(unsigned int id) : ProcIndicationWrapper(id) {}
 };
 
-static void call_start(uint64_t startpc, unsigned int imp, unsigned int dmp)
+static void call_start(uint64_t startpc)
 {
-    printf("Starting... %p %p %p\n", (void*)startpc, (void*)(uint64_t)imp, (void*)(uint64_t)dmp);
-    procRequestProxy->start(startpc, imp, dmp);
+    printf("Starting... %p\n", (void*)startpc);
+    procRequestProxy->start(startpc);
 }
 
 int main(int argc, const char **argv)
@@ -96,28 +96,10 @@ int main(int argc, const char **argv)
 
     ProcIndication procIndication(IfcNames_ProcIndicationH2S);
     procRequestProxy = new ProcRequestProxy(IfcNames_ProcRequestS2H);
-    DmaManager *dma = platformInit();
 
-    imemAlloc = portalAlloc(mem_buffer_sz, 0);
-    imemBuffer = (uint64_t*)portalMmap(imemAlloc, mem_buffer_sz);
-
-    dmemAlloc = portalAlloc(mem_buffer_sz, 0);
-    dmemBuffer = (uint64_t*)portalMmap(dmemAlloc, mem_buffer_sz);
-
-    mem = (uint64_t(*)[mem_buffer_words]) malloc(mem_sz);
+    mem = (uint64_t(*)) malloc(mem_sz);
 
     assert(vmhLoadImage("memory.vmh", (uint64_t*)mem, mem_sz) && "Failed to load VMH image");
-
-    memcpy(imemBuffer, &mem[0], mem_buffer_sz);
-    imemAddr = 0;
-    memcpy(dmemBuffer, &mem[0], mem_buffer_sz);
-    dmemAddr = 0;
-
-    portalCacheFlush(imemAlloc, imemBuffer, mem_buffer_sz, 1);
-    portalCacheFlush(dmemAlloc, dmemBuffer, mem_buffer_sz, 1);
-    unsigned int ref_imemAlloc = dma->reference(imemAlloc);
-    unsigned int ref_dmemAlloc = dma->reference(dmemAlloc);
-    sleep(1);
 
     int status = setClockFrequency(0, requestedFrequency, &actualFrequency);
     printf("Requested main clock frequency %5.2f, actual clock frequency %5.2f MHz status=%d errno=%d\n",
@@ -126,7 +108,7 @@ int main(int argc, const char **argv)
       status, (status != 0) ? errno : 0);
 
     uint64_t startpc = 0x200;
-    call_start(startpc, ref_imemAlloc, ref_dmemAlloc);
-    while (1) ;
+    call_start(startpc);
+    while (1);
     return 0;
 }

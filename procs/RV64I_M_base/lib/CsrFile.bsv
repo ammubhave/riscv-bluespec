@@ -33,6 +33,18 @@ module mkCsrFile(CsrFile);
   Reg#(Data) instretReg <- mkConfigReg(0);
   Reg#(Data) statsReg <- mkConfigReg(0);
 
+  // Supervisor-Level CSRs
+  Reg#(Data) stvecReg <- mkConfigReg(0);
+  Reg#(Data) stimecmpReg <- mkConfigReg(0);
+  Reg#(Data) stimeReg <- mkConfigReg(0);
+  Reg#(Data) sscratchReg <- mkConfigReg(?);
+  Reg#(Data) sepcReg <- mkConfigReg(0);
+  Reg#(Data) scauseReg <- mkConfigReg(?);
+  Reg#(Data) sbadaddrReg <- mkConfigReg(?);
+  Reg#(Data) sipReg <- mkConfigReg(0);
+  Reg#(Data) sptbrReg <- mkConfigReg(?);
+  Reg#(Data) sasidReg <- mkConfigReg(?);
+
   // Machine-Level CSRs
   Reg#(Data) mhartidReg <- mkConfigReg(0);
   //                                      SD       VM=Mbare  MPRV    XS     FS   PRV3   IE3  PRV2   IE2  PRV1   IE1   PRV   IE
@@ -67,6 +79,18 @@ module mkCsrFile(CsrFile);
       CSRinstret: instretReg;
       CSRstats: statsReg;
 
+      CSRsstatus: {mstatusReg[valueOf(DataSz)-1], 'b0, mstatusReg[16:12], 7'b0, mstatusReg[4:3], 2'b0, mstatusReg[0]};
+      CSRstvec: stvecReg;
+      CSRsie: {'b0, mieReg[5], 3'b0, mieReg[1], 1'b0};
+      CSRstimecmp: stimecmpReg;
+      CSRstime: (instretReg >> timeShamt);
+      CSRsscratch: sscratchReg;
+      CSRsepc: sepcReg;
+      CSRscause: scauseReg;
+      CSRsbadaddr: sbadaddrReg;
+      CSRsip: {'b0, mipReg[5], 3'b0, mipReg[1], 1'b0};
+      CSRsptbr: sptbrReg;
+      CSRsasid: 0;
       CSRcyclew: cycleReg;
       CSRtimew: (instretReg >> timeShamt);
       CSRinstretw: instretReg;
@@ -75,7 +99,7 @@ module mkCsrFile(CsrFile);
 
       //           RV64           ZYXWVUTSRQPONMLKJIHGFEDCBA
       CSRmcpuid: {2'b10, 'b0, 26'b00000001000000000100000000};
-      //               Anonymous   
+      //               Anonymous
       CSRmimpid: {'b0, 16'h8000};
       CSRmhartid: mhartidReg;
       CSRmstatus: mstatusReg;
@@ -102,6 +126,7 @@ module mkCsrFile(CsrFile);
     CsrState csrState = ?;
     csrState.mstatus = mstatusReg;
     csrState.mtvec = mtvecReg;
+    csrState.sepc = sepcReg;
     csrState.mepc = mepcReg;
     csrState.mcause = mcauseReg;
     csrState.csr = csr;
@@ -120,6 +145,21 @@ module mkCsrFile(CsrFile);
       case (idx)
         CSRstats: statsReg <= val;
 
+        CSRstvec: stvecReg <= val & ~3;
+        CSRsie:
+        begin
+          Data mask = _MIP_SSIP | _MIP_STIP;
+          mieReg <= (mieReg & ~mask) | (val & mask);
+        end
+        CSRstimecmp:
+        begin
+          mipReg <= mipReg & ~_MIP_STIP;
+          stimecmpReg <= val;
+        end
+        CSRsscratch: sscratchReg <= val;
+        CSRsip: mipReg <= (mipReg & ~_MIP_SSIP) | (val & _MIP_SSIP);
+        CSRsptbr: sptbrReg <= val;
+
         CSRmtdeleg: mtdelegReg <= val;
         CSRmie:
         begin
@@ -136,24 +176,26 @@ module mkCsrFile(CsrFile);
         CSRmtohost:
         begin
           //$fwrite(stderr, "mtohost: %b\n", val);
-          //mtohostReg <= val;
           mtohostReg <= val;
-          csrFifo.enq(val); // Finish code
+          csrFifo.enq(val);
         end
         CSRmfromhost: mfromhostReg <= val;
       endcase
 
       mstatusReg <= case (idx)
+        CSRsstatus: ((mstatusReg & signExtend(32'hFFFE0FC6)) | (val & 'h1F019));
         CSRmstatus: (val & 'h3F0FFF);
         default: csrState.mstatus;
       endcase;
 
       mtvecReg <= (idx == CSRmtvec ? val : csrState.mtvec);
+      sepcReg <= (idx == CSRsepc ? val : csrState.sepc);
       mepcReg <= (idx == CSRmepc ? val : csrState.mepc);
       mcauseReg <= (idx == CSRmcause ? val : csrState.mcause);
     end else begin
       mstatusReg <= csrState.mstatus;
       $display("mstatus == %h", csrState.mstatus);
+      sepcReg <= csrState.sepc;
       mtvecReg <= csrState.mtvec;
       mepcReg <= csrState.mepc;
       mcauseReg <= csrState.mcause;
