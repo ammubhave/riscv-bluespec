@@ -73,9 +73,11 @@ module mkCache(Cache);
       memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
       status <= WaitFillResp;
     end
+    $display("cache startmiss %x", miss.addr);
   endrule
 
   rule sendFillReq(status == SendFillReq);
+    $display("cache sendfillreq %x", miss.addr);
     memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
     status <= WaitFillResp;
   endrule
@@ -90,6 +92,7 @@ module mkCache(Cache);
     hitQ.enq(data);
     memRespQ.deq;
     status <= Ready;
+    $display("cache waitfillresp %x %x", miss.addr, data);
   endrule
 
   interface Server to_proc;
@@ -125,9 +128,11 @@ module mkCache(Cache);
             end
             dataArray.upd(idx, pack(bytes));
             dirtyArray.upd(idx, True);
+            $display("cache req: st hit %x %x", r.addr, r.data);
           end
           else
           begin
+            $display("cache req: enq to mem %x", r.addr);
             memReqQ.enq(WideMemReq{op: r.op, addr: r.addr, byteEn: r.byteEn, data: r.data});
           end
         end
@@ -136,6 +141,7 @@ module mkCache(Cache);
 
     interface Get response;
       method ActionValue#(Data) get();
+        $display("cache to_proc get() %x", hitQ.first);
         hitQ.deq;
         return hitQ.first;
       endmethod
@@ -145,6 +151,7 @@ module mkCache(Cache);
   interface Client to_mem;
     interface Get request;
       method ActionValue#(WideMemReq) get();
+        $display("cache to_mem get() %x", memReqQ.first.addr);
         memReqQ.deq;
         return memReqQ.first;
       endmethod
@@ -152,7 +159,43 @@ module mkCache(Cache);
 
     interface Put response;
       method Action put(WideMemResp r);
+        $display("cache to_mem put() %x", r);
         memRespQ.enq(r);
+      endmethod
+    endinterface
+  endinterface
+endmodule
+
+module mkDummyCache (Cache ifc);
+  Fifo#(2, WideMemReq)  reqFifo  <- mkBypassFifo;
+  Fifo#(2, MemResp)     respFifo <- mkBypassFifo;
+
+  interface Server to_proc;
+    interface Put request;
+      method Action put(MemReq r);
+        reqFifo.enq(WideMemReq{op: r.op, addr: r.addr, data: r.data, byteEn: r.byteEn});
+      endmethod
+    endinterface
+
+    interface Get response;
+      method ActionValue#(MemResp) get;
+        respFifo.deq;
+        return respFifo.first;
+      endmethod
+    endinterface
+  endinterface
+
+  interface Client to_mem;
+    interface Get request;
+      method ActionValue#(WideMemReq) get;
+        reqFifo.deq;
+        return reqFifo.first;
+      endmethod
+    endinterface
+
+    interface Put response;
+      method Action put(WideMemResp r);
+        respFifo.enq(truncate(r));
       endmethod
     endinterface
   endinterface

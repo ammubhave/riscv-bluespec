@@ -30,7 +30,8 @@ typedef struct {
 } WideMemReq deriving(Eq, Bits);
 
 interface WideMem;
-    interface Server#(WideMemReq, WideMemResp) to_proc;
+  interface Server#(WideMemReq, WideMemResp) to_proc;
+  interface Server#(WideMemReq, WideMemResp) to_host;
 endinterface
 
 typedef enum {InstMem, DataMem} MemPort deriving (Bits, Eq);

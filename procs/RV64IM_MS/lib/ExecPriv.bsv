@@ -25,7 +25,7 @@ function Data changePrivModeIe(Data mstatus, Bit#(2) prv, Bool ie) = { mstatus[v
 function Data changePrivMode(Data mstatus, Bit#(2) prv) = changePrivModeIe(mstatus, prv, unpack(mstatus[0]));
 
 // Returns: mcause
-/*function Maybe#(Data) getPendingInterrupt(CsrState csrState);
+function Maybe#(Data) getPendingInterrupt(CsrState csrState);
   let prv = csrState.mstatus[2:1];
   let ie = csrState.mstatus[0] == 1;
   let interrupts = csrState.mie & csrState.mip;
@@ -44,7 +44,7 @@ function Data changePrivMode(Data mstatus, Bit#(2) prv) = changePrivModeIe(mstat
   end
 
   return ret;
-endfunction*/
+endfunction
 
 (* noinline *)
 function ExecInst execPriv(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrState, Addr pc, Addr ppc);

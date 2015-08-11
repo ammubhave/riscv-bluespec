@@ -8,3 +8,6 @@
 [submodule "vendor/riscv-fesvr"]
 	path = vendor/riscv-fesvr
 	url = https://github.com/riscv/riscv-fesvr.git
+[submodule "vendor/fpgamake"]
+	path = vendor/fpgamake
+	url = https://github.com/cambridgehackers/fpgamake.git

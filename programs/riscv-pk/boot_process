@@ -1,0 +1,25 @@
+0x200: (mentry.S)
+	sp = end of first full page after end of the binary
+	reserve space on the stack for MENTRY_FRAME_SIZE (reg + softfloats + hls_size)
+	mscratch = sp
+	a0 = mhartid, check if zero
+	j machine_init (minit.c)
+
+machine_init(0):
+	hls_init(0):
+		HLS() = 0
+		HLS().hart_id = 0
+	mstatus_init():
+		check if supports supervisor mode which is required
+		mstatus = VM_SV39 | FS | XS | PRV2_U | PRV1_S | PRV_M | IE2
+		check if supports VM, if not: have_vm = 0
+		clear MIP_MSIP
+		set   MIE_MSIP
+	init_first_hart():
+		file_init():
+			initialize stdin, stdout, stderr; and FDs 0-2
+		*args = parse_args(&arg_buffer):
+			frontend_syscall(SYS_getmainvars, &arg_buffer)
+			mem_size = 32MB
+			num_harts = 1
+

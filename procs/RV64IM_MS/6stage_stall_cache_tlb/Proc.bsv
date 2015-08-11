@@ -1,36 +1,54 @@
+// REGFILE_MEMORY, FPGA_MEMORY, CONNECTAL_MEMORY
+`define CONNECTAL_MEMORY
+`define MEMORY_NOCACHE
+
+import AddrPred::*;
 import Cache::*;
+import CsrFile::*;
 import ClientServer::*;
 import Connectable::*;
-import Types::*;
-import ProcTypes::*;
-import MemoryTypes::*;
-import RFile::*;
-import CsrFile::*;
 import Decode::*;
+import Ehr::*;
 import Exec::*;
 import ExecPriv::*;
 import Fifo::*;
 import GetPut::*;
-import Ehr::*;
-import Scoreboard::*;
-import AddrPred::*;
-import Tlb::*;
-import Connectable::*;
-import RegfileMemory::*;
+import MemoryTypes::*;
 import MemUtil::*;
+import Types::*;
+import ProcTypes::*;
+import RFile::*;
+import Scoreboard::*;
+import Tlb::*;
 import Vector::*;
+
+`ifdef REGFILE_MEMORY
+import RegfileMemory::*;
+`elsif FPGA_MEMORY
+import FPGAMemory::*;
+`endif
 
 interface ProcRequest;
   method Action start(Bit#(64) startpc);
   method Action from_host(Bool isfromhost, Bit#(64) v);
-//  method Action imem_resp(Bit#(64) data);
-//  method Action dmem_resp(Bit#(64) data);
+
+`ifdef CONNECTAL_MEMORY
+  method Action imem_resp(Bit#(64) data);
+  method Action dmem_resp(Bit#(64) data);
+`else
+  method Action mem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+`endif
 endinterface
 
 interface ProcIndication;
   method Action to_host(Bit#(64) v);
-//  method Action imem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
-//  method Action dmem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+
+`ifdef CONNECTAL_MEMORY
+  method Action imem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+  method Action dmem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+`else
+  method Action mem_resp(Bit#(64) data);
+`endif
 endinterface
 
 interface Proc;
@@ -43,12 +61,23 @@ module mkProc#(ProcIndication indication)(Proc);
   RFile      rf <- mkRFile;
   CsrFile  csrf <- mkCsrFile;
 
+`ifdef REGFILE_MEMORY
   WideMem wideMem <- mkRegfileMemory;
+`elsif FPGA_MEMORY
+  WideMem wideMem <- mkFPGAMemory;
+`endif
+
+`ifndef CONNECTAL_MEMORY
   Vector#(2, WideMem) wideMems <- mkSplitWideMem( wideMem );
+`endif
+
+`ifdef MEMORY_NOCACHE
+  Cache      iMem <- mkDummyCache;
+  Cache      dMem <- mkDummyCache;
+`else
   Cache      iMem <- mkCache;
   Cache      dMem <- mkCache;
-  mkConnection(wideMems[0].to_proc, iMem.to_mem);
-  mkConnection(wideMems[1].to_proc, dMem.to_mem);
+`endif
 
   Reg#(Bool) started <- mkReg(False);
   AddrPred addrPred <- mkBtb;
@@ -61,6 +90,12 @@ module mkProc#(ProcIndication indication)(Proc);
 
   Tlb iTlb <- mkTlb;
   Tlb dTlb <- mkTlb;
+
+`ifndef CONNECTAL_MEMORY
+  mkConnection(wideMems[0].to_proc, iMem.to_mem);
+  mkConnection(wideMems[1].to_proc, dMem.to_mem);
+`endif
+
   mkConnection(iMem.to_proc, iTlb.to_mem);
   mkConnection(dMem.to_proc, dTlb.to_mem);
 
@@ -283,7 +318,7 @@ module mkProc#(ProcIndication indication)(Proc);
     indication.to_host(ret);
   endrule
 
-/*
+`ifdef CONNECTAL_MEMORY
   rule iMemToHost;
     let d <- iMem.to_mem.request.get;
     if (d.op == Ld) begin
@@ -301,7 +336,13 @@ module mkProc#(ProcIndication indication)(Proc);
       indication.dmem_req(1, d.addr, d.data);
     end
   endrule
-*/
+`else
+  rule memToHost;
+    let d <- wideMem.to_host.response.get;
+    indication.mem_resp(d);
+  endrule
+`endif
+
   interface ProcRequest request;
     method Action start(Bit#(64) startpc);
       started <= True;
@@ -311,13 +352,22 @@ module mkProc#(ProcIndication indication)(Proc);
     method Action from_host(Bool isfromhost, Bit#(64) v);
       csrf.hostToCsrf(isfromhost, v);
     endmethod
-/*
+
+  `ifdef CONNECTAL_MEMORY
     method Action imem_resp(Bit#(64) data);
       iMem.to_mem.response.put(data);
     endmethod
 
     method Action dmem_resp(Bit#(64) data);
       dMem.to_mem.response.put(data);
-    endmethod*/
+    endmethod
+  `else
+    method Action mem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+      if (op == 0)  // Ld
+        wideMem.to_host.request.put(WideMemReq{op: Ld, addr: addr, data: data, byteEn: unpack('1)});
+      else
+        wideMem.to_host.request.put(WideMemReq{op: St, addr: addr, data: data, byteEn: unpack('1)});
+    endmethod
+  `endif
   endinterface
 endmodule
