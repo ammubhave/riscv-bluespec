@@ -147,7 +147,7 @@ typedef enum {
   CSRmhartid   = 'hf10
 } CSR deriving(Bits, Eq, FShow);
 
-typedef enum {Unsupported, Alu, Ld, St, Lr, Sc, J, Jr, Br, Csrs, Csrc, Csrw, Auipc, Priv} IType deriving(Bits, Eq, FShow);
+typedef enum {Unsupported, Alu, Ld, St, J, Jr, Br, Csrs, Csrc, Csrw, Auipc} IType deriving(Bits, Eq, FShow);
 typedef enum {Eq, Neq, Lt, Ltu, Ge, Geu, AT, NT} BrFunc deriving(Bits, Eq, FShow);
 typedef enum {Add, Addw, Sub, Subw, And, Or, Xor, Slt, Sltu, Sll, Sllw, Sra, Sraw, Srl, Srlw, Mul, Mulh, Mulhsu, Mulhu, Div, Divu, Rem, Remu, Mulw, Divw, Divuw, Remw, Remuw} AluFunc deriving(Bits, Eq, FShow);
 
@@ -168,24 +168,6 @@ typedef enum {
 } Exception deriving(Bits, Eq, FShow);
 
 typedef struct {
-  Data mstatus;
-
-  Data stvec;
-  Data htvec;
-  Data mtvec;
-
-  Data sepc;
-  Data hepc;
-  Data mepc;
-
-  Data scause;
-  Data hcause;
-  Data mcause;
-
-  Data sbadaddr;
-  Data hbadaddr;
-  Data mbadaddr;
-
   Maybe#(CSR) csr;
   Data data;
 } CsrState deriving (Bits, Eq, FShow);
@@ -224,12 +206,6 @@ typedef struct {
   Bool             mispredict;
   Bool             brTaken;
 } ExecInst deriving(Bits, Eq);
-
-typedef struct {
-  Bool isPaged;
-  Addr base;
-  Addr bound;
-} PagingInfo deriving(Bits, Eq);
 
 // Op
 Bit#(3) fnADD   = 3'b000;
@@ -303,59 +279,10 @@ Bit#(12) privHRTS     = 12'h205;
 Bit#(12) privMRTS     = 12'h305;
 Bit#(12) privMRTH     = 12'h306;
 
-Data _MSTATUS_IE        = 'h00000001;
-Data _MSTATUS_PRV       = 'h00000006;
-Data _MSTATUS_IE1       = 'h00000008;
-Data _MSTATUS_PRV1      = 'h00000030;
-Data _MSTATUS_IE2       = 'h00000040;
-Data _MSTATUS_PRV2      = 'h00000180;
-Data _MSTATUS_IE3       = 'h00000200;
-Data _MSTATUS_PRV3      = 'h00000C00;
-Data _MSTATUS_FS        = 'h00003000;
-Data _MSTATUS_XS        = 'h0000C000;
-Data _MSTATUS_MPRV      = 'h00010000;
-Data _MSTATUS_VM        = 'h003E0000;
-Data _MSTATUS_SD        = {1'b1, 'b0};
-
-Data _SSTATUS_IE        = 'h00000001;
-Data _SSTATUS_PIE       = 'h00000008;
-Data _SSTATUS_PS        = 'h00000010;
-Data _SSTATUS_FS        = 'h00003000;
-Data _SSTATUS_XS        = 'h0000C000;
-Data _SSTATUS_MPRV      = 'h00010000;
-Data _SSTATUS_TIE       = 'h01000000;
-Data _SSTATUS_SD        = {1'b1, 'b0};
-
-Data _MIP_SSIP          = 'h00000002;
-Data _MIP_HSIP          = 'h00000004;
-Data _MIP_MSIP          = 'h00000008;
-Data _MIP_STIP          = 'h00000020;
-Data _MIP_HTIP          = 'h00000040;
-Data _MIP_MTIP          = 'h00000080;
-
-Data _SIP_SSIP          = _MIP_SSIP;
-Data _SIP_STIP          = _MIP_STIP;
-
-Bit#(2) prvU = 0;
-Bit#(2) prvS = 1;
-Bit#(2) prvH = 2;
-Bit#(2) prvM = 3;
-
-Bit#(5) vmMbare = 0;
-Bit#(5) vmMbb   = 1;
-Bit#(5) vmMbbid = 2;
-Bit#(5) vmSv32  = 8;
-Bit#(5) vmSv39  = 9;
-Bit#(5) vmSv48  = 10;
-Bit#(5) vmSv57  = 11;
-Bit#(5) vmSv64  = 12;
-
 function Bool dataHazard(Maybe#(RIndx) src1, Maybe#(RIndx) src2, Maybe#(RIndx) dst);
     return (isValid(dst) && ((isValid(src1) && validValue(dst)==validValue(src1)) ||
                              (isValid(src2) && validValue(dst)==validValue(src2))));
 endfunction
-
-function Bool isSystem(IType iType) = (iType == Priv || iType == Csrw || iType == Csrs || iType == Csrc || iType == Unsupported);
 
 function Fmt showInst(Instruction inst);
   Fmt ret = fshow("");
@@ -444,7 +371,7 @@ function Fmt showInst(Instruction inst);
     Jalr:
       ret = fshow("jalr ") + fshow(rd) + fshow(" ") + fshow(rs1) + fshow(" ") + fshow(immI);
 
-    Branch:    
+    Branch:
     begin
       ret = case(funct3)
         fnBEQ: fshow("beq");
@@ -525,34 +452,34 @@ function Fmt showInst(Instruction inst);
       endcase
     end
     /*
-    opLB: 
+    opLB:
       ret = fshow("lb ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLH: 
+
+    opLH:
       ret = fshow("lh ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLW: 
+
+    opLW:
       ret = fshow("lw ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLBU: 
+
+    opLBU:
       ret = fshow("lbu ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
-    opLHU: 
+
+    opLHU:
       ret = fshow("lhu ") + fshow(rt) + fshow(" = ") + fshow(rs) + fshow(" ") + fshow(imm);
-    
+
     opSB:
       ret = fshow("sb ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
-    
+
     opSH:
       ret = fshow("sh ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
-    
+
     opSW:
       ret = fshow("sw ") + fshow(rs) + fshow(" ") + fshow(rt) + fshow(" ") + fshow(imm);
 */
-    default: 
+    default:
       ret = fshow("nop");
   endcase
 
   return ret;
-  
+
 endfunction

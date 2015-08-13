@@ -255,7 +255,7 @@ function DecodedInst decode(Instruction inst);
       dInst.csr = tagged Invalid;
       dInst.brFunc = NT;
     end
-    
+
     Store:
     begin
       dInst.iType = St;
@@ -285,112 +285,25 @@ function DecodedInst decode(Instruction inst);
       dInst.brFunc = NT;
     end
 
-    Amo:
+    System:
     begin
-      case (inst[31:27])
-       /* fnLR:
-        begin
-          dInst.iType = Lr;
-          dInst.byteEn = replicate(False);
-          case (funct3)
-            memW:
-            begin
-              dInst.byteEn[0] = True;
-              dInst.byteEn[1] = True;
-              dInst.byteEn[2] = True;
-              dInst.byteEn[3] = True;
-            end
-            memD: dInst.byteEn = replicate(True);
-          endcase
-          dInst.unsignedLd = False;
-          dInst.aluFunc = Add;
-          dInst.dst  = Valid(rd);
-          dInst.src1 = Valid(rs1);
-          dInst.src2 = Valid(0);
-          dInst.imm  = Invalid;
-          dInst.csr  = Invalid;
-          dInst.brFunc = NT;
-        end
+      dInst.iType = case (funct3)
+        fnCSRRWI, fnCSRRW: Csrw;
+        fnCSRRSI, fnCSRRS: Csrs;
+        fnCSRRCI, fnCSRRC: Csrc;
+      endcase;
 
-        fnSC:
-        begin
-          dInst.iType = Sc;
-          dInst.byteEn = replicate(False);
-          case (funct3)
-            memW:
-            begin
-              dInst.byteEn[0] = True;
-              dInst.byteEn[1] = True;
-              dInst.byteEn[2] = True;
-              dInst.byteEn[3] = True;
-            end
-            memD: dInst.byteEn = replicate(True);
-          endcase
-          dInst.aluFunc = Add;
-          dInst.dst  = Valid(rd);
-          dInst.src1 = Valid(rs1);
-          dInst.src2 = Valid(rs2);
-          dInst.imm  = Valid(0);
-          dInst.csr  = Invalid;
-          dInst.brFunc = NT;
-        end*/
-
-        default:
-        begin
-          dInst.iType = Unsupported;
-          dInst.dst  = Invalid;
-          dInst.src1 = Invalid;
-          dInst.src2 = Invalid;
-          dInst.imm  = Invalid;
-          dInst.csr  = Invalid;
-          dInst.brFunc = NT;
-        end
-      endcase
-    end
-
-    MiscMem:
-    begin
-      dInst.iType = Alu;
       dInst.aluFunc = Add;
-      dInst.dst  = Valid(0);
+      dInst.dst = Valid(rd);
       dInst.src1 = Valid(0);
-      dInst.src2 = Invalid;
-      dInst.imm  = Valid(0);
-      dInst.csr  = Invalid;
+      //                                Reg     :          Imm
+      dInst.src2 = (funct3[2] == 0 ? Valid(rs1) :                Invalid);
+      dInst.imm  = (funct3[2] == 0 ?    Invalid : Valid(zeroExtend(rs1)));
+      dInst.csr = Valid(unpack(truncate(immI)));
       dInst.brFunc = NT;
     end
 
-    System:
-    begin
-      if (funct3 == fnPRIV)
-      begin
-        dInst.iType = Priv;
-        dInst.dst  = Invalid;
-        dInst.src1 = Valid(rs1);
-        dInst.src2 = Invalid;
-        dInst.imm  = Valid(immI);
-        dInst.csr = tagged Invalid;
-        dInst.brFunc = NT;
-      end else // fnCSRRWI, fnCSRRW, fnCSRRSI, fnCSRRS, fnCSRRCI, fnCSRRC
-      begin
-        dInst.iType = case (funct3)
-          fnCSRRWI, fnCSRRW: Csrw;
-          fnCSRRSI, fnCSRRS: Csrs;
-          fnCSRRCI, fnCSRRC: Csrc;
-        endcase;
-
-        dInst.aluFunc = Add;
-        dInst.dst = Valid(rd);
-        dInst.src1 = Valid(0);
-        //                                Reg     :          Imm
-        dInst.src2 = (funct3[2] == 0 ? Valid(rs1) :                Invalid);
-        dInst.imm  = (funct3[2] == 0 ?    Invalid : Valid(zeroExtend(rs1)));
-        dInst.csr = Valid(unpack(truncate(immI)));
-        dInst.brFunc = NT;
-      end
-    end
-
-    default: 
+    default:
     begin
       dInst.iType = Unsupported;
       dInst.dst  = Invalid;

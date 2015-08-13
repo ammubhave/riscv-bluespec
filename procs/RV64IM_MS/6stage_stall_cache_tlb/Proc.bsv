@@ -87,6 +87,7 @@ module mkProc#(ProcIndication indication)(Proc);
   Fifo#(2, RegRead2Exec)   rf2ex <- mkCFFifo;
   Fifo#(2, Exec2Mem)      ex2m <- mkCFFifo;
   Fifo#(2, Mem2Wb)        m2wb <- mkCFFifo;
+  Fifo#(2, Tuple2#(RegRead2Exec, ExecInst))       e12e2 <- mkCFFifo;
 
   Tlb iTlb <- mkTlb;
   Tlb dTlb <- mkTlb;
@@ -99,11 +100,11 @@ module mkProc#(ProcIndication indication)(Proc);
   mkConnection(iMem.to_proc, iTlb.to_mem);
   mkConnection(dMem.to_proc, dTlb.to_mem);
 
-  Fifo#(1, Tuple3#(Addr, Addr, Bool)) f12f2 <- mkBypassFifo;
-  Fifo#(1, Exec2Mem) m12m2 <- mkBypassFifo;
+  Fifo#(2, Tuple3#(Addr, Addr, Bool)) f12f2 <- mkCFFifo;// mkBypassFifo;
+  Fifo#(2, Exec2Mem) m12m2 <- mkCFFifo;// mkBypassFifo;
 
   Scoreboard#(16)           sb <- mkCFScoreboard;
-  Fifo#(1, Tuple2#(Redirect, CsrState))     execRedirect <- mkBypassFifo;
+  Fifo#(2, Tuple2#(Redirect, CsrState))     execRedirect <- mkCFFifo;
   Reg#(Bool)            fEpoch <- mkReg(False);
   Reg#(Bool)            eEpoch <- mkReg(False);
   Ehr#(2, Bool)         privIn <- mkEhr(False);
@@ -116,10 +117,11 @@ module mkProc#(ProcIndication indication)(Proc);
                      (isSystem(tpl_1(execRedirect.first).brType) && !ex2m.notEmpty && !m12m2.notEmpty)))));
     if(execRedirect.notEmpty)
     begin
-      addrPred.update(tpl_1(execRedirect.first));
+      if (tpl_1(execRedirect.first).brType != Interrupt)
+        addrPred.update(tpl_1(execRedirect.first));
       execRedirect.deq;
       if (isSystem(tpl_1(execRedirect.first).brType)) begin
-        if (tpl_1(execRedirect.first).brType == Priv) begin
+        if (tpl_1(execRedirect.first).brType == Priv || tpl_1(execRedirect.first).brType == Interrupt) begin
           iTlb.flush;
           dTlb.flush;
         end
@@ -190,6 +192,20 @@ module mkProc#(ProcIndication indication)(Proc);
 
     if(!raw && !isValid(cause))
     begin
+      // Interrupts?
+      let pi = getPendingInterrupt(csrState);
+      if (isValid(pi)) begin
+        $display("Pending Interrupt: %h", validValue(pi));
+        dInst.iType = Interrupt;
+        dInst.src1 = Invalid;
+        dInst.src2 = Invalid;
+        dInst.dst = Invalid;
+        dInst.csr = Invalid;
+        dInst.imm = pi;
+        dInst.brFunc = NT;
+        csrState.csr = Invalid;
+      end
+
       rf2ex.enq(RegRead2Exec{pc: pc, ppc: ppc, dInst: dInst, epoch: epoch, rVal1: rVal1, rVal2: rVal2, csrState: csrState, cause: cause});
       sb.insert(dInst.dst);
       privIn[0] <= isSystem(dInst.iType);
@@ -214,12 +230,32 @@ module mkProc#(ProcIndication indication)(Proc);
     let rVal2  = rf2ex.first.rVal2;
     let csrState = rf2ex.first.csrState;
     let cause = rf2ex.first.cause;
+    rf2ex.deq;
 
     // We use a poisoned bit to denote whether an instruction is killed or not. If the epochs match, the instruction is not killed, and hence the poisoned bit is not set. Otherwise poisoned bit is set
     let poisoned = epoch != eEpoch;
 
 
-    let eInst = ((isSystem(dInst.iType) /*|| isValid(getPendingInterrupt(csrState))*/) ? execPriv(dInst, rVal1, rVal2, csrState, pc, ppc) : exec(dInst, rVal1, rVal2, csrState, pc, ppc));
+    let eInst = ((isSystem(dInst.iType)) ? execPriv(dInst, rVal1, rVal2, csrState, pc, ppc) : exec(dInst, rVal1, rVal2, csrState, pc, ppc));
+/*
+    e12e2.enq(tuple2(rf2ex.first, eInst));
+    rf2ex.deq;
+  endrule
+
+  rule doExec2;
+    match {.varr, .eInst} = e12e2.first;
+    let dInst  = varr.dInst;
+    let pc     = varr.pc;
+    let ppc    = varr.ppc;
+    let epoch  = varr.epoch;
+    let rVal1  = varr.rVal1;
+    let rVal2  = varr.rVal2;
+    let csrState = varr.csrState;
+    let cause = varr.cause;
+
+    let poisoned = epoch != eEpoch;
+
+    e12e2.deq;*/
 
     if(!poisoned)
     begin
@@ -237,7 +273,6 @@ module mkProc#(ProcIndication indication)(Proc);
       $display("Execute: pc: %h epoch: %d", pc, epoch);
     end
     ex2m.enq(Exec2Mem{poisoned: poisoned, iType: eInst.iType, dst: eInst.dst, data: eInst.data, csrState: eInst.csrState, byteEn: eInst.byteEn, unsignedLd: eInst.unsignedLd, addr: eInst.addr});
-    rf2ex.deq;
   endrule
 
   rule doMem1;

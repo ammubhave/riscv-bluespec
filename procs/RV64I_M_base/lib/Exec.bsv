@@ -21,19 +21,6 @@ import Vector::*;
 
 (* noinline *)
 function Data alu(Data a, Data b, AluFunc func);
-  Bit#(TAdd#(DataSz, DataSz)) a_lu = zeroExtend(a); Bit#(TAdd#(DataSz, DataSz)) a_ls = signExtend(a);
-  Bit#(TAdd#(DataSz, DataSz)) b_lu = zeroExtend(b); Bit#(TAdd#(DataSz, DataSz)) b_ls = signExtend(b);
-  Bit#(32) a_w = truncate(a); Bit#(32) b_w = truncate(b);
-  Bool s_a = a[valueOf(DataSz)-1] == 1; Bool s_b = b[valueOf(DataSz)-1] == 1;
-  Bool s_a_w = a[31] == 1; Bool s_b_w = b[31] == 1;
-
-  let data_div = (s_a ? -a : a) / (b == 0 ? 1 : (s_b ? -b : b));
-  let data_rem = (s_a ? -a : a) % (b == 0 ? 1 : (s_b ? -b : b));
-  let s_data_rem = data_rem[valueOf(DataSz)-1] == 1;
-  let data_divw = (s_a_w ? -a_w : a_w) / (b_w == 0 ? 1 : (s_b_w ? -b_w : b_w));
-  let data_remw = (s_a_w ? -a_w : a_w) % (b_w == 0 ? 1 : (s_b_w ? -b_w : b_w));
-  let s_data_remw = data_remw[31] == 1;
-
   Data res = case(func)
      Add   : (a + b);
      Addw  : signExtend((a + b)[31:0]);
@@ -50,20 +37,6 @@ function Data alu(Data a, Data b, AluFunc func);
      Sra   : signedShiftRight(a, b[5:0]);
      Srlw  : signExtend((a[31:0] >> b[4:0])[31:0]);
      Sraw  : signExtend(signedShiftRight(a[31:0], b[4:0])[31:0]);
-
-     Mul   : (a * b);
-     Mulh  : truncateLSB(a_ls * b_ls);
-     Mulhu : truncateLSB(a_lu * b_lu);
-     Mulhsu: truncateLSB(a_ls * b_lu);
-     Mulw  : signExtend(a_w * b_w);
-     Div   : (b != 0 ? (s_a != s_b ? -data_div : data_div) : signExtend(1'b1));
-     Divu  : (b != 0 ? (a / (b == 0 ? 1 : b)) : signExtend(1'b1));
-     Rem   : (b != 0 ? (s_a != s_data_rem ? -data_rem : data_rem) : a);
-     Remu  : (b != 0 ? (a % (b == 0 ? 1 : b)) : a);
-     Divw  : signExtend(b_w != 0 ? (s_a_w != s_b_w ? -data_divw : data_divw) : signExtend(1'b1));
-     Divuw : signExtend(b_w != 0 ? (a_w / (b_w == 0 ? 1 : b_w)) : signExtend(1'b1));
-     Remw  : signExtend(b_w != 0 ? (s_a_w != s_data_remw ? -data_remw : data_remw) : a_w);
-     Remuw : signExtend(b_w != 0 ? (a_w % (b_w == 0 ? 1 : b_w)) : a_w);
   endcase;
   return res;
 endfunction
@@ -85,7 +58,7 @@ endfunction
 
 (* noinline *)
 function Addr brAddrCalc(Addr pc, Data val, IType iType, Data imm, Bool taken);
-  Addr pcPlus4 = pc + 4; 
+  Addr pcPlus4 = pc + 4;
   Addr targetAddr = case (iType)
     J  : (pc + imm);
     Jr : {(val + imm)[valueOf(AddrSz)-1:1], 1'b0};
@@ -99,16 +72,16 @@ endfunction
 function ExecInst exec(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrState, Addr pc, Addr ppc);
   ExecInst eInst = ?;
   Data aluVal2 = isValid(dInst.imm) ? validValue(dInst.imm) : rVal2;
-  
+
   let aluRes = alu(rVal1, aluVal2, dInst.aluFunc);
-  
+
   eInst.iType = dInst.iType;
-  
+
   eInst.data = (dInst.iType==St || dInst.iType==Sc)?
                  rVal2 :
                (dInst.iType==J || dInst.iType==Jr) ?
                  (pc+4) :
-               dInst.iType==Auipc? 
+               dInst.iType==Auipc?
                  (pc+validValue(dInst.imm)):
                  aluRes;
 
@@ -121,8 +94,8 @@ function ExecInst exec(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrSt
   eInst.mispredict = brAddr != ppc;
 
   eInst.brTaken = brTaken;
-  eInst.addr = (dInst.iType == Ld || dInst.iType == St || dInst.iType == Lr || dInst.iType == Sc) ? aluRes : brAddr;
-  
+  eInst.addr = (dInst.iType == Ld || dInst.iType == St) ? aluRes : brAddr;
+
   eInst.dst = dInst.dst;
 
   return eInst;

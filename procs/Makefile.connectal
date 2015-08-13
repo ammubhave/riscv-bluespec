@@ -32,7 +32,7 @@ run:
 clean:
 	rm -rf $(BUILD_DIR)
 
-gentarget:: process_autotop generate_altera_custom
+gentarget:: process_autotop
 	@[ -e $(CONNECTALDIR)/scripts/syntax/parsetab.py ] || make -C $(CONNECTALDIR) scripts/syntax/parsetab.py
 	$(Q)[ -e $(IPDIR) ] || mkdir -p $(IPDIR)
 	$(Q)[ -e $(PROJECTDIR)/generatedbsv ] || mkdir -p $(PROJECTDIR)/generatedbsv

@@ -72,7 +72,7 @@ class ProcIndication : public ProcIndicationWrapper {
 #ifdef CONNECTAL_MEMORY
     virtual void imem_req(uint8_t op, uint64_t addr, uint64_t data) {
         if (op == false) {  // Ld
-            printf("imem_req ld: %p %p", (void*)addr, (void*)mem[addr / 8]);
+            //printf("imem_req ld: %p %p", (void*)addr, (void*)mem[addr / 8]);
             call_imem_resp(mem[addr / 8]);
         } else {
             mem[addr / 8] = data;

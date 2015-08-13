@@ -79,6 +79,12 @@ function DecodedInst decode(Instruction inst);
     Op:
     begin
       dInst.iType = Alu;
+      dInst.dst  = Valid(rd);
+      dInst.src1 = Valid(rs1);
+      dInst.src2 = Valid(rs2);
+      dInst.imm  = Invalid;
+      dInst.csr = tagged Invalid;
+      dInst.brFunc = NT;
       case (funct7)
         opALU1:
         begin
@@ -102,6 +108,14 @@ function DecodedInst decode(Instruction inst);
         end
         opMULDIV:
         begin
+          /*dInst.iType = Interrupt;
+          dInst.src1 = Invalid;
+          dInst.src2 = Invalid;
+          dInst.dst = Invalid;
+          dInst.csr = Invalid;
+          dInst.imm = Valid(2);
+          dInst.brFunc = NT;*/
+
           dInst.aluFunc = case(funct3)
             fnMUL: Mul;
             fnMULH: Mulh;
@@ -114,12 +128,6 @@ function DecodedInst decode(Instruction inst);
           endcase;
         end
       endcase
-      dInst.dst  = Valid(rd);
-      dInst.src1 = Valid(rs1);
-      dInst.src2 = Valid(rs2);
-      dInst.imm  = Invalid;
-      dInst.csr = tagged Invalid;
-      dInst.brFunc = NT;
     end
 
     Op32:
@@ -255,7 +263,7 @@ function DecodedInst decode(Instruction inst);
       dInst.csr = tagged Invalid;
       dInst.brFunc = NT;
     end
-    
+
     Store:
     begin
       dInst.iType = St;
@@ -390,7 +398,7 @@ function DecodedInst decode(Instruction inst);
       end
     end
 
-    default: 
+    default:
     begin
       dInst.iType = Unsupported;
       dInst.dst  = Invalid;

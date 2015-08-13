@@ -1,119 +1,139 @@
-SHELL := /bin/sh
-RISCV_PREFIX=riscv64-unknown-elf
-CPP=$(RISCV_PREFIX)-gcc
-CPPFLAGS=-static -fpic -fvisibility=hidden -nostdlib -nostartfiles -Wa,-march=RVIMAFDXhwacha
-
 #=======================================================================
-# Makefile for riscv-tests/isa
+# UCB VLSI FLOW: Makefile for riscv-bmarks
 #-----------------------------------------------------------------------
-
-build_dir := $(RISCV_BUILD)/programs
-asm_build_dir := $(build_dir)/assembly
-
-include console/Makefrag
+# Yunsup Lee (yunsup@cs.berkeley.edu)
+#
+SHELL := /bin/bash
 
 default: all
 
+bmarkdir = .
+build_dir := $(RISCV_BUILD)/programs
+bmarks_build_dir := $(build_dir)/htif
+
+#instname = riscv-bmarks
+#instbasedir = $(UCB_VLSI_HOME)/install
+
 #--------------------------------------------------------------------
-# Build rules
+# Sources
 #--------------------------------------------------------------------
 
+bmarks = \
+	timer \
+
+bmarks_host = \
+	timer \
+
+#--------------------------------------------------------------------
+# Build rules -march=RVIMAFDXhwacha
+#--------------------------------------------------------------------
+
+HOST_OPTS = -std=gnu99 -DPREALLOCATE=0 -DHOST_DEBUG=1
+HOST_COMP = gcc $(HOST_OPTS)
+
+RISCV_PREFIX=riscv64-unknown-elf
 RISCV_GCC = $(RISCV_PREFIX)-gcc
-RISCV_GCC_OPTS = -static -fpic -fvisibility=hidden -nostdlib -nostartfiles -Wa,-march=RVIMAFDXhwacha
+RISCV_GCC_OPTS = -static -Wa,-march=RVIMF -std=gnu99 -O2 -ffast-math -fno-common -fno-builtin-printf
+RISCV_LINK = $(RISCV_GCC) -T $(RISCV_HOME)/programs/htif/common/test.ld $(incs) -I$(bmarks_build_dir)/
+RISCV_LINK_MT = $(RISCV_GCC) -T $(RISCV_HOME)/programs/htif/common/test-mt.ld
+RISCV_LINK_OPTS = -nostdlib -nostartfiles -ffast-math -lc -lgcc
 RISCV_OBJDUMP = $(RISCV_PREFIX)-objdump --disassemble-all --disassemble-zeroes --section=.text --section=.text.startup --section=.data
 
-VPATH += $(asm_build_dir)
+VPATH += $(addprefix $(bmarkdir)/, $(bmarks))
+VPATH += $(bmarkdir)/common
+VPATH += $(bmarks_build_dir)
+
+incs  += -I$(bmarkdir)/../env -I$(bmarkdir)/common $(addprefix -I$(bmarkdir)/, $(bmarks))
+objs  :=
+
+include $(patsubst %, $(bmarkdir)/%/bmark.mk, $(bmarks))
 
 #------------------------------------------------------------
-# Build assembly tests
+# Build and run benchmarks on riscv simulator
 
-%.vmh: %
-	@echo "@0" > $(asm_build_dir)/$@
-	elf2hex 8 8192 $(asm_build_dir)/$< >> $(asm_build_dir)/$@
+bmarks_riscv_bin  = $(addsuffix .riscv,  $(bmarks))
+bmarks_riscv_dump = $(addsuffix .riscv.dump, $(bmarks))
+bmarks_riscv_vmh = $(addsuffix .riscv.vmh, $(bmarks))
+bmarks_riscv_out  = $(addsuffix .riscv.out_PHONY,  $(bmarks))
 
-#elf2hex 64 16384 $(asm_build_dir)/$< >> $(asm_build_dir)/$@
-#(elf2hex 8 8192 $(asm_build_dir)/$< 2> /dev/null || elf2hex 512 16384 $<) >> $(asm_build_dir)/$@
-#(elf2hex 8 8192 $(asm_build_dir)/$< 2> /dev/null || elf2hex 64 16384 $<) >> $(asm_build_dir)/$@
+bmarks_defs   = -DPREALLOCATE=1 -DHOST_DEBUG=0
+bmarks_cycles = 80000
 
-%.dump: %
-	$(RISCV_OBJDUMP) $(asm_build_dir)/$< > $(asm_build_dir)/$@
+$(bmarks_riscv_vmh): %.riscv.vmh: %.riscv
+	@echo $(basename $<)
+	@echo "@0" > $(bmarks_build_dir)/$@
+	elf2hex 8 32768 $(bmarks_build_dir)/$< >> $(bmarks_build_dir)/$@
 
-%.out_PHONY: $(addprefix $(asm_build_dir)/, %.vmh)
+$(bmarks_riscv_dump): %.riscv.dump: %.riscv
+	$(RISCV_OBJDUMP) $(bmarks_build_dir)/$< > $(bmarks_build_dir)/$@
+
+$(bmarks_riscv_out): %.riscv.out_PHONY: %.riscv.vmh
 	@echo $<
 	@ln -sf $< $(PROC_BUILD_DIR)/memory.vmh
-	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run > $(asm_build_dir)/$(@:.out_PHONY=.out)
+	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run > $(bmarks_build_dir)/$(@:.out_PHONY=.out)
 	@tput sgr0; tput bold
 
-#	@mkdir -p $(build_dir)/$(RISCV_SIMULATOR)/assembly
-#	@ln -sf $< $(build_dir)/$(RISCV_SIMULATOR)/memory.vmh
-#	-@pkill -9 bluetcl > /dev/null 2> /dev/null || true
-#	@echo $(basename $<)
-#	@echo -e -n "\t"
-#	@tput setaf 1 && cd $(build_dir)/$(RISCV_SIMULATOR) && $(RISCV_HOME)/utility-bins/redirect $(build_dir)/$(RISCV_SIMULATOR)/sim $(build_dir)/$(RISCV_SIMULATOR)/assembly/$@ &
-#	@tput sgr0; tput bold
-#	@sleep 1; cd $(build_dir)/$(RISCV_SIMULATOR)/bsim-scemi && $(RISCV_HOME)/utility-bins/redirect $(build_dir)/$(RISCV_SIMULATOR)/bsim-scemi/run $(build_dir)/$(RISCV_SIMULATOR)/assembly/runOut
+#	$(RISCV_SIM) $< > $(bmarks_build_dir)/$@
+# cd $(build_dir)/$(RISCV_SIMULATOR) && $(RISCV_HOME)/utility-bins/redirect $(build_dir)/$(RISCV_SIMULATOR)/sim $(build_dir)/$(RISCV_SIMULATOR)/benchmarks/$@
 
-define compile_template
+%.o: %.c
+	$(RISCV_GCC) $(RISCV_GCC_OPTS) $(bmarks_defs) \
+	             -c $(incs) $< -o $(bmarks_build_dir)/$@
 
-$$($(1)_p_tests): $(1)-p-%: $(1)/%.S
-	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I../env/p -Imacros/scalar -T../env/p/link.ld $$< -o $(asm_build_dir)/$$@
-$(1)_tests += $$($(1)_p_tests)
+%.o: %.S
+	$(RISCV_GCC) $(RISCV_GCC_OPTS) $(bmarks_defs) -D__ASSEMBLY__=1 \
+	             -c $(incs) $< -o $(bmarks_build_dir)/$@
 
-#$$($(1)_pt_tests): $(1)-pt-%: $(1)/%.S
-#	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(asm_src_dir)/../env/pt -I$(asm_src_dir)/macros/scalar -T$(asm_src_dir)/../env/pt/link.ld $$< -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_pt_tests)
+riscv: $(build_dir) $(bmarks_riscv_dump) $(bmarks_riscv_vmh)
+run-riscv: $(bmarks_riscv_out)
+run: run-riscv
 
-#$$($(1)_pm_tests): $(1)-pm-%: $(1)/%.S
-#	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(asm_src_dir)/../env/pm -I$(asm_src_dir)/macros/scalar -T$(asm_src_dir)/../env/pm/link.ld $$< -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_pm_tests)
+#echo; perl -ne 'print "  [$$1] $$ARGV \t$$2\n" if /\*{3}(.{8})\*{3}(.*)/' \
+#	       $(bmarks_riscv_out); echo;
 
-#$$($(1)_v_tests): $(1)-v-%: $(1)/%.S
-	#$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -std=gnu99 -O2 -I$(asm_src_dir)/../env/v -I$(asm_src_dir)/macros/scalar -T$(asm_src_dir)/../env/v/link.ld $(asm_src_dir)/../env/v/entry.S $(asm_src_dir)/../env/v/vm.c $$< -lc -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_v_tests)
+junk += $(bmarks_riscv_bin) $(bmarks_riscv_dump) $(bmarks_riscv_vmh) $(bmarks_riscv_out)
 
-#$$($(1)_p_vec_tests): $(1)-p-vec-%: $(1)/%.S
-	#$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(asm_src_dir)/../env/p -I$(asm_src_dir)/macros/vector -T$(asm_src_dir)/../env/p/link.ld $$< -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_p_vec_tests)
-#
-#$$($(1)_pt_vec_tests): $(1)-pt-vec-%: $(1)/%.S
-#	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(asm_src_dir)/../env/pt -I$(asm_src_dir)/macros/vector -T$(asm_src_dir)/../env/pt/link.ld $$< -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_pt_vec_tests)
+#------------------------------------------------------------
+# Build and run benchmarks on host machine
 
-#$$($(1)_v_vec_tests): $(1)-v-vec-%: $(1)/%.S
-#	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -std=gnu99 -O2 -I$(asm_src_dir)/../env/v -I$(asm_src_dir)/macros/vector -T$(asm_src_dir)/../env/v/link.ld $(asm_src_dir)/../env/v/entry.S $(asm_src_dir)/../env/v/vm.c $$< -lc -o $(asm_build_dir)/$$@
-#$(1)_tests += $$($(1)_v_vec_tests)
+bmarks_host_bin = $(addsuffix .host, $(bmarks_host))
+bmarks_host_out = $(addsuffix .host.out, $(bmarks_host))
 
-$(1)_tests_dump = $$(addsuffix .dump, $$($(1)_tests))
-$(1)_tests_vmh = $$(addsuffix .vmh, $$($(1)_tests))
+$(bmarks_host_out): %.host.out: %.host
+	./$< > $@
 
-$(1): $$($(1)_tests_dump) $$($(1)_tests_vmh)
+host: $(bmarks_host_bin)
+run-host: $(bmarks_host_out)
+	echo; perl -ne 'print "  [$$1] $$ARGV \t$$2\n" if /\*{3}(.{8})\*{3}(.*)/' \
+	       $(bmarks_host_out); echo;
 
-.PHONY: $(1)
-
-tests += $$($(1)_tests)
-
-endef
-
-$(eval $(call compile_template,rv64ui))
-
-tests_dump = $(addsuffix .dump, $(tests))
-tests_vmh = $(addsuffix .vmh, $(tests))
-tests_out = $(addsuffix .out_PHONY, $(tests))
-
-run: $(tests_out)
-
-junk += $(tests) $(tests_dump) $(tests_vmh) $(tests_out:.out_PHONY=.out)
+junk += $(bmarks_host_bin) $(bmarks_host_out)
 
 #------------------------------------------------------------
 # Default
+$(build_dir):
+	mkdir -p $(build_dir)
+	mkdir -p $(bmarks_build_dir)
 
-$(asm_build_dir):
-	mkdir -p $(asm_build_dir)
+all: $(build_dir) riscv
 
-all: $(asm_build_dir) $(tests_dump) $(tests_vmh)
+#------------------------------------------------------------
+# Install
+
+#date_suffix = $(shell date +%Y-%m-%d_%H-%M)
+#install_dir = $(instbasedir)/$(instname)-$(date_suffix)
+#latest_install = $(shell ls -1 -d $(instbasedir)/$(instname)* | tail -n 1)
+
+#install:
+#	mkdir $(install_dir)
+#	cp -r $(bmarks_riscv_bin) $(bmarks_riscv_dump) $(install_dir)
+
+#install-link:
+#	rm -rf $(instbasedir)/$(instname)
+#	ln -s $(latest_install) $(instbasedir)/$(instname)
 
 #------------------------------------------------------------
 # Clean up
 
 clean:
-	rm -rf $(addprefix $(asm_build_dir)/, $(junk))
+	rm -rf $(objs) $(addprefix $(bmarks_build_dir)/, $(junk))

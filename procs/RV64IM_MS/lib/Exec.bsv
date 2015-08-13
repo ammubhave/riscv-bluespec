@@ -19,6 +19,62 @@ import Types::*;
 import ProcTypes::*;
 import Vector::*;
 
+function Bit#(TAdd#(DataSz, DataSz)) mul64(Data a, Data b);
+  Bit#(64) a_l = zeroExtend(a[31:0]); Bit#(64) a_h = zeroExtend(a[63:0]);
+  Bit#(64) b_l = zeroExtend(b[31:0]); Bit#(64) b_h = zeroExtend(b[63:0]);
+  return zeroExtend(a_l * b_l) + (zeroExtend(a_l * b_h) << 32) + (zeroExtend(a_h * b_l) << 32) + (zeroExtend(a_h * b_h) << 64);
+endfunction
+
+/*void mult64to128(uint64 u, uint64 v, uint64& h, uint64 &l)
+{
+    uint64 u1 = (u & 0xffffffff);
+    uint64 v1 = (v & 0xffffffff);
+    uint64 t = (u1 * v1);
+    uint64 w3 = (t & 0xffffffff);
+    uint64 k = (t >> 32);
+
+    u >>= 32;
+    t = (u * v1) + k;
+    k = (t & 0xffffffff);
+    uint64 w1 = (t >> 32);
+
+    v >>= 32;
+    t = (u1 * v) + k;
+    k = (t >> 32);
+
+    h = (u * v) + w1 + k;
+    l = (t << 32) + w3;
+}*/
+function Bit#(TAdd#(DataSz, DataSz)) mult64to128(Data u, Data v);
+  Bit#(64) u1 = zeroExtend(u[31:0]);
+  Bit#(64) v1 = zeroExtend(v[31:0]);
+  Bit#(64) t = u1 * v1;
+  Bit#(64) w3 = zeroExtend(t[31:0]);
+  Bit#(64) k = t >> 32;
+
+  u = u >> 32;
+  t = (u * v1) + k;
+  k = zeroExtend(t[31:0]);
+  Bit#(64) w1 = t >> 32;
+
+  v = v >> 32;
+  t = (u1 * v) + k;
+  k = t >> 32;
+
+  return {(u * v) + w1 + k, (t << 32) + w3};
+endfunction
+/*
+void mult128(uint128 N, uint128 M, uint128& Ans)
+{
+    mult64to128(N.Lo, M.Lo, Ans.Hi, Ans.Lo);
+    Ans.Hi += (N.Hi * M.Lo) + (N.Lo * M.Hi);
+}
+*/
+function Bit#(TAdd#(DataSz, DataSz)) mult128(Bit#(TAdd#(DataSz, DataSz)) n, Bit#(TAdd#(DataSz, DataSz)) m);
+  Bit#(128) ans = mult64to128(n[63:0], m[63:0]);
+  return {(n[127:64] * m[63:0]) + (n[63:0] + m[127:64]) + ans[127:64], ans[63:0]};
+endfunction
+
 (* noinline *)
 function Data alu(Data a, Data b, AluFunc func);
   Bit#(TAdd#(DataSz, DataSz)) a_lu = zeroExtend(a); Bit#(TAdd#(DataSz, DataSz)) a_ls = signExtend(a);
@@ -35,6 +91,7 @@ function Data alu(Data a, Data b, AluFunc func);
   let s_data_remw = data_remw[31] == 1;
 
   Data res = case(func)
+     //default: 0;
      Add   : (a + b);
      Addw  : signExtend((a + b)[31:0]);
      Sub   : (a - b);
@@ -52,10 +109,15 @@ function Data alu(Data a, Data b, AluFunc func);
      Sraw  : signExtend(signedShiftRight(a[31:0], b[4:0])[31:0]);
 
      Mul   : (a * b);
-     Mulh  : truncateLSB(a_ls * b_ls);
+     /*Mulh  : truncateLSB(a_ls * b_ls);
      Mulhu : truncateLSB(a_lu * b_lu);
-     Mulhsu: truncateLSB(a_ls * b_lu);
+     Mulhsu: truncateLSB(a_ls * b_lu);*/
      Mulw  : signExtend(a_w * b_w);
+
+    /* Mulh  : truncateLSB(mult128(a_ls, b_ls));
+     Mulhu : truncateLSB(mult128(a_lu, b_lu));
+     Mulhsu: truncateLSB(mult128(a_ls, b_lu));*/
+
      Div   : (b != 0 ? (s_a != s_b ? -data_div : data_div) : signExtend(1'b1));
      Divu  : (b != 0 ? (a / (b == 0 ? 1 : b)) : signExtend(1'b1));
      Rem   : (b != 0 ? (s_a != s_data_rem ? -data_rem : data_rem) : a);
@@ -85,7 +147,7 @@ endfunction
 
 (* noinline *)
 function Addr brAddrCalc(Addr pc, Data val, IType iType, Data imm, Bool taken);
-  Addr pcPlus4 = pc + 4; 
+  Addr pcPlus4 = pc + 4;
   Addr targetAddr = case (iType)
     J  : (pc + imm);
     Jr : {(val + imm)[valueOf(AddrSz)-1:1], 1'b0};
@@ -99,16 +161,16 @@ endfunction
 function ExecInst exec(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrState, Addr pc, Addr ppc);
   ExecInst eInst = ?;
   Data aluVal2 = isValid(dInst.imm) ? validValue(dInst.imm) : rVal2;
-  
+
   let aluRes = alu(rVal1, aluVal2, dInst.aluFunc);
-  
+
   eInst.iType = dInst.iType;
-  
+
   eInst.data = (dInst.iType==St || dInst.iType==Sc)?
                  rVal2 :
                (dInst.iType==J || dInst.iType==Jr) ?
                  (pc+4) :
-               dInst.iType==Auipc? 
+               dInst.iType==Auipc?
                  (pc+validValue(dInst.imm)):
                  aluRes;
 
@@ -122,7 +184,7 @@ function ExecInst exec(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrSt
 
   eInst.brTaken = brTaken;
   eInst.addr = (dInst.iType == Ld || dInst.iType == St || dInst.iType == Lr || dInst.iType == Sc) ? aluRes : brAddr;
-  
+
   eInst.dst = dInst.dst;
 
   return eInst;

@@ -27,9 +27,13 @@ $(linux_build_dir)/vmlinux.vmh: $(linux_src_dir)/vmlinux
 	elf2hex 8 16384 $(RISCV_HOME)/programs/riscv-pk/build/bbl >> $@
 	(od -An -v -tx8 -w8 $< | sed 's/ //g') >> $@
 
+$(linux_build_dir)/vmlinux.dump: $(linux_src_dir)/vmlinux
+	$(RISCV_OBJDUMP) -S $(RISCV_HOME)/programs/riscv-pk/build/bbl > $(linux_build_dir)/bbl.dump
+	$(RISCV_OBJDUMP) -S $< > $@
+
 $(linux_build_dir)/vmlinux.out_PHONY: $(linux_build_dir)/vmlinux.vmh
 	@ln -sf $< $(PROC_BUILD_DIR)/memory.vmh
-	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run > $(@:.out_PHONY=.out)
+	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run >>  $(@:.out_PHONY=.out)
 	@tput sgr0; tput bold
 
 run: $(linux_build_dir)/vmlinux.out_PHONY
@@ -42,7 +46,7 @@ junk += $(linux_build_dir)/vmlinux.out_PHONY $(linux_build_dir)/vmlinux.vmh
 $(linux_build_dir):
 	mkdir -p $(linux_build_dir)
 
-all: $(linux_build_dir) $(linux_build_dir)/vmlinux.vmh
+all: $(linux_build_dir) $(linux_build_dir)/vmlinux.vmh $(linux_build_dir)/vmlinux.dump
 
 #------------------------------------------------------------
 # Clean up

@@ -25,19 +25,18 @@ interface Proc;
 endinterface
 
 module mkProc#(ProcIndication indication)(Proc);
-  Reg#(Addr) pc <- mkRegU;
-  RFile      rf <- mkRFile;
-  CsrFile  csrf <- mkCsrFile;
-  IMemory  iMem <- mkIMemory;
-  DMemory  dMem <- mkDMemory;
-  Cop       cop <- mkCop;
+  Reg#(Addr)       pc <- mkRegU;
+  RFile           rf <- mkRFile;
+  CsrFile       csrf <- mkCsrFile;
+  IMemory       iMem <- mkIMemory;
+  DMemory       dMem <- mkDMemory;
+  Reg#(Bool) started <- mkReg(False);
 
-  rule doProc(cop.started);
+  rule doProc(started);
     Instruction inst = truncate(gatherLoad(pc, unpack(zeroExtend(4'b1111)), True, iMem.req(pc)));
 
     // decode
     let dInst = decode(inst);
-    //$display(fshow(dInst));
 
     // trace - print the instruction
     $display("pc: %h inst: (%h) expanded: ", pc, inst, showInst(inst));
@@ -51,7 +50,7 @@ module mkProc#(ProcIndication indication)(Proc);
       $display("csrr %h == %h, %h", validValue(csrState.csr), csrState.data);
 
     // execute
-    let eInst = (isSystem(dInst.iType) ? execPriv(dInst, rVal1, rVal2, csrState, pc, ?) : exec(dInst, rVal1, rVal2, csrState, pc, ?)); // The fifth argument is the predicted pc, to detect if it was mispredicted. Since there is no branch prediction, this field is sent with a random value
+    let eInst = exec(dInst, rVal1, rVal2, csrState, pc, ?));
 
     // Executing unsupported instruction. Exiting
     if(eInst.iType == Unsupported)
@@ -65,14 +64,11 @@ module mkProc#(ProcIndication indication)(Proc);
     begin
       let data <- dMem.req(MemReq{op: Ld, addr: eInst.addr, byteEn: eInst.byteEn, data: ?});
       eInst.data = gatherLoad(eInst.addr, eInst.byteEn, eInst.unsignedLd, data);
-
-      $display("mld %h (%h), %h", eInst.data, eInst.addr, eInst.byteEn);
     end
     else if(eInst.iType == St)
     begin
       match {.byteEn, .data} = scatterStore(eInst.addr, eInst.byteEn, eInst.data);
       let d <- dMem.req(MemReq{op: St, addr: eInst.addr, byteEn: byteEn, data: data});
-      $display("mst %h (%h), %h", data, eInst.addr, byteEn);
     end
 
     // write back
@@ -88,13 +84,12 @@ module mkProc#(ProcIndication indication)(Proc);
 
   rule csrfToCop;
     let ret <- csrf.csrfToHost;
-    //cop.csrfToCop(ret);
     indication.to_host(ret);
   endrule
 
  interface ProcRequest request;
     method Action start(Bit#(64) startpc);
-      cop.start;
+      started <= True;
       pc <= startpc;
     endmethod
 

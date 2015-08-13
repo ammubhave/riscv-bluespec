@@ -5,6 +5,9 @@ H2S_INTERFACES = Proc:ProcIndication
 BSVFILES = Proc.bsv
 CPPFILES = testproc.cpp VmhLoadImage.cpp
 NUMBER_OF_MASTERS = 0
-CONNECTALFLAGS += --bscflags="+RTS -K12000000 -RTS" --nocache
+CONNECTALFLAGS += --bscflags="+RTS -K24000000 -RTS" --nocache
+#MAIN_CLOCK_PERIOD = 200
+CONNECTALFLAGS += --mainclockperiod=128
 
 include $(RISCV_HOME)/procs/Makefile.connectal
+
