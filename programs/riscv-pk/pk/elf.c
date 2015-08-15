@@ -122,7 +122,7 @@ void load_elf(const char* fn, elf_info* info)
   info->first_vaddr_after_user = ROUNDUP(max_vaddr - info->bias, RISCV_PGSIZE);
   info->brk_min = max_vaddr;
 
-  printk("info->first_user_vaddr:       %p\n", info->first_user_vaddr);
+  /*printk("info->first_user_vaddr:       %p\n", info->first_user_vaddr);
   printk("info->first_vaddr_after_user: %p\n", info->first_vaddr_after_user);
   printk("info->brk_min:                %p\n", info->brk_min);
   printk("info->brk_max:                %p\n", info->brk_max);
@@ -130,7 +130,7 @@ void load_elf(const char* fn, elf_info* info)
   printk("info->bias:                   %p\n", info->bias);
   printk("info->is_supervisor:          %p\n", info->is_supervisor);
   printk("info->first_free_paddr:       %p\n", info->first_free_paddr);
-  printk("current->mmap_max:            %p\n", current.mmap_max);
+  printk("current->mmap_max:            %p\n", current.mmap_max);*/
   printk(" done\n");
 
   file_decref(file);

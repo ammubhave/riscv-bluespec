@@ -6,7 +6,7 @@ import ProcTypes::*;
 import Types::*;
 import Vector::*;
 
-module mkSplitWideMem(  WideMem mem,
+module mkSplitWideMem(  Server#(WideMemReq, WideMemResp) mem_to_proc,
                         Vector#(n, WideMem) ifc );
 
     Vector#(n, Fifo#(2, WideMemReq)) reqFifos <- replicateM(mkCFFifo);
@@ -25,7 +25,7 @@ module mkSplitWideMem(  WideMem mem,
             let req = reqFifos[ fromMaybe(?,req_index) ].first;
             reqFifos[ fromMaybe(?,req_index) ].deq();
 
-            mem.to_proc.request.put(req);
+            mem_to_proc.request.put(req);
             if( req.op == Ld ) begin
                 // req is a load, so keep track of the source
                 reqSource.enq( fromMaybe(?,req_index) );
@@ -34,7 +34,7 @@ module mkSplitWideMem(  WideMem mem,
     endrule
 
     rule doResp;
-        let resp <- mem.to_proc.response.get;
+        let resp <- mem_to_proc.response.get;
 
         let source = reqSource.first;
         reqSource.deq;

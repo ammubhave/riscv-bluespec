@@ -238,11 +238,11 @@ uintptr_t __do_mmap(uintptr_t addr, size_t length, int prot, int flags, file_t* 
       return (uintptr_t)-1;
   }
   else if ((addr = __vm_alloc(npage)) == 0)
-    return (uintptr_t)-1;
+    return (uintptr_t)-2;
 
   vmr_t* v = __vmr_alloc(addr, length, f, offset, npage, prot);
   if (!v)
-    return (uintptr_t)-1;
+    return (uintptr_t)-3;
 
   for (uintptr_t a = addr; a < addr + length; a += RISCV_PGSIZE)
   {
@@ -320,7 +320,7 @@ uintptr_t do_brk(size_t addr)
   spinlock_lock(&vm_lock);
     addr = __do_brk(addr);
   spinlock_unlock(&vm_lock);
-  
+
   return addr;
 }
 
@@ -343,7 +343,7 @@ uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot)
         res = -ENOMEM;
         break;
       }
-  
+
       if (!(*pte & PTE_V)) {
         vmr_t* v = (vmr_t*)*pte;
         if((v->prot ^ prot) & ~v->prot){
@@ -363,7 +363,7 @@ uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot)
       }
     }
   spinlock_unlock(&vm_lock);
- 
+
   return res;
 }
 

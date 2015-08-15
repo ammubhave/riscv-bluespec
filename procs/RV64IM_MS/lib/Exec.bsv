@@ -108,15 +108,15 @@ function Data alu(Data a, Data b, AluFunc func);
      Srlw  : signExtend((a[31:0] >> b[4:0])[31:0]);
      Sraw  : signExtend(signedShiftRight(a[31:0], b[4:0])[31:0]);
 
-     Mul   : (a * b);
-     /*Mulh  : truncateLSB(a_ls * b_ls);
+     /*Mul   : (a * b);
+     Mulh  : truncateLSB(a_ls * b_ls);
      Mulhu : truncateLSB(a_lu * b_lu);
-     Mulhsu: truncateLSB(a_ls * b_lu);*/
+     Mulhsu: truncateLSB(a_ls * b_lu);
      Mulw  : signExtend(a_w * b_w);
 
     /* Mulh  : truncateLSB(mult128(a_ls, b_ls));
      Mulhu : truncateLSB(mult128(a_lu, b_lu));
-     Mulhsu: truncateLSB(mult128(a_ls, b_lu));*/
+     Mulhsu: truncateLSB(mult128(a_ls, b_lu));
 
      Div   : (b != 0 ? (s_a != s_b ? -data_div : data_div) : signExtend(1'b1));
      Divu  : (b != 0 ? (a / (b == 0 ? 1 : b)) : signExtend(1'b1));
@@ -125,7 +125,7 @@ function Data alu(Data a, Data b, AluFunc func);
      Divw  : signExtend(b_w != 0 ? (s_a_w != s_b_w ? -data_divw : data_divw) : signExtend(1'b1));
      Divuw : signExtend(b_w != 0 ? (a_w / (b_w == 0 ? 1 : b_w)) : signExtend(1'b1));
      Remw  : signExtend(b_w != 0 ? (s_a_w != s_data_remw ? -data_remw : data_remw) : a_w);
-     Remuw : signExtend(b_w != 0 ? (a_w % (b_w == 0 ? 1 : b_w)) : a_w);
+     Remuw : signExtend(b_w != 0 ? (a_w % (b_w == 0 ? 1 : b_w)) : a_w);*/
   endcase;
   return res;
 endfunction

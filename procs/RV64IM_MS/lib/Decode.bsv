@@ -108,15 +108,15 @@ function DecodedInst decode(Instruction inst);
         end
         opMULDIV:
         begin
-          /*dInst.iType = Interrupt;
+          dInst.iType = Unsupported;
           dInst.src1 = Invalid;
           dInst.src2 = Invalid;
           dInst.dst = Invalid;
           dInst.csr = Invalid;
           dInst.imm = Valid(2);
-          dInst.brFunc = NT;*/
+          dInst.brFunc = NT;
 
-          dInst.aluFunc = case(funct3)
+         /* dInst.aluFunc = case(funct3)
             fnMUL: Mul;
             fnMULH: Mulh;
             fnMULHSU: Mulhsu;
@@ -125,7 +125,7 @@ function DecodedInst decode(Instruction inst);
             fnDIVU: Divu;
             fnREM: Rem;
             fnREMU: Remu;
-          endcase;
+          endcase;*/
         end
       endcase
     end
@@ -358,7 +358,7 @@ function DecodedInst decode(Instruction inst);
 
     MiscMem:
     begin
-      dInst.iType = Alu;
+      dInst.iType = Fence;
       dInst.aluFunc = Add;
       dInst.dst  = Valid(0);
       dInst.src1 = Valid(0);

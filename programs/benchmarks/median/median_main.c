@@ -16,7 +16,7 @@
 
 //--------------------------------------------------------------------------
 // Input/Reference Data
-
+//int printf(const char* fmt, ...);
 #include "dataset1.h"
 
 //--------------------------------------------------------------------------
@@ -24,6 +24,7 @@
 
 int main( int argc, char* argv[] )
 {
+//printf("%d %s %s\n", __LINE__, __FILE__, __FUNCTION__);
   int results_data[DATA_SIZE];
 
   // Output the input array
@@ -35,6 +36,7 @@ int main( int argc, char* argv[] )
   median( DATA_SIZE, input_data, results_data );
 #endif
 
+//printf("%d %s %s\n", __LINE__, __FILE__, __FUNCTION__);
   // Do the filter
   setStats(1);
   median( DATA_SIZE, input_data, results_data );
@@ -43,6 +45,7 @@ int main( int argc, char* argv[] )
   // Print out the results
   printArray( "results", DATA_SIZE, results_data );
 
+//printf("%d %s %s\n", __LINE__, __FILE__, __FUNCTION__);
   // Check the results
   return verify( DATA_SIZE, results_data, verify_data );
 }

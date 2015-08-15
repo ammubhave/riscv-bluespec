@@ -1,8 +1,8 @@
 // REGFILE_MEMORY, FPGA_MEMORY, CONNECTAL_MEMORY
 `define CONNECTAL_MEMORY
-`define MEMORY_NOCACHE
 
 import AddrPred::*;
+import BuildVector::*;
 import Cache::*;
 import CsrFile::*;
 import ClientServer::*;
@@ -13,9 +13,12 @@ import Exec::*;
 import ExecPriv::*;
 import Fifo::*;
 import GetPut::*;
+import HostInterface::*;
+import MemTypes::*;
 import MemoryTypes::*;
 import MemUtil::*;
 import Types::*;
+import Pipe::*;
 import ProcTypes::*;
 import RFile::*;
 import Scoreboard::*;
@@ -26,6 +29,8 @@ import Vector::*;
 import RegfileMemory::*;
 `elsif FPGA_MEMORY
 import FPGAMemory::*;
+`elsif CONNECTAL_MEMORY
+import ConnectalMem::*;
 `endif
 
 interface ProcRequest;
@@ -33,26 +38,21 @@ interface ProcRequest;
   method Action from_host(Bool isfromhost, Bit#(64) v);
 
 `ifdef CONNECTAL_MEMORY
-  method Action imem_resp(Bit#(64) data);
-  method Action dmem_resp(Bit#(64) data);
-`else
-  method Action mem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
+  method Action set_refPointer(Bit#(32) refPointer);
 `endif
 endinterface
 
 interface ProcIndication;
   method Action to_host(Bit#(64) v);
-
-`ifdef CONNECTAL_MEMORY
-  method Action imem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
-  method Action dmem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
-`else
-  method Action mem_resp(Bit#(64) data);
-`endif
 endinterface
 
 interface Proc;
   interface ProcRequest request;
+
+`ifdef CONNECTAL_MEMORY
+  interface Vector#(1, MemReadClient#(64)) dmaReadClient;
+  interface Vector#(1, MemWriteClient#(64)) dmaWriteClient;
+`endif
 endinterface
 
 module mkProc#(ProcIndication indication)(Proc);
@@ -65,11 +65,12 @@ module mkProc#(ProcIndication indication)(Proc);
   WideMem wideMem <- mkRegfileMemory;
 `elsif FPGA_MEMORY
   WideMem wideMem <- mkFPGAMemory;
+`elsif CONNECTAL_MEMORY
+  ConnectalMem wideMem <- mkConnectalMemory;
 `endif
 
-`ifndef CONNECTAL_MEMORY
-  Vector#(2, WideMem) wideMems <- mkSplitWideMem( wideMem );
-`endif
+
+  Vector#(2, WideMem) wideMems <- mkSplitWideMem( wideMem.to_proc );
 
 `ifdef MEMORY_NOCACHE
   Cache      iMem <- mkDummyCache;
@@ -92,10 +93,8 @@ module mkProc#(ProcIndication indication)(Proc);
   Tlb iTlb <- mkTlb;
   Tlb dTlb <- mkTlb;
 
-`ifndef CONNECTAL_MEMORY
   mkConnection(wideMems[0].to_proc, iMem.to_mem);
   mkConnection(wideMems[1].to_proc, dMem.to_mem);
-`endif
 
   mkConnection(iMem.to_proc, iTlb.to_mem);
   mkConnection(dMem.to_proc, dTlb.to_mem);
@@ -117,20 +116,27 @@ module mkProc#(ProcIndication indication)(Proc);
                      (isSystem(tpl_1(execRedirect.first).brType) && !ex2m.notEmpty && !m12m2.notEmpty)))));
     if(execRedirect.notEmpty)
     begin
-      if (tpl_1(execRedirect.first).brType != Interrupt)
+      if (tpl_1(execRedirect.first).brType != Interrupt && tpl_1(execRedirect.first).brType != Priv && tpl_1(execRedirect.first).brType != Fence)
         addrPred.update(tpl_1(execRedirect.first));
       execRedirect.deq;
       if (isSystem(tpl_1(execRedirect.first).brType)) begin
-        if (tpl_1(execRedirect.first).brType == Priv || tpl_1(execRedirect.first).brType == Interrupt) begin
+        if (tpl_1(execRedirect.first).brType == Priv || tpl_1(execRedirect.first).brType == Interrupt || tpl_1(execRedirect.first).brType == Fence) begin
           iTlb.flush;
           dTlb.flush;
+        end
+        if (tpl_1(execRedirect.first).brType == Fence) begin
+          iMem.flush;
+          dMem.flush;
         end
         CsrState state = tpl_2(execRedirect.first);
         if (!isValid(state.csr)) begin
           state.csr = Valid(CSRmstatus);
           state.data = state.mstatus;
         end
-        iTlb.updateCsr(validValue(state.csr), state.data);
+        let itlb_update_csr_data = state.data;
+        if (validValue(state.csr) == CSRmstatus)
+          itlb_update_csr_data[16] = 0;
+        iTlb.updateCsr(validValue(state.csr), itlb_update_csr_data);
         dTlb.updateCsr(validValue(state.csr), state.data);
       end
     end
@@ -193,6 +199,8 @@ module mkProc#(ProcIndication indication)(Proc);
     if(!raw && !isValid(cause))
     begin
       // Interrupts?
+      if (dInst.iType == Interrupt)
+        $display("Illegal Instruction will trap");
       let pi = getPendingInterrupt(csrState);
       if (isValid(pi)) begin
         $display("Pending Interrupt: %h", validValue(pi));
@@ -237,25 +245,6 @@ module mkProc#(ProcIndication indication)(Proc);
 
 
     let eInst = ((isSystem(dInst.iType)) ? execPriv(dInst, rVal1, rVal2, csrState, pc, ppc) : exec(dInst, rVal1, rVal2, csrState, pc, ppc));
-/*
-    e12e2.enq(tuple2(rf2ex.first, eInst));
-    rf2ex.deq;
-  endrule
-
-  rule doExec2;
-    match {.varr, .eInst} = e12e2.first;
-    let dInst  = varr.dInst;
-    let pc     = varr.pc;
-    let ppc    = varr.ppc;
-    let epoch  = varr.epoch;
-    let rVal1  = varr.rVal1;
-    let rVal2  = varr.rVal2;
-    let csrState = varr.csrState;
-    let cause = varr.cause;
-
-    let poisoned = epoch != eEpoch;
-
-    e12e2.deq;*/
 
     if(!poisoned)
     begin
@@ -265,7 +254,7 @@ module mkProc#(ProcIndication indication)(Proc);
         $finish();
       end
 
-      if(eInst.iType == J || eInst.iType == Jr || eInst.iType == Br || isSystem(eInst.iType)/* || eInst.iType == Priv*/)
+      if(eInst.iType == J || eInst.iType == Jr || eInst.iType == Br || isSystem(eInst.iType))
         execRedirect.enq(tuple2(Redirect{pc: pc, nextPc: eInst.addr, brType: eInst.iType, taken: eInst.brTaken, mispredict: eInst.mispredict}, eInst.csrState));
       if(eInst.mispredict || isSystem(eInst.iType))
         eEpoch <= !eEpoch;
@@ -354,28 +343,18 @@ module mkProc#(ProcIndication indication)(Proc);
   endrule
 
 `ifdef CONNECTAL_MEMORY
-  rule iMemToHost;
-    let d <- iMem.to_mem.request.get;
-    if (d.op == Ld) begin
-      indication.imem_req(0, d.addr, d.data);
-    end else begin
-      indication.imem_req(1, d.addr, d.data);
-    end
-  endrule
+  MemReadClient#(DataBusWidth) readClient = (interface MemReadClient;
+    interface Get readReq = wideMem.to_host_readReq;
+    interface Put readData = wideMem.to_host_readData;
+  endinterface );
+  MemWriteClient#(DataBusWidth) writeClient = (interface MemWriteClient;
+    interface Get writeReq = wideMem.to_host_writeReq;
+    interface Get writeData = wideMem.to_host_writeData;
+    interface Put writeDone = wideMem.to_host_writeDone;
+  endinterface );
 
-  rule dMemToHost;
-    let d <- dMem.to_mem.request.get;
-    if (d.op == Ld) begin
-      indication.dmem_req(0, d.addr, d.data);
-    end else begin
-      indication.dmem_req(1, d.addr, d.data);
-    end
-  endrule
-`else
-  rule memToHost;
-    let d <- wideMem.to_host.response.get;
-    indication.mem_resp(d);
-  endrule
+  interface MemReadClient dmaReadClient = vec(readClient);
+  interface MemWriteClient dmaWriteClient = vec(writeClient);
 `endif
 
   interface ProcRequest request;
@@ -389,19 +368,8 @@ module mkProc#(ProcIndication indication)(Proc);
     endmethod
 
   `ifdef CONNECTAL_MEMORY
-    method Action imem_resp(Bit#(64) data);
-      iMem.to_mem.response.put(data);
-    endmethod
-
-    method Action dmem_resp(Bit#(64) data);
-      dMem.to_mem.response.put(data);
-    endmethod
-  `else
-    method Action mem_req(Bit#(1) op, Bit#(64) addr, Bit#(64) data);
-      if (op == 0)  // Ld
-        wideMem.to_host.request.put(WideMemReq{op: Ld, addr: addr, data: data, byteEn: unpack('1)});
-      else
-        wideMem.to_host.request.put(WideMemReq{op: St, addr: addr, data: data, byteEn: unpack('1)});
+    method Action set_refPointer(Bit#(32) refPointer);
+      wideMem.set_refPointer(refPointer);
     endmethod
   `endif
   endinterface

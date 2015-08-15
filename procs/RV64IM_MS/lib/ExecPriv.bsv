@@ -147,6 +147,8 @@ function ExecInst execPriv(DecodedInst dInst, Data rVal1, Data rVal2, CsrState c
         eInst.iType = Unsupported;
       end
     endcase
+  end else if (dInst.iType == Fence) begin
+
   end else begin
     Bit#(12) csr = pack(validValue(csrState.csr));
     Data csrOperand = isValid(dInst.imm) ? validValue(dInst.imm) : rVal2;

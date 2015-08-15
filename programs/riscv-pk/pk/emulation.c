@@ -173,7 +173,7 @@ DECLARE_EMULATION_FUNC(emulate_float_load)
   uintptr_t val_lo, val_hi, error;
   uint64_t val;
   uintptr_t addr = GET_RS1(insn, regs) + IMM_I(insn);
-  
+
   switch (insn & MASK_FUNCT3)
   {
     case MATCH_FLW & MASK_FUNCT3:
@@ -225,7 +225,7 @@ DECLARE_EMULATION_FUNC(emulate_float_store)
   uintptr_t val_lo, val_hi, error;
   uint64_t val;
   uintptr_t addr = GET_RS1(insn, regs) + IMM_S(insn);
-  
+
   switch (insn & MASK_FUNCT3)
   {
     case MATCH_FSW & MASK_FUNCT3:
@@ -300,6 +300,8 @@ DECLARE_EMULATION_FUNC(emulate_mul_div)
   else
     return -1;
 
+  printk("%lx = %lx %lx op : %x\n", val, rs1, rs2, (insn >> 12) & 0x7);
+
   SET_RD(insn, regs, val);
   write_csr(mepc, mepc + 4);
   return 0;
@@ -327,6 +329,8 @@ DECLARE_EMULATION_FUNC(emulate_mul_div32)
     val = rs1 % rs2;
   else
     return -1;
+
+  printk("%lx = %lx %lx opw: %x\n", val, rs1, rs2, (insn >> 12) & 0x7);
 
   SET_RD(insn, regs, val);
   write_csr(mepc, mepc + 4);

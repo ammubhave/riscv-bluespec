@@ -63,7 +63,7 @@ long frontend_syscall(long n, long a0, long a1, long a2, long a3, long a4, long 
     case SYS_getmainvars:
       args->argc = 4;
       args->argv[0] = "bbl";
-      args->argv[1] = "-m128";
+      args->argv[1] = "-m32";
       args->argv[2] = "-p1";
       args->argv[3] = "vmlinux";
       ret = 0;

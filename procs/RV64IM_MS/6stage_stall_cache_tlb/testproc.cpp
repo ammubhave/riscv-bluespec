@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <bitset>
 #include <cassert>
+#include <fcntl.h>
+#include <string>
+#include <iostream>
+#include <sys/stat.h>
+#include <vector>
+#include <sstream>
+#include "dmaManager.h"
 #include "ProcIndication.h"
 #include "ProcRequest.h"
 #include "GeneratedTypes.h"
@@ -11,35 +18,49 @@
 
 static ProcRequestProxy *procRequestProxy = 0;
 
-#ifdef CONNECTAL_MEMORY
-const size_t mem_buffer_sz = 64;  // 512 Bytes
-const size_t mem_buffer_words = mem_buffer_sz / sizeof(uint64_t);
-
-uint64_t *mem = NULL;
 const  size_t mem_sz = 64*1024*1024;  // 64 MB
-#else
-uint64_t *mem = NULL;
-const size_t mem_sz = 8; // 64 bytes
-sem_t done_req;
-#endif
+uint64_t *memBuffer;
 
 static void call_from_host(bool isfromhost, uint64_t v) {
     procRequestProxy->from_host(isfromhost, v);
 }
+static void call_set_refPointer(unsigned int refPointer) {
+    procRequestProxy->set_refPointer(refPointer);
+}
+static void to_host_respond(uint64_t tohost, uint64_t resp) {
+    call_from_host(true, (tohost >> 48 << 48) | (resp << 16 >> 16));
+}
 
-#ifdef CONNECTAL_MEMORY
-static void call_imem_resp(uint64_t data) {
-    procRequestProxy->imem_resp(data);
+struct request_t
+{
+    uint64_t addr;
+    uint64_t offset;
+    uint64_t size;
+    uint64_t tag;
+};
+int fd;
+std::string id;
+size_t size;
+void blk_read(uint64_t v) {
+    uint64_t payload = v & 0xFFFFFFFFFFFFULL;
+    request_t req;
+    memcpy(&req, ((char*)(uint64_t)&memBuffer + payload), sizeof(req));
+    std::vector<uint8_t> buf(req.size);
+    if ((size_t)::pread(fd, &buf[0], buf.size(), req.offset) != req.size)
+        throw std::runtime_error("could not read");
+    memcpy((char*)((uint64_t)&memBuffer + req.addr), &buf[0], buf.size());
+    to_host_respond(v, req.tag);
 }
-static void call_dmem_resp(uint64_t data) {
-    procRequestProxy->dmem_resp(data);
+void blk_write(uint64_t v) {
+    uint64_t payload = v & 0xFFFFFFFFFFFFULL;
+    request_t req;
+    memcpy(&req, ((char*)(uint64_t)&memBuffer + payload), sizeof(req));
+    std::vector<uint8_t> buf2(req.size);
+    memcpy(&buf2[0], ((char*)(uint64_t)&memBuffer + req.addr), buf2.size());
+    if ((size_t)::pwrite(fd, &buf2[0], buf2.size(), req.offset) != req.size)
+        throw std::runtime_error("could not write");
+    to_host_respond(v, req.tag);
 }
-#else
-/*static void call_mem_req(uint8_t op, uint64_t addr, uint64_t data) {
-    procRequestProxy->mem_req(op, addr, data);
-    sem_wait(&done_req);
-}*/
-#endif
 
 class ProcIndication : public ProcIndicationWrapper {
  public:
@@ -47,6 +68,11 @@ class ProcIndication : public ProcIndicationWrapper {
         uint8_t device = v >> 56;
         uint8_t cmd = v >> 48;
         uint64_t payload = v & 0xFFFFFFFFFFFFULL;
+
+        uint64_t addr = payload >> 8;
+        uint8_t what = payload & 0xFF;
+
+
         switch (device) {
             case 0:  // dev EXIT
                 switch (cmd) {
@@ -56,43 +82,69 @@ class ProcIndication : public ProcIndicationWrapper {
                         else
                             fprintf(stderr, "FAILED %d\n", (int)payload);
                         exit(0);
+                    default:
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                 }
                 break;
             case 1:  // dev CONSOLE
                 switch (cmd) {
+                    case 0:  // cmd READ CHAR
+                        break;
                     case 1:  // cmd PUT CHAR
                         fprintf(stderr, "%c", (char)payload);
+                        to_host_respond(v, 0x100 | (uint8_t)payload);
                         break;
+                    case 0xFF:
+                        if (what == 0xFF)
+                            strcpy((char*)&memBuffer[addr / 8], "bcd");
+                        else if (what == 0x00)
+                            strcpy((char*)&memBuffer[addr / 8], "read");
+                        else if (what == 0x01)
+                            strcpy((char*)&memBuffer[addr / 8], "write");
+                        else
+                            memBuffer[addr / 8] = 0;
+                        to_host_respond(v, 1);
+                        break;
+                    default:
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                 }
                 break;
+            case 2:  // dev BLK
+                switch (cmd) {
+                    case 0:  // cmd READ CHAR
+                        blk_read(v);
+                        break;
+                    case 1:  // cmd PUT CHAR
+                        blk_write(v);
+                        break;
+                    case 0xFF:
+                        if (what == 0xFF)
+                            strcpy((char*)&memBuffer[addr / 8], id.c_str());
+                        else if (what == 0x00)
+                            strcpy((char*)&memBuffer[addr / 8], "read");
+                        else if (what == 0x01)
+                            strcpy((char*)&memBuffer[addr / 8], "write");
+                        else
+                            memBuffer[addr / 8] = 0;
+                        to_host_respond(v, 1);
+                        break;
+                    default:
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                }
+                break;
+            default:
+                switch (cmd) {
+                    case 0xFF:
+                        memBuffer[addr / 8] = 0;
+                        to_host_respond(v, 1);
+                        break;
+                    default:
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                }
+                fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
         }
         call_from_host(false, 0);
     }
-
-#ifdef CONNECTAL_MEMORY
-    virtual void imem_req(uint8_t op, uint64_t addr, uint64_t data) {
-        if (op == false) {  // Ld
-            //printf("imem_req ld: %p %p", (void*)addr, (void*)mem[addr / 8]);
-            call_imem_resp(mem[addr / 8]);
-        } else {
-            mem[addr / 8] = data;
-        }
-    }
-
-    virtual void dmem_req(uint8_t op, uint64_t addr, uint64_t data) {
-        if (op == false) {  // Ld
-            call_dmem_resp(mem[addr / 8]);
-        } else {
-            mem[addr / 8] = data;
-        }
-    }
-#else
-    virtual void mem_resp(uint64_t data) {
-        *mem = data;
-        sem_post(&done_req);
-    }
-#endif
-
     explicit ProcIndication(unsigned int id) : ProcIndicationWrapper(id) {}
 };
 
@@ -109,9 +161,28 @@ int main(int argc, const char **argv) {
     procRequestProxy = new ProcRequestProxy(IfcNames_ProcRequestS2H);
 
 #ifdef CONNECTAL_MEMORY
-    mem = (uint64_t*) malloc(mem_sz);
-    assert(vmhLoadImage("memory.vmh", (uint64_t*)mem, mem_sz)
+    DmaManager *dma = platformInit();
+    int memAlloc = portalAlloc(mem_sz, 0);
+    memBuffer = (uint64_t*)portalMmap(memAlloc, mem_sz);
+
+    assert(vmhLoadImage("memory.vmh", (uint64_t*)memBuffer, mem_sz)
             && "Failed to load VMH image");
+
+    unsigned int ref_memAlloc = dma->reference(memAlloc);
+    call_set_refPointer(ref_memAlloc);
+
+    fd = ::open("disk.img", O_RDWR);
+    if (fd < 0)
+        throw std::runtime_error("could not open disk.img");
+
+    struct stat st;
+    if (fstat(fd, &st) < 0)
+        throw std::runtime_error("could not stat disk.img");
+
+    size = st.st_size;
+    std::stringstream ss;
+    ss << size;
+    id = "disk size=" + ss.str();
 #endif
 
     int status = setClockFrequency(0, requestedFrequency, &actualFrequency);

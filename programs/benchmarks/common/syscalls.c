@@ -67,7 +67,7 @@ void tohost_exit(long code)
   while (1);
 }
 
-/* For Software Traps of Illegal Instructions */
+/* For Software Traps of Illegal Instructions
 uint64_t umul64(uint64_t a, uint64_t b) {
   uint64_t res = 0;
   while(b != 0)             // Iterate the loop till b==0
@@ -116,41 +116,15 @@ void sumul64wide(int64_t a, uint64_t b, int64_t *hi, int64_t *lo)
     if (a < 0LL) *hi -= b;
   }
 }
-
+*/
 long handle_trap(long cause, long epc, long long regs[32])
 {
   int* csr_insn;
   asm ("jal %0, 1f; csrr a0, stats; 1:" : "=r"(csr_insn));
   long sys_ret = 0;
 
-  if (cause == 0x12)
-    uint32_t inst = *(uint32_t*)epc;
-    int opcode = inst & 0x7F; inst >>= 7;
-    int rd     = inst & 0x1F; inst >>= 5;
-    int funct3 = inst & 0x7; inst >>= 3;
-    int rs1    = inst & 0x1F; inst >>= 5;
-    int rs2    = inst & 0x1F; inst >>= 5;
-    int funct7 = inst & 0x7F;
-
-    if (opcode == MATCH_ADD) {  // Op
-      uint64_t src1 = regs[rs1];
-      uint64_t src2 = regs[rs2];
-      if (funct7 == 0x1) {  // MULDIV
-        if (funct3 == 0x0) {  // MUL rd,rs1,rs2
-          regs[rd] = umul64(src1, src2);
-        } else if (funct3 == 0x1) {  // MULH rd,rs1,rs2
-          mul64wide(src1, src2, &regs[rd], NULL);
-        } else if (funct3 == 0x2) {  // MULHSU rd,rs1,rs2
-          sumul64wide(src1, src2, &regs[rd], NULL);
-        } else if (funct3 == 0x3) {  // MULHU rd,rs1,rs2
-          umul64wide(src1, src2, &regs[rd], NULL);
-        }
-      }
-    }
-    return epc + 4;
-  }
-  else if (cause == CAUSE_ILLEGAL_INSTRUCTION)
-     if ((*(int*)epc & *csr_insn) == *csr_insn);
+  if (cause == CAUSE_ILLEGAL_INSTRUCTION)
+  {   if ((*(int*)epc & *csr_insn) == *csr_insn); }
   else if (cause != CAUSE_USER_ECALL)
     tohost_exit(1337);
   else if (regs[17] == SYS_exit)

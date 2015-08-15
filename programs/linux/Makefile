@@ -33,7 +33,7 @@ $(linux_build_dir)/vmlinux.dump: $(linux_src_dir)/vmlinux
 
 $(linux_build_dir)/vmlinux.out_PHONY: $(linux_build_dir)/vmlinux.vmh
 	@ln -sf $< $(PROC_BUILD_DIR)/memory.vmh
-	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run >>  $(@:.out_PHONY=.out)
+	@tput setaf 1 && $(MAKE) -C $(PROC_BUILD_DIR) --no-print-directory run >> $(@:.out_PHONY=.out)
 	@tput sgr0; tput bold
 
 run: $(linux_build_dir)/vmlinux.out_PHONY

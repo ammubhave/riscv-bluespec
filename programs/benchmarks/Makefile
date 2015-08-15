@@ -19,7 +19,6 @@ bmarks_build_dir := $(build_dir)/benchmarks
 #--------------------------------------------------------------------
 
 bmarks = \
-	assembly \
 	median \
 	qsort \
 	towers \

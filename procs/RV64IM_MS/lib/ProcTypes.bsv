@@ -147,7 +147,7 @@ typedef enum {
   CSRmhartid   = 'hf10
 } CSR deriving(Bits, Eq, FShow);
 
-typedef enum {Unsupported, Alu, Ld, St, Lr, Sc, J, Jr, Br, Csrs, Csrc, Csrw, Auipc, Priv, Interrupt} IType deriving(Bits, Eq, FShow);
+typedef enum {Unsupported, Alu, Ld, St, Lr, Sc, J, Jr, Br, Csrs, Csrc, Csrw, Auipc, Priv, Interrupt, Fence} IType deriving(Bits, Eq, FShow);
 typedef enum {Eq, Neq, Lt, Ltu, Ge, Geu, AT, NT} BrFunc deriving(Bits, Eq, FShow);
 typedef enum {Add, Addw, Sub, Subw, And, Or, Xor, Slt, Sltu, Sll, Sllw, Sra, Sraw, Srl, Srlw, Mul, Mulh, Mulhsu, Mulhu, Div, Divu, Rem, Remu, Mulw, Divw, Divuw, Remw, Remuw} AluFunc deriving(Bits, Eq, FShow);
 
@@ -358,7 +358,7 @@ function Bool dataHazard(Maybe#(RIndx) src1, Maybe#(RIndx) src2, Maybe#(RIndx) d
                              (isValid(src2) && validValue(dst)==validValue(src2))));
 endfunction
 
-function Bool isSystem(IType iType) = (iType == Priv || iType == Csrw || iType == Csrs || iType == Csrc || iType == Unsupported || iType == Interrupt);
+function Bool isSystem(IType iType) = (iType == Priv || iType == Csrw || iType == Csrs || iType == Csrc || iType == Unsupported || iType == Interrupt || iType == Fence);
 
 function Fmt showInst(Instruction inst);
   Fmt ret = fshow("");

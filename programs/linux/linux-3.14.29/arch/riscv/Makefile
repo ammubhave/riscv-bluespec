@@ -46,6 +46,8 @@ ifeq ($(CONFIG_RVC),y)
 	KBUILD_AFLAGS += -Wa,-mrvc
 endif
 
+KBUILD_CFLAGS += -mno-muldiv -lgcc -L/home/ambhave/riscv-bluespec/build/tools/lib/gcc/riscv64-unknown-linux-gnu/5.2.0
+
 head-y := arch/riscv/kernel/head.o
 
 core-y += arch/riscv/kernel/ arch/riscv/mm/

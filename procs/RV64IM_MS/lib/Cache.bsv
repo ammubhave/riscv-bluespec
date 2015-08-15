@@ -19,6 +19,7 @@ import Types::*;
 import Vector::*;
 
 interface Cache;
+  method Action flush;
   interface Server#(MemReq, MemResp) to_proc;
   interface Client#(WideMemReq, WideMemResp) to_mem;
 endinterface
@@ -36,6 +37,7 @@ module mkCache(Cache);
   RegFile#(CacheIndex, Bool) dirtyArray <- mkRegFileFull;
 
   Reg#(Bit#(TLog#(TAdd#(CacheEntries, 1)))) init <- mkReg(0);
+  Reg#(Bit#(TLog#(TAdd#(CacheEntries, 1)))) flush_init <- mkReg(fromInteger(valueOf(TAdd#(CacheEntries, 1))));
 
   Fifo#(1, Data) hitQ <- mkBypassFifo;
 
@@ -50,8 +52,9 @@ module mkCache(Cache);
   function CacheTag getTag(Addr addr) = truncateLSB(addr);
 
   let inited = truncateLSB(init) == 1'b1;
+  let flushed = truncateLSB(flush_init) == 1'b1;
 
-  rule initialize(!inited);
+  rule initialize(!inited && flushed);
     init <= init + 1;
     tagArray.upd(truncate(init), Invalid);
     dirtyArray.upd(truncate(init), False);
@@ -70,7 +73,7 @@ module mkCache(Cache);
     end
     else
     begin
-      memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
+      memReqQ.enq(WideMemReq{op: Ld, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
       status <= WaitFillResp;
     end
     $display("cache startmiss %x", miss.addr);
@@ -78,22 +81,54 @@ module mkCache(Cache);
 
   rule sendFillReq(status == SendFillReq);
     $display("cache sendfillreq %x", miss.addr);
-    memReqQ.enq(WideMemReq{op: miss.op, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
+    memReqQ.enq(WideMemReq{op: Ld, addr: miss.addr, byteEn: miss.byteEn, data: miss.data});
     status <= WaitFillResp;
   endrule
 
-  rule waitFillResp(status == WaitFillResp && inited);
+  rule waitFillResp(status == WaitFillResp);
     let idx = getIdx(miss.addr);
     let tag = getTag(miss.addr);
     let data = memRespQ.first;
+    let dirty = False;
+
+    if (miss.op == St) begin
+      Vector#(NumBytes, Bit#(8)) bytes = unpack(data);
+      Vector#(NumBytes, Bit#(8)) bytesIn = unpack(miss.data);
+      for(Integer i = 0; i < valueOf(NumBytes); i = i + 1)
+      begin
+        if(miss.byteEn[i])
+          bytes[i] = bytesIn[i];
+      end
+      data = pack(bytes);
+      dirty = True;
+    end else begin
+      hitQ.enq(data);
+    end
+
     dataArray.upd(idx, data);
     tagArray.upd(idx, Valid (tag));
-    dirtyArray.upd(idx, False);
-    hitQ.enq(data);
+    dirtyArray.upd(idx, dirty);
     memRespQ.deq;
     status <= Ready;
     $display("cache waitfillresp %x %x", miss.addr, data);
   endrule
+
+  rule flushCache(!flushed);
+    let tag = tagArray.sub(truncate(flush_init));
+    let dirty = dirtyArray.sub(truncate(flush_init));
+    if(isValid(tag) && dirty)
+    begin
+      let addr = {validValue(tag), truncate(flush_init), 3'b0};
+      let data = dataArray.sub(truncate(flush_init));
+      memReqQ.enq(WideMemReq{op: St, addr: addr, byteEn: replicate(True), data: data});
+    end
+    flush_init <= flush_init + 1;
+  endrule
+
+  method Action flush if (status == Ready && flushed);
+    flush_init <= 0;
+    init <= 0;
+  endmethod
 
   interface Server to_proc;
     interface Put request;
@@ -133,7 +168,9 @@ module mkCache(Cache);
           else
           begin
             $display("cache req: enq to mem %x", r.addr);
-            memReqQ.enq(WideMemReq{op: r.op, addr: r.addr, byteEn: r.byteEn, data: r.data});
+            //memReqQ.enq(WideMemReq{op: r.op, addr: r.addr, byteEn: r.byteEn, data: r.data});
+            miss <= r;
+            status <= StartMiss;
           end
         end
       endmethod

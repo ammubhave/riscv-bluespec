@@ -19,7 +19,7 @@ default: all
 #--------------------------------------------------------------------
 
 RISCV_GCC = $(RISCV_PREFIX)-gcc
-RISCV_GCC_OPTS = -static -fpic -fvisibility=hidden -nostdlib -nostartfiles -Wa,-march=RVIMAFDXhwacha
+RISCV_GCC_OPTS = -static -fpic -fvisibility=hidden -nostdlib -nostartfiles -mno-muldiv -Wa,-march=RVIMAFDXhwacha
 RISCV_OBJDUMP = $(RISCV_PREFIX)-objdump --disassemble-all --disassemble-zeroes --section=.text --section=.text.startup --section=.data
 
 VPATH += $(asm_build_dir)

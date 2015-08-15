@@ -64,7 +64,7 @@ module mkTlb(Tlb ifc);
       vmMbare: PagingInfo{isPaged: False, base: 0, bound: -1};
    //   vmMbb, vmMbbid: PagingInfo{isPaged: False, base: mdbaseReg, bound: mdboundReg};
       vmSv32, vmSv39, vmSv48, vmSv57, vmSv64:
-        case (mstatusReg[2:1])
+        case (mstatusReg[16] == 0 ? mstatusReg[2:1] : mstatusReg[5:4])
           prvM: PagingInfo{isPaged: False, base: 0, bound: -1};
           default: PagingInfo{isPaged: True, base: sptbrReg, bound: ?};
         endcase
