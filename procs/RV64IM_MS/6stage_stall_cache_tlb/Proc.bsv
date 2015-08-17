@@ -363,7 +363,7 @@ module mkProc#(ProcIndication indication)(Proc);
       pc <= startpc;
     endmethod
 
-    method Action from_host(Bool isfromhost, Bit#(64) v);
+    method Action from_host(Bool isfromhost, Bit#(64) v) if (privIn[0] == False) ;
       csrf.hostToCsrf(isfromhost, v);
     endmethod
 

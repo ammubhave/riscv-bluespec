@@ -28,7 +28,9 @@ static void call_set_refPointer(unsigned int refPointer) {
     procRequestProxy->set_refPointer(refPointer);
 }
 static void to_host_respond(uint64_t tohost, uint64_t resp) {
+     //   uint64_t payload = tohost & 0xFFFFFFFFFFFFULL;
     call_from_host(true, (tohost >> 48 << 48) | (resp << 16 >> 16));
+    //printf("\nfromhost: %x\n", 0x100 | (uint8_t)payload);
 }
 /*
 struct request_t
@@ -72,7 +74,7 @@ class ProcIndication : public ProcIndicationWrapper {
         uint64_t addr = payload >> 8;
         uint8_t what = payload & 0xFF;
 
-
+        //fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
         switch (device) {
             case 0:  // dev EXIT
                 switch (cmd) {
@@ -143,6 +145,7 @@ class ProcIndication : public ProcIndicationWrapper {
                 }
                 fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
         }
+      //  usleep(50000);
         call_from_host(false, 0);
     }
     explicit ProcIndication(unsigned int id) : ProcIndicationWrapper(id) {}
