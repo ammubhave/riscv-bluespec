@@ -79,7 +79,7 @@ module mkCsrFile(CsrFile);
   Reg#(Data) mtohostReg <- mkConfigReg(0);
   Reg#(Data) mfromhostReg <- mkConfigReg(1);
 
-  Integer timeShamt = 12;
+  Integer timeShamt = 22;
 
   Fifo#(2,  Data) csrFifo <- mkCFFifo;
 
@@ -262,8 +262,8 @@ module mkCsrFile(CsrFile);
         CSRmtohost:
         begin
           //$fwrite(stderr, "mtohost: %b\n", val);
-          if (mfromhostReg == 0) begin
-            mfromhostReg <= val;
+          if (mtohostReg == 0) begin
+            mtohostReg <= val;
             csrFifo.enq(val);
           end
         end

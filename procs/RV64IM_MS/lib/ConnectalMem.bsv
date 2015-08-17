@@ -35,8 +35,8 @@ module mkConnectalMemory(ConnectalMem);
   interface Server to_proc;
     interface Put request;
       method Action put(WideMemReq r);
-        //r.addr = {r.addr[valueOf(AddrSz)-1:3], 3'b0};
-        r.addr = {'b0, r.addr[25:3], 3'b0};
+        r.addr = {r.addr[valueOf(AddrSz)-1:3], 3'b0};
+        //r.addr = {'b0, r.addr[25:3], 3'b0};
         //if (r.addr[63:26] == 0) begin
           if (r.op == Ld) begin
             readReqFifo.enq(MemRequest { sglId: refPointerReg, offset: truncate(r.addr), burstLen: 8, tag: 1});

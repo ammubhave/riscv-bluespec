@@ -30,7 +30,7 @@ static void call_set_refPointer(unsigned int refPointer) {
 static void to_host_respond(uint64_t tohost, uint64_t resp) {
     call_from_host(true, (tohost >> 48 << 48) | (resp << 16 >> 16));
 }
-
+/*
 struct request_t
 {
     uint64_t addr;
@@ -60,7 +60,7 @@ void blk_write(uint64_t v) {
     if ((size_t)::pwrite(fd, &buf2[0], buf2.size(), req.offset) != req.size)
         throw std::runtime_error("could not write");
     to_host_respond(v, req.tag);
-}
+}*/
 
 class ProcIndication : public ProcIndicationWrapper {
  public:
@@ -109,7 +109,7 @@ class ProcIndication : public ProcIndicationWrapper {
                         fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                 }
                 break;
-            case 2:  // dev BLK
+            /*case 2:  // dev BLK
                 switch (cmd) {
                     case 0:  // cmd READ CHAR
                         blk_read(v);
@@ -131,7 +131,7 @@ class ProcIndication : public ProcIndicationWrapper {
                     default:
                         fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                 }
-                break;
+                break;*/
             default:
                 switch (cmd) {
                     case 0xFF:
@@ -171,7 +171,7 @@ int main(int argc, const char **argv) {
     unsigned int ref_memAlloc = dma->reference(memAlloc);
     call_set_refPointer(ref_memAlloc);
 
-    fd = ::open("disk.img", O_RDWR);
+    /*fd = ::open("disk.img", O_RDWR);
     if (fd < 0)
         throw std::runtime_error("could not open disk.img");
 
@@ -182,7 +182,7 @@ int main(int argc, const char **argv) {
     size = st.st_size;
     std::stringstream ss;
     ss << size;
-    id = "disk size=" + ss.str();
+    id = "disk size=" + ss.str();*/
 #endif
 
     int status = setClockFrequency(0, requestedFrequency, &actualFrequency);
