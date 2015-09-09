@@ -65,10 +65,13 @@ ENTRY(__clear_user)
 	 * t0: lowest doubleword-aligned address in target region
 	 * t1: highest doubleword-aligned address in target region
 	 */
+	//sbreak;
 	bgeu t0, t1, 2f
 	bltu a0, t0, 3f
+	//sbreak;
 1:
 	fixup REG_S, zero, (a0), 10f
+	//sbreak;
 	addi a0, a0, SZREG
 	bltu a0, t1, 1b
 2:
@@ -76,9 +79,13 @@ ENTRY(__clear_user)
 	li a0, 0
 	ret
 3: /* Edge case: unalignment */
+	//sbreak;
 	fixup sb, zero, (a0), 10f
+	//sbreak;
 	addi a0, a0, 1
+	//sbreak;
 	bltu a0, t0, 3b
+	//sbreak;
 	j 1b
 4: /* Edge case: remainder */
 	fixup sb, zero, (a0), 10f

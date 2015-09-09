@@ -21,15 +21,15 @@ static ProcRequestProxy *procRequestProxy = 0;
 const  size_t mem_sz = 64*1024*1024;  // 64 MB
 uint64_t *memBuffer;
 
-static void call_from_host(bool isfromhost, uint64_t v) {
-    procRequestProxy->from_host(isfromhost, v);
+static void call_from_host(uint64_t v) {
+    procRequestProxy->from_host(v);
 }
 static void call_set_refPointer(unsigned int refPointer) {
     procRequestProxy->set_refPointer(refPointer);
 }
 static void to_host_respond(uint64_t tohost, uint64_t resp) {
-     //   uint64_t payload = tohost & 0xFFFFFFFFFFFFULL;
-    call_from_host(true, (tohost >> 48 << 48) | (resp << 16 >> 16));
+    //uint64_t payload = tohost & 0xFFFFFFFFFFFFULL;
+    call_from_host((tohost >> 48 << 48) | (resp << 16 >> 16));
     //printf("\nfromhost: %x\n", 0x100 | (uint8_t)payload);
 }
 /*
@@ -74,7 +74,8 @@ class ProcIndication : public ProcIndicationWrapper {
         uint64_t addr = payload >> 8;
         uint8_t what = payload & 0xFF;
 
-        //fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+        if (device != 1 || cmd != 1)
+            fprintf(stderr, "{%d %d %lx %lx}\n", device, cmd, payload, addr);
         switch (device) {
             case 0:  // dev EXIT
                 switch (cmd) {
@@ -84,6 +85,14 @@ class ProcIndication : public ProcIndicationWrapper {
                         else
                             fprintf(stderr, "FAILED %d\n", (int)payload);
                         exit(0);
+                    case 0xFF:
+                        if (what == 0xFF)
+                            strcpy((char*)&memBuffer[addr / 8], "ext");
+                        else
+                            memBuffer[addr / 8] = 0;
+                        fprintf(stderr, "Identified {%d %d %lx}\n", device, cmd, payload);
+                        to_host_respond(v, 1);
+                        break;
                     default:
                         fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                 }
@@ -91,6 +100,8 @@ class ProcIndication : public ProcIndicationWrapper {
             case 1:  // dev CONSOLE
                 switch (cmd) {
                     case 0:  // cmd READ CHAR
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        call_from_host(0);
                         break;
                     case 1:  // cmd PUT CHAR
                         fprintf(stderr, "%c", (char)payload);
@@ -105,6 +116,7 @@ class ProcIndication : public ProcIndicationWrapper {
                             strcpy((char*)&memBuffer[addr / 8], "write");
                         else
                             memBuffer[addr / 8] = 0;
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                         to_host_respond(v, 1);
                         break;
                     default:
@@ -138,6 +150,7 @@ class ProcIndication : public ProcIndicationWrapper {
                 switch (cmd) {
                     case 0xFF:
                         memBuffer[addr / 8] = 0;
+                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
                         to_host_respond(v, 1);
                         break;
                     default:
@@ -145,8 +158,8 @@ class ProcIndication : public ProcIndicationWrapper {
                 }
                 fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
         }
-      //  usleep(50000);
-        call_from_host(false, 0);
+        usleep(50);
+       // call_from_host(false, 0);
     }
     explicit ProcIndication(unsigned int id) : ProcIndicationWrapper(id) {}
 };

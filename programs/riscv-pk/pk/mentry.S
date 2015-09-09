@@ -8,7 +8,7 @@ trap_table:
   .word bad_trap
   .word bad_trap
   .word illegal_insn_trap
-  .word bad_trap
+  .word breakpoint_trap
   .word misaligned_load_trap
   .word bad_trap
   .word misaligned_store_trap
@@ -28,7 +28,7 @@ trap_table:
   | (0 << (31- 0)) /* IF misaligned */           \
   | (0 << (31- 1)) /* IF fault */                \
   | (1 << (31- 2)) /* illegal instruction */     \
-  | (0 << (31- 3)) /* breakpoint */              \
+  | (1 << (31- 3)) /* breakpoint */              \
   | (1 << (31- 4)) /* load misaligned */         \
   | (0 << (31- 5)) /* load fault */              \
   | (1 << (31- 6)) /* store misaligned */        \
@@ -40,7 +40,7 @@ trap_table:
   | (0 << (31- 0)) /* IF misaligned */           \
   | (0 << (31- 1)) /* IF fault */                \
   | (1 << (31- 2)) /* illegal instruction */     \
-  | (0 << (31- 3)) /* breakpoint */              \
+  | (1 << (31- 3)) /* breakpoint */              \
   | (1 << (31- 4)) /* load misaligned */         \
   | (0 << (31- 5)) /* load fault */              \
   | (1 << (31- 6)) /* store misaligned */        \

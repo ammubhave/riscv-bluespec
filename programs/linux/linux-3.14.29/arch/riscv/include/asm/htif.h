@@ -11,7 +11,7 @@
 #define HTIF_CMD_WRITE      (0x01UL)
 #define HTIF_CMD_IDENTIFY   (0xFFUL)
 
-#define HTIF_MAX_DEV        (256)
+#define HTIF_MAX_DEV        (2) // 256
 #define HTIF_MAX_ID         (64)
 
 #define HTIF_ALIGN          (64)

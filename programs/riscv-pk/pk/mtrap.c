@@ -5,6 +5,21 @@
 #include <errno.h>
 #include <stdarg.h>
 
+uintptr_t breakpoint_trap(uintptr_t mcause, uintptr_t* regs)
+{
+  uintptr_t mepc = read_csr(mepc);
+  uintptr_t mstatus = read_csr(mstatus);
+  printk("BREAKPOINT (%p): x0: %llx, ra: %llx, sp: %llx, gp: %llx, tp: %llx\n", mepc, regs[0], regs[1], regs[2], regs[3], regs[4]);
+  printk("                 t0: %llx, t1: %llx, t2: %llx, s0: %llx, s1: %llx\n", regs[5], regs[6], regs[7], regs[8], regs[9]);
+  printk("                 a0: %llx, a1: %llx, a2: %llx, a3: %llx, a4: %llx\n", regs[10], regs[11], regs[12], regs[13], regs[14]);
+  printk("                 a5: %llx, a6: %llx, a7: %llx, s2: %llx, s3: %llx\n", regs[15], regs[16], regs[17], regs[18], regs[19]);
+  printk("                 s4: %llx, s5: %llx, s6: %llx, s7: %llx, s8: %llx\n", regs[20], regs[21], regs[22], regs[23], regs[24]);
+  printk("                 s9: %llx, s10: %llx, s11: %llx, t3: %llx, t4: %llx\n", regs[25], regs[26], regs[27], regs[28], regs[29]);
+  printk("                 t5: %llx, t6: %llx, mstatus: %llx\n", regs[30], regs[31], mstatus);
+  write_csr(mepc, mepc + 4);
+  return 0;
+}
+
 uintptr_t illegal_insn_trap(uintptr_t mcause, uintptr_t* regs)
 {
   asm (".pushsection .rodata\n"
@@ -135,21 +150,20 @@ static uintptr_t mcall_console_putchar(uint8_t ch)
   char buf[128], *p = buf; snprintf(buf, sizeof(buf), str, __VA_ARGS__); \
   while (*p) mcall_console_putchar(*p++); })
 
-void printmm(uintptr_t str, ...) 
-{ 
+void printmm(uintptr_t str, ...)
+{
   va_list vl;
   va_start(vl, str);
 
-  char buf[128], *p = buf; 
+  char buf[128], *p = buf;
   snprintf(buf, sizeof(buf), str, vl);
-  while (*p) mcall_console_putchar(*p++); 
+  while (*p) mcall_console_putchar(*p++);
 
   va_end(vl);
 }
 
 static uintptr_t mcall_dev_req(sbi_device_message *m)
 {
-  //printm("req %d %p\n", HLS()->device_request_queue_size, m);
   if (!supervisor_paddr_valid(m, sizeof(*m))
       && EXTRACT_FIELD(read_csr(mstatus), MSTATUS_PRV1) != PRV_M)
     return -EFAULT;
@@ -175,7 +189,6 @@ static uintptr_t mcall_dev_resp()
 
   sbi_device_message* m = HLS()->device_response_queue_head;
   if (m) {
-    //printm("resp %p\n", m);
     sbi_device_message* next = (void*)atomic_read(&m->sbi_private_data);
     HLS()->device_response_queue_head = next;
     if (!next) {

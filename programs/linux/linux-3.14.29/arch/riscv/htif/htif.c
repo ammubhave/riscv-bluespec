@@ -132,9 +132,11 @@ static int __init htif_init(void)
 		arch_local_irq_restore(flags);
 
 		len = strnlen(id, sizeof(id));
+printk(KERN_ALERT "AMOL DEBUG: Passed %s %d %s %s %d\n",__FUNCTION__,__LINE__,__FILE__,id,len);
 		if (len <= 0)
-			break;
+			continue;
 
+printk(KERN_ALERT "AMOL DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 		dev = kzalloc(sizeof(struct htif_device) + len + 1, GFP_KERNEL);
 		if (unlikely(dev == NULL))
 			return -ENOMEM;

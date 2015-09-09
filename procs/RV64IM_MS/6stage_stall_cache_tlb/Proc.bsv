@@ -35,7 +35,7 @@ import ConnectalMem::*;
 
 interface ProcRequest;
   method Action start(Bit#(64) startpc);
-  method Action from_host(Bool isfromhost, Bit#(64) v);
+  method Action from_host(Bit#(64) v);
 
 `ifdef CONNECTAL_MEMORY
   method Action set_refPointer(Bit#(32) refPointer);
@@ -89,6 +89,8 @@ module mkProc#(ProcIndication indication)(Proc);
   Fifo#(2, Exec2Mem)      ex2m <- mkCFFifo;
   Fifo#(2, Mem2Wb)        m2wb <- mkCFFifo;
   Fifo#(2, Tuple2#(RegRead2Exec, ExecInst))       e12e2 <- mkCFFifo;
+
+  Reg#(Bool) htifStall <- mkReg(False);
 
   Tlb iTlb <- mkTlb;
   Tlb dTlb <- mkTlb;
@@ -183,7 +185,7 @@ module mkProc#(ProcIndication indication)(Proc);
     $display("Decode: pc: %h epoch: %d", pc, epoch);
   endrule
 
-  rule doRegRead;
+  rule doRegRead(!htifStall);
     let pc = d2rf.first.pc;
     let ppc = d2rf.first.ppc;
     let epoch = d2rf.first.epoch;
@@ -221,9 +223,18 @@ module mkProc#(ProcIndication indication)(Proc);
 
       $display("RegRead: pc: %h", pc);
     end else if (isValid(cause)) begin
-      dInst.dst = Valid(0);
+      dInst.iType = Interrupt;
+      dInst.src1 = Invalid;
+      dInst.src2 = Invalid;
+      dInst.dst = Invalid;
+      dInst.csr = Invalid;
+      dInst.imm = Valid(zeroExtend(pack(validValue(cause))));
+      dInst.brFunc = NT;
+      csrState.csr = Invalid;
+
       rf2ex.enq(RegRead2Exec{pc: pc, ppc: ppc, dInst: dInst, epoch: epoch, rVal1: rVal1, rVal2: rVal2, csrState: csrState, cause: cause});
       sb.insert(dInst.dst);
+      privIn[0] <= isSystem(dInst.iType);
       d2rf.deq;
       $display("RegRead: Exception pc: %h", pc);
     end
@@ -339,6 +350,7 @@ module mkProc#(ProcIndication indication)(Proc);
 
   rule csrfToHost;
     let ret <- csrf.csrfToHost;
+    htifStall <= True;
     indication.to_host(ret);
   endrule
 
@@ -363,8 +375,9 @@ module mkProc#(ProcIndication indication)(Proc);
       pc <= startpc;
     endmethod
 
-    method Action from_host(Bool isfromhost, Bit#(64) v) if (privIn[0] == False) ;
-      csrf.hostToCsrf(isfromhost, v);
+    method Action from_host(Bit#(64) v);
+      csrf.hostToCsrf(v);
+      htifStall <= False;
     endmethod
 
   `ifdef CONNECTAL_MEMORY

@@ -25,7 +25,7 @@ interface CsrFile;
   method PagingInfo ptbrI;
   method PagingInfo ptbrD;
 
-  method Action hostToCsrf(Bool isfromhost, Data val);
+  method Action hostToCsrf(Data val);
   method ActionValue#(Data) csrfToHost;
 endinterface
 
@@ -79,7 +79,7 @@ module mkCsrFile(CsrFile);
   Reg#(Data) mtohostReg <- mkConfigReg(0);
   Reg#(Data) mfromhostReg <- mkConfigReg(1);
 
-  Integer timeShamt = 14;
+  Integer timeShamt = 15;
 
   Fifo#(2,  Data) csrFifo <- mkCFFifo;
 
@@ -262,7 +262,7 @@ module mkCsrFile(CsrFile);
         CSRmtohost:
         begin
           //$fwrite(stderr, "mtohost: %b\n", val);
-          mfromhostReg <= val;
+          //mfromhostReg <= val;
           csrFifo.enq(val);
         end
         CSRmfromhost: mfromhostReg <= val;
@@ -298,9 +298,10 @@ module mkCsrFile(CsrFile);
     instretReg <= instretReg + 1;
   endmethod
 
-  method Action hostToCsrf(Bool isfromhost, Data val);
-    if (isfromhost) mfromhostReg <= val;
-    else mtohostReg <= val;
+  method Action hostToCsrf(Data val);
+    mfromhostReg <= val;
+   // mipReg <= mipReg | zeroExtend(4'h2);
+    $display("Posting Software Interrupt: %x\n", mfromhostReg);
   endmethod
 
   method ActionValue#(Data) csrfToHost;

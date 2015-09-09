@@ -98,6 +98,14 @@ function ExecInst execPriv(DecodedInst dInst, Data rVal1, Data rVal2, CsrState c
         //endcase
       end
 
+      privSBREAK:
+      begin
+        eInst.addr = csrState.mtvec + 'h40 * zeroExtend(csrState.mstatus[2:1]);
+        csrState.mcause = 3;
+        csrState.mepc = pc;
+        csrState.mstatus = pushPrivStack(csrState.mstatus);
+      end
+
       privMRTS:
       begin
         if (prv == prvM) begin
