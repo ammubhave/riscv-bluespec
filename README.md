@@ -44,6 +44,7 @@ make install
 You need to install Connectal tools and dependencies before you can compile and run any of the Bluespec files. Follow the installation instructions at `vendor/connectal/README.md` to get started.
 
 You should do this instead of building the drivers directly:
+(from http://www.instructables.com/id/Blinking-the-LEDs-on-a-Zedboard-using-Bluespec-and/step6/Runzedboard/)
 ```
 sudo apt-add-repository -y ppa:jamey-hicks/connectal
 sudo apt-get update
