@@ -43,6 +43,14 @@ make install
 
 You need to install Connectal tools and dependencies before you can compile and run any of the Bluespec files. Follow the installation instructions at `vendor/connectal/README.md` to get started.
 
+You should do this instead of building the drivers directly:
+(from http://www.instructables.com/id/Blinking-the-LEDs-on-a-Zedboard-using-Bluespec-and/step6/Runzedboard/)
+```
+sudo apt-add-repository -y ppa:jamey-hicks/connectal
+sudo apt-get update
+sudo apt-get install connectal
+```
+
 ## Running Programs
 
 All runnable programs reside in the `programs` directory. You will first need to compile the programs. The following example uses the `assembly` program.
@@ -55,6 +63,7 @@ This will compile the programs and generate all the required dump and vmh files 
 
 ```
 cd procs/RV64I_M_base/Unpipelined_1cyc
+make build.bluesim
 make run.bluesim PROG=assembly
 ```
 Replace PROG=assembly with the program you want to run. This command will call `make run` using the Makefile in directory of your program.
