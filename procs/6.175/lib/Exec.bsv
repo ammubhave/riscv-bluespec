@@ -77,9 +77,9 @@ function ExecInst exec(DecodedInst dInst, Data rVal1, Data rVal2, CsrState csrSt
 
   eInst.iType = dInst.iType;
 
-  eInst.data = (dInst.iType==St || dInst.iType==Sc)?
+  eInst.data = (dInst.iType==St)?
                  rVal2 :
-               (dInst.iType==J || dInst.iType==Jr) ?
+               (dInst.iType==J) ?
                  (pc+4) :
                dInst.iType==Auipc?
                  (pc+validValue(dInst.imm)):

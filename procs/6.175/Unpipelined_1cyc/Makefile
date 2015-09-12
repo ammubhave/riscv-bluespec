@@ -1,4 +1,4 @@
-PROC=RV64I_M_base/Unpipelined_1cyc
+PROC=6.175/Unpipelined_1cyc
 
 S2H_INTERFACES = ProcRequest:Proc.request
 H2S_INTERFACES = Proc:ProcIndication

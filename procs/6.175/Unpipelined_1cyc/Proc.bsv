@@ -50,7 +50,7 @@ module mkProc#(ProcIndication indication)(Proc);
       $display("csrr %h == %h, %h", validValue(csrState.csr), csrState.data);
 
     // execute
-    let eInst = exec(dInst, rVal1, rVal2, csrState, pc, ?));
+    let eInst = exec(dInst, rVal1, rVal2, csrState, pc, ?);
 
     // Executing unsupported instruction. Exiting
     if(eInst.iType == Unsupported)
