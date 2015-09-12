@@ -1,0 +1,2084 @@
+init/built-in.o: In function `.LVL3':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/calibrate.c:304: undefined reference to `__udivdi3'
+init/built-in.o: In function `.LVL4':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/calibrate.c:304: undefined reference to `__umoddi3'
+init/built-in.o: In function `.LM23':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/calibrate.c:278: undefined reference to `__udivdi3'
+init/built-in.o: In function `calibrate_delay_direct':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/calibrate.c:73: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/calibrate.c:137: undefined reference to `__udivdi3'
+init/built-in.o: In function `.LBE310':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:22: undefined reference to `__muldi3'
+init/built-in.o: In function `.LVL124':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/main.c:553: undefined reference to `__muldi3'
+init/built-in.o: In function `.LM22':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/do_mounts.c:323: undefined reference to `__muldi3'
+init/built-in.o: In function `.LVL116':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/init/do_mounts.c:434: undefined reference to `__muldi3'
+arch/riscv/kernel/built-in.o: In function `.LVL0':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/kernel/vdso.c:27: undefined reference to `__muldi3'
+arch/riscv/kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/kernel/vdso.c:35: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `.LBB241':
+itimer.c:(.text+0x5174): undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM171':
+itimer.c:(.text+0x51e4): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L89':
+itimer.c:(.text+0x5234): undefined reference to `__moddi3'
+kernel/built-in.o: In function `.L108':
+itimer.c:(.text+0x52d0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L104':
+itimer.c:(.text+0x52e8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE271':
+itimer.c:(.text+0x5300): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL148':
+itimer.c:(.text+0x5318): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL149':
+itimer.c:(.text+0x532c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL15':
+time.c:(.text+0x5438): undefined reference to `__moddi3'
+kernel/built-in.o: In function `do_sys_settimeofday':
+(.text+0x544c): undefined reference to `__divdi3'
+kernel/built-in.o: In function `do_sys_settimeofday':
+(.text+0x54ec): undefined reference to `__moddi3'
+kernel/built-in.o: In function `do_sys_settimeofday':
+(.text+0x5500): undefined reference to `__divdi3'
+kernel/built-in.o: In function `do_sys_settimeofday':
+(.text+0x5518): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LBE247':
+time.c:(.text+0x556c): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LBE253':
+time.c:(.text+0x55c4): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.L57':
+time.c:(.text+0x562c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE261':
+time.c:(.text+0x5644): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM79':
+time.c:(.text+0x568c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL48':
+time.c:(.text+0x569c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB278':
+time.c:(.text+0x56b0): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL58':
+time.c:(.text+0x5718): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL61':
+time.c:(.text+0x5734): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L74':
+time.c:(.text+0x574c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `jiffies_to_usecs':
+(.text+0x5794): undefined reference to `__muldi3'
+kernel/built-in.o: In function `jiffies_to_usecs':
+(.text+0x57a4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `jiffies_to_usecs':
+(.text+0x57b8): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM112':
+time.c:(.text+0x57d0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL79':
+time.c:(.text+0x5818): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `mktime':
+(.text+0x583c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `mktime':
+(.text+0x5860): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `__devm_request_region':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/resource.c:1196: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/resource.c:1200: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/resource.c:1209: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE445':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sysctl.c:1736: undefined reference to `__muldi3'
+kernel/built-in.o: In function `__access_ok':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/uaccess.h:70: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL369':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sysctl.c:2039: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L347':
+ptrace.c:(.text+0xb128): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL294':
+ptrace.c:(.text+0xb1cc): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM518':
+ptrace.c:(.text+0xb234): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBB1612':
+ptrace.c:(.text+0xb2a0): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L291':
+ptrace.c:(.text+0xb330): undefined reference to `__umoddi3'
+kernel/built-in.o:ptrace.c:(.text+0xb394): more undefined references to `__umoddi3' follow
+kernel/built-in.o: In function `lock_timer_base':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/processor.h:76: undefined reference to `__muldi3'
+kernel/built-in.o: In function `round_jiffies_common':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/timer.c:133: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM1069':
+sys.c:(.text+0x131f4): undefined reference to `__moddi3'
+kernel/built-in.o: In function `pwq_unbound_release_workfn':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:3710: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM756':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:851: undefined reference to `__moddi3'
+kernel/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LVL399':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:883: undefined reference to `__moddi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:1066: more undefined references to `__moddi3' follow
+kernel/built-in.o: In function `set_work_pool_and_keep_pending':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:617: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBB4286':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:2328: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE4551':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:2678: undefined reference to `__muldi3'
+kernel/built-in.o: In function `alloc_and_link_pwqs':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:4170: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L1073':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/workqueue.c:4569: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBB920':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/pid.c:388: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/pid.c:439: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `.LVL161':
+kthread.c:(.text+0x1ca40): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L98':
+kthread.c:(.text+0x1ca5c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L1':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:101: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE738':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:418: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM110':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:271: undefined reference to `__muldi3'
+kernel/built-in.o: In function `thread_cpu_timer_create':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:1449: undefined reference to `__divdi3'
+kernel/built-in.o: In function `process_cpu_timer_create':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:1424: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L216':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:769: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBB985':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/sched.h:2461: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL217':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:807: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL221':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:819: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/posix-cpu-timers.c:449: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `blocking_notifier_call_chain':
+(.text+0x1fff8): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LBB200':
+notifier.c:(.text+0x20130): undefined reference to `__divdi3'
+kernel/built-in.o: In function `SYSC_reboot':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/reboot.c:233: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE341':
+async.c:(.text+0x2127c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL19':
+groups.c:(.text+0x21cc0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__muldi3'
+kernel/built-in.o: In function `put_task_struct':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/sched.h:1783: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM396':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:93: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:93: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM401':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:107: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM403':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:110: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM408':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:127: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB3407':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:28: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE3430':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:520: undefined reference to `__muldi3'
+kernel/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM504':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:975: undefined reference to `__muldi3'
+kernel/built-in.o: In function `__preempt_count_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/preempt.h:56: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:1421: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `.LVL321':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:1877: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE3918':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:2951: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L527':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:2990: undefined reference to `__muldi3'
+kernel/built-in.o: In function `check_class_changed':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:946: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L565':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:2952: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM1041':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:3124: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM1050':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:3149: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL715':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:4337: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM1527':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:4459: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM1729':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:7571: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM1738':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/core.c:7585: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE134':
+debug.c:(.text+0x25a58): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL15':
+debug.c:(.text+0x25a74): undefined reference to `__muldi3'
+kernel/built-in.o: In function `check_preempt_curr_idle':
+idle_task.c:(.text+0x25e90): undefined reference to `__muldi3'
+kernel/built-in.o: In function `__update_inv_weight':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:195: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:198: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:4415: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `update_load_sub':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:124: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:124: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM367':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:2659: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM370':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:2660: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBE865':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:3763: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL192':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:3763: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `update_load_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:118: undefined reference to `__umoddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:118: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L259':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/sched.h:1228: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL199':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:3702: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `enqueue_entity':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:2555: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `update_load_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:118: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `place_entity':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:2519: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:2537: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L281':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:6971: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `sched_vslice':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:681: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `calc_delta_fair':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:619: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBE1008':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:6968: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `calc_delta_fair':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:620: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM476':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:171: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB1012':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:562: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM497':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:600: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL243':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:600: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM501':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:606: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL247':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:611: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `alloc_fair_sched_group':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:7282: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `print_cfs_stats':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/fair.c:7350: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE532':
+debug.c:(.text+0x27000): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB519':
+debug.c:(.text+0x2701c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM39':
+debug.c:(.text+0x27038): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L31':
+debug.c:(.text+0x27168): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL29':
+debug.c:(.text+0x27180): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL37':
+debug.c:(.text+0x271d4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE557':
+debug.c:(.text+0x271ec): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L80':
+debug.c:(.text+0x27350): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE636':
+debug.c:(.text+0x27380): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM159':
+debug.c:(.text+0x273f4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM187':
+debug.c:(.text+0x2748c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM190':
+debug.c:(.text+0x274a8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM200':
+debug.c:(.text+0x274e0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L123':
+debug.c:(.text+0x27510): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBB760':
+debug.c:(.text+0x2763c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE762':
+debug.c:(.text+0x27654): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL111':
+debug.c:(.text+0x276a8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM259':
+debug.c:(.text+0x276c0): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBE834':
+debug.c:(.text+0x277b0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L155':
+debug.c:(.text+0x277d0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM293':
+debug.c:(.text+0x27800): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `init_rt_bandwidth':
+(.text+0x278b4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `init_rt_bandwidth':
+(.text+0x278cc): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM346':
+debug.c:(.text+0x27958): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `sched_rt_bandwidth_account':
+(.text+0x27970): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM357':
+debug.c:(.text+0x279a0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB935':
+debug.c:(.text+0x279b8): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL4':
+debug.c:(.text+0x279e8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM11':
+debug.c:(.text+0x27a00): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L12':
+debug.c:(.text+0x27a34): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM20':
+debug.c:(.text+0x27a4c): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM26':
+debug.c:(.text+0x27a80): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM27':
+debug.c:(.text+0x27a98): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM50':
+debug.c:(.text+0x27b54): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM55':
+debug.c:(.text+0x27b70): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB422':
+debug.c:(.text+0x27b8c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB427':
+debug.c:(.text+0x27ba8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L59':
+debug.c:(.text+0x27bc4): undefined reference to `__udivdi3'
+kernel/built-in.o:debug.c:(.text+0x27be4): more undefined references to `__udivdi3' follow
+kernel/built-in.o: In function `.L21':
+debug.c:(.text+0x27c3c): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM81':
+debug.c:(.text+0x27c6c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM85':
+debug.c:(.text+0x27c84): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L64':
+debug.c:(.text+0x27cb4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE454':
+debug.c:(.text+0x27ccc): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM98':
+debug.c:(.text+0x27d00): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL47':
+debug.c:(.text+0x27d18): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM110':
+debug.c:(.text+0x27d4c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM115':
+debug.c:(.text+0x27d64): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM143':
+debug.c:(.text+0x27e34): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM146':
+debug.c:(.text+0x27e4c): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L90':
+debug.c:(.text+0x27e84): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM156':
+debug.c:(.text+0x27ea4): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L95':
+debug.c:(.text+0x27ec0): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL72':
+debug.c:(.text+0x27edc): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `update_curr_dl':
+deadline.c:(.text+0x27ef8): undefined reference to `__udivdi3'
+kernel/built-in.o:deadline.c:(.text+0x27f18): more undefined references to `__udivdi3' follow
+kernel/built-in.o: In function `update_curr_dl':
+deadline.c:(.text+0x27fc0): undefined reference to `__umoddi3'
+deadline.c:(.text+0x27ff8): undefined reference to `__udivdi3'
+deadline.c:(.text+0x28010): undefined reference to `__umoddi3'
+deadline.c:(.text+0x2805c): undefined reference to `__udivdi3'
+deadline.c:(.text+0x2807c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `dequeue_task_dl':
+deadline.c:(.text+0x280e4): undefined reference to `__udivdi3'
+deadline.c:(.text+0x280fc): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `pick_next_task_dl':
+(.text+0x28134): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `pick_next_task_dl':
+(.text+0x2814c): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBE608':
+debug.c:(.text+0x2819c): undefined reference to `__udivdi3'
+debug.c:(.text+0x281b8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL137':
+debug.c:(.text+0x2825c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE22':
+debug.c:(.text+0x28274): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `set_curr_task_stop':
+stop_task.c:(.text+0x282ac): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `prio_changed_stop':
+stop_task.c:(.text+0x282c4): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBB32':
+debug.c:(.text+0x282f8): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L16':
+debug.c:(.text+0x28310): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBB575':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/non-atomic.h:105: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBE575':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:307: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `__list_del_entry':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:101: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `list_del_init':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:27: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `wake_atomic_t_function':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:434: undefined reference to `__umoddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:440: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:292: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM66':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:27: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `list_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:62: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LBE720':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:146: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `prepare_to_wait':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:175: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/wait.c:179: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `nsec_high':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/sched/debug.c:48: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL63':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:114: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM184':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:137: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `down_timeout':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:156: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:168: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM210':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:184: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LVL82':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/semaphore.c:188: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `up_read':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/rwsem.c:76: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM453':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/rtmutex.c:1207: undefined reference to `__umoddi3'
+kernel/built-in.o: In function `rt_mutex_proxy_unlock':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/rtmutex.c:57: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `rt_mutex_start_proxy_lock':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/locking/rtmutex.c:1265: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM474':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:944: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM481':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:1027: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE1312':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:1117: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L296':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:1085: undefined reference to `__muldi3'
+kernel/built-in.o: In function `early_printk':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:1750: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/printk/printk.c:1866: more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `misrouted_irq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/irq/spurious.c:130: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/irq/spurious.c:129: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L143':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/irq/spurious.c:416: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM5':
+proc.c:(.text+0x32ac4): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBB467':
+proc.c:(.text+0x32af4): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL57':
+proc.c:(.text+0x32db8): undefined reference to `__muldi3'
+kernel/built-in.o:proc.c:(.text+0x32f14): more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `.LBE629':
+proc.c:(.text+0x33288): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM327':
+proc.c:(.text+0x335c0): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL183':
+proc.c:(.text+0x33714): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL198':
+proc.c:(.text+0x337d8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM419':
+proc.c:(.text+0x33960): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB727':
+proc.c:(.text+0x33988): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL232':
+proc.c:(.text+0x33a6c): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM448':
+proc.c:(.text+0x33a7c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM450':
+proc.c:(.text+0x33a94): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L316':
+proc.c:(.text+0x33aa8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LVL48':
+proc.c:(.text+0x33fa8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM51':
+proc.c:(.text+0x33fe8): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.L20':
+proc.c:(.text+0x33ffc): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL25':
+proc.c:(.text+0x34174): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L77':
+proc.c:(.text+0x344f8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L87':
+proc.c:(.text+0x345c4): undefined reference to `__muldi3'
+kernel/built-in.o: In function `srcu_advance_batches':
+srcu.c:(.text+0x347ec): undefined reference to `__muldi3'
+srcu.c:(.text+0x3487c): undefined reference to `__muldi3'
+kernel/built-in.o:srcu.c:(.text+0x348f4): more undefined references to `__muldi3' follow
+kernel/built-in.o: In function `.LM108':
+tiny.c:(.text+0x349dc): undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM149':
+tiny.c:(.text+0x34b04): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L52':
+tiny.c:(.text+0x34b10): undefined reference to `__divdi3'
+kernel/built-in.o: In function `init_srcu_struct':
+(.text+0x34bb4): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `init_srcu_struct':
+(.text+0x34bfc): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `.LM8':
+tiny.c:(.text+0x34e1c): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM25':
+tiny.c:(.text+0x34ea0): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM35':
+tiny.c:(.text+0x34ef8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM41':
+tiny.c:(.text+0x34f24): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM55':
+tiny.c:(.text+0x34fdc): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM76':
+tiny.c:(.text+0x350e8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM92':
+tiny.c:(.text+0x3517c): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM97':
+tiny.c:(.text+0x351a8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM109':
+tiny.c:(.text+0x35204): undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LBE401':
+tiny.c:(.text+0x353f0): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE410':
+tiny.c:(.text+0x35460): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM169':
+tiny.c:(.text+0x35498): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM6':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:74: undefined reference to `__muldi3'
+kernel/built-in.o: In function `ktime_set':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/ktime.h:77: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `timespec_add_ns':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/time.h:266: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM78':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:250: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM79':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:250: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LBB1048':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:260: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.L36':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:260: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:260: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM91':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:103: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM99':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:115: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.L47':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:126: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL78':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:86: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `__read_seqcount_begin':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/processor.h:77: undefined reference to `__divdi3'
+kernel/built-in.o: In function `getnstimeofday':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:333: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:335: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM226':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:339: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LM547':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:912: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LVL309':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:920: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM556':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:939: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM560':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:939: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM563':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:953: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM565':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:953: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LVL318':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:954: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM571':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:969: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM577':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:974: undefined reference to `__moddi3'
+kernel/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LVL325':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:984: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.L285':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/time.h:35: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.L290':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/time.h:82: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LBE1500':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:969: undefined reference to `__divdi3'
+kernel/built-in.o: In function `div64_u64':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/math64.h:47: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LVL337':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:957: undefined reference to `__divdi3'
+kernel/built-in.o: In function `timekeeping_suspend':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:988: undefined reference to `__moddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:988: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:1001: undefined reference to `__moddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:1006: undefined reference to `__muldi3'
+kernel/built-in.o: In function `timespec_sub':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/time.h:82: undefined reference to `__moddi3'
+kernel/built-in.o: In function `timekeeping_suspend':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/time.h:82: undefined reference to `__muldi3'
+kernel/built-in.o: In function `timekeeping_suspend':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/timekeeping.c:1038: undefined reference to `__moddi3'
+kernel/built-in.o: In function `.LM52':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:377: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM55':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:423: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM79':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:393: undefined reference to `__divdi3'
+kernel/built-in.o: In function `.LM83':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:425: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM95':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:396: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM146':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:625: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `.LVL44':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:654: undefined reference to `__udivdi3'
+kernel/built-in.o: In function `process_adjtimex_modes':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/time/ntp.c:562: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L75':
+tick-common.c:(.text+0x3b5b8): undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LBE240':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/resource.c:1235: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.L14':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/reboot.c:375: undefined reference to `__muldi3'
+kernel/built-in.o: In function `.LM9':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/reboot.c:377: undefined reference to `__muldi3'
+kernel/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/kernel/reboot.c:388: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.LM129':
+mempool.c:(.text+0x4304): undefined reference to `__divdi3'
+mempool.c:(.text+0x4318): undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL82':
+mempool.c:(.text+0x4324): undefined reference to `__muldi3'
+mm/built-in.o: In function `.L138':
+oom_kill.c:(.text+0x4e1c): undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL178':
+oom_kill.c:(.text+0x4e28): undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM390':
+oom_kill.c:(.text+0x5324): undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL265':
+oom_kill.c:(.text+0x5364): undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM402':
+oom_kill.c:(.text+0x53c8): undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM4':
+fadvise.c:(.text+0x5408): undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBB92':
+fadvise.c:(.text+0x5478): undefined reference to `__muldi3'
+mm/built-in.o:fadvise.c:(.text+0x54b4): more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.LVL7':
+maccess.c:(.text+0x5700): undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL3':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:1701: undefined reference to `__udivdi3'
+mm/built-in.o: In function `zoneref_set_zone':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:3273: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE3115':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:3293: undefined reference to `__muldi3'
+mm/built-in.o: In function `dump_page_flags':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:6564: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L76':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5567: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM140':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5565: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L84':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5623: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE3805':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:31: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE3809':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:31: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:31: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.LM1136':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:316: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBE4216':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:398: undefined reference to `__muldi3'
+mm/built-in.o: In function `__clear_bit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/non-atomic.h:28: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL617':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:409: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL621':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:403: undefined reference to `__muldi3'
+mm/built-in.o: In function `set_page_refcounted':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/internal.h:46: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mm.h:403: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `should_alloc_retry':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2181: undefined reference to `__udivdi3'
+mm/built-in.o: In function `__alloc_pages_slowpath':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2677: undefined reference to `__muldi3'
+mm/built-in.o: In function `memalloc_noio_flags':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/sched.h:1885: undefined reference to `__divdi3'
+mm/built-in.o: In function `gfp_to_alloc_flags':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2472: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2472: undefined reference to `__muldi3'
+mm/built-in.o: In function `__alloc_pages_may_oom':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2242: undefined reference to `__udivdi3'
+mm/built-in.o: In function `__alloc_pages_slowpath':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mmzone.h:1016: undefined reference to `__muldi3'
+mm/built-in.o: In function `__alloc_pages_may_oom':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2223: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2242: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2242: undefined reference to `__udivdi3'
+mm/built-in.o: In function `__alloc_pages':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/gfp.h:312: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL1327':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2823: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBE6185':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic.h:95: undefined reference to `__muldi3'
+mm/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL1340':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2843: undefined reference to `__divdi3'
+mm/built-in.o: In function `.L1296':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2843: undefined reference to `__muldi3'
+mm/built-in.o: In function `__free_pages_ok':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2839: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL1364':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2895: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM2614':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2888: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL1368':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2888: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L1312':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2890: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL1378':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2916: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE6258':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2933: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE6266':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2933: undefined reference to `__udivdi3'
+mm/built-in.o: In function `__get_order':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:17: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:24: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:30: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L1405':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/gfp.h:312: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE6275':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:2938: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL1465':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5404: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5404: undefined reference to `__udivdi3'
+mm/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__muldi3'
+mm/built-in.o: In function `init_page_count':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mm.h:504: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L1424':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5421: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL1476':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5421: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBE1844':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:256: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE1847':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:260: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM62':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:713: undefined reference to `__udivdi3'
+mm/built-in.o: In function `pos_ratio_polynom':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:610: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L24':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:741: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBB1927':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:826: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L32':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/math64.h:21: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/math64.h:21: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE1928':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:841: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:841: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM73':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:842: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L36':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:860: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE1939':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:706: undefined reference to `__muldi3'
+mm/built-in.o: In function `__fls':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:17: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:14: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:30: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:34: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE1960':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1233: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL74':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1270: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L75':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1299: undefined reference to `__udivdi3'
+mm/built-in.o: In function `fls64':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/__fls.h:26: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM194':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:287: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM195':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:281: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM203':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:293: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:293: undefined reference to `__udivdi3'
+mm/built-in.o: In function `zone_dirty_limit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:326: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:326: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL176':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/spinlock.h:348: undefined reference to `__udivdi3'
+mm/built-in.o: In function `bdi_update_dirty_ratelimit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1101: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL266':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1617: undefined reference to `__muldi3'
+mm/built-in.o: In function `balance_dirty_pages':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1431: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL397':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page-writeback.c:1833: undefined reference to `__muldi3'
+mm/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__muldi3'
+mm/built-in.o:readahead.c:(.text+0xd8e8): more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.L41':
+truncate.c:(.text+0xff28): undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL58':
+truncate.c:(.text+0xff38): undefined reference to `__muldi3'
+mm/built-in.o: In function `truncate_inode_pages_range':
+(.text+0xff4c): undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL178':
+truncate.c:(.text+0x10714): undefined reference to `__muldi3'
+mm/built-in.o: In function `shrink_slab_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:223: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE3608':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1602: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM295':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:199: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL211':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:381: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:786: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `page_check_references':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:704: undefined reference to `__udivdi3'
+mm/built-in.o: In function `pageout':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:502: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:510: undefined reference to `__udivdi3'
+mm/built-in.o: In function `__inc_zone_state':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/vmstat.h:229: undefined reference to `__muldi3'
+mm/built-in.o: In function `__inc_zone_state':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:45: undefined reference to `__udivdi3'
+mm/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM893':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1051: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE4733':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1052: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM953':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1133: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM954':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1126: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1126: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1126: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBE5004':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1414: undefined reference to `__muldi3'
+mm/built-in.o: In function `atomic_long_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:59: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM1162':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1475: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L619':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1484: undefined reference to `__muldi3'
+mm/built-in.o: In function `__count_vm_events':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/vmstat.h:42: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.L634':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1685: undefined reference to `__muldi3'
+mm/built-in.o: In function `get_scan_count':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:1973: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM1384':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:2026: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM1518':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:2638: undefined reference to `__muldi3'
+mm/built-in.o: In function `do_try_to_free_pages':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:2458: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:2477: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `zone_balanced':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/vmscan.c:2779: undefined reference to `__udivdi3'
+mm/built-in.o: In function `shmem_delete_from_page_cache':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/shmem.c:322: undefined reference to `__muldi3'
+mm/built-in.o: In function `__dec_zone_state':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/vmstat.h:241: undefined reference to `__muldi3'
+mm/built-in.o: In function `lowmem_page_address':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mm.h:890: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE2600':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:28: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL170':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/shmem.c:2377: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/shmem.c:2385: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.LVL793':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/shmem.c:404: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL5':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/backing-dev.c:224: undefined reference to `__muldi3'
+mm/built-in.o: In function `spin_unlock_bh':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/spinlock.h:348: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/spinlock.h:348: undefined reference to `__muldi3'
+mm/built-in.o: In function `bdi_wb_shutdown':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/backing-dev.c:385: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBB285':
+interval_tree.c:(.text+0x1d61c): undefined reference to `__muldi3'
+mm/built-in.o:interval_tree.c:(.text+0x1d8ec): more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.LVL367':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/memblock.c:571: undefined reference to `__umoddi3'
+mm/built-in.o: In function `.LM194':
+page_io.c:(.text+0x316a8): undefined reference to `__muldi3'
+mm/built-in.o: In function `cluster_set_next':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:231: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L161':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:830: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM392':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:2644: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM401':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:2650: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:2656: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `add_swap_extent':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:1682: undefined reference to `__udivdi3'
+mm/built-in.o: In function `SYSC_swapon':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:2499: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:2529: undefined reference to `__muldi3'
+mm/built-in.o: In function `swap_do_scheduled_discard':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:290: undefined reference to `__udivdi3'
+mm/built-in.o: In function `discard_swap_cluster':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:174: undefined reference to `__udivdi3'
+mm/built-in.o: In function `cluster_next':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:225: undefined reference to `__umoddi3'
+mm/built-in.o: In function `cluster_set_next':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:231: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LM843':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:456: undefined reference to `__umoddi3'
+mm/built-in.o: In function `.LVL404':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:1279: undefined reference to `__umoddi3'
+mm/built-in.o: In function `.L488':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/swapfile.c:1293: undefined reference to `__udivdi3'
+mm/built-in.o: In function `memblock_virt_alloc_node_nopanic':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/bootmem.h:294: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LBE3310':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:4913: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LM352':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:4920: undefined reference to `__muldi3'
+mm/built-in.o: In function `free_area_init_core':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:4804: undefined reference to `__muldi3'
+mm/built-in.o: In function `early_calculate_totalpages':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5072: undefined reference to `__udivdi3'
+mm/built-in.o: In function `alloc_large_system_hash':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5932: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5932: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:5961: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:6001: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:6013: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/page_alloc.c:6013: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL13':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/mm_init.c:75: undefined reference to `__muldi3'
+mm/built-in.o: In function `.L19':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1242: undefined reference to `__muldi3'
+mm/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/fls64.h:28: more undefined references to `__muldi3' follow
+mm/built-in.o: In function `.L26':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1111: undefined reference to `__divdi3'
+mm/built-in.o: In function `.LVL27':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1119: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LVL29':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1121: undefined reference to `__divdi3'
+mm/built-in.o: In function `.LBE700':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1123: undefined reference to `__udivdi3'
+mm/built-in.o: In function `.LBB702':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1131: undefined reference to `__muldi3'
+mm/built-in.o: In function `.LVL43':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1131: undefined reference to `__moddi3'
+mm/built-in.o: In function `.L33':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1132: undefined reference to `__divdi3'
+mm/built-in.o: In function `.LVL47':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1134: undefined reference to `__moddi3'
+mm/built-in.o: In function `.LVL52':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/mm/percpu.c:1140: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB472':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:190: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LVL64':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:190: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L61':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:195: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LVL68':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:195: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.L70':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:190: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB951':
+super.c:(.text+0x4088): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LBB954':
+super.c:(.text+0x409c): undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LBB957':
+super.c:(.text+0x40b0): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBE957':
+super.c:(.text+0x40bc): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LBE960':
+super.c:(.text+0x40d0): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL122':
+super.c:(.text+0x40e4): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBE963':
+super.c:(.text+0x40f0): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LBB966':
+super.c:(.text+0x4108): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM250':
+super.c:(.text+0x4164): undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LBB970':
+super.c:(.text+0x4170): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL129':
+super.c:(.text+0x417c): undefined reference to `__udivdi3'
+super.c:(.text+0x4190): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LBE971':
+super.c:(.text+0x41a0): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM677':
+super.c:(.text+0x5470): undefined reference to `__umoddi3'
+fs/built-in.o: In function `.L463':
+super.c:(.text+0x55b8): undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LVL102':
+stat.c:(.text+0x6964): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL217':
+exec.c:(.text+0x7770): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBE1976':
+exec.c:(.text+0x8484): undefined reference to `__muldi3'
+fs/built-in.o: In function `fault_in_pages_readable':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/pagemap.h:462: undefined reference to `__muldi3'
+fs/built-in.o: In function `compound_head':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/non-atomic.h:105: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/pipe.c:1172: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.LM325':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/fcntl.c:678: undefined reference to `__divdi3'
+fs/built-in.o: In function `.LM31':
+ioctl.c:(.text+0x12684): undefined reference to `__divdi3'
+fs/built-in.o: In function `.LM35':
+ioctl.c:(.text+0x12698): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB622':
+ioctl.c:(.text+0x12e94): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM34':
+readdir.c:(.text+0x1326c): undefined reference to `__moddi3'
+fs/built-in.o: In function `.L16':
+readdir.c:(.text+0x13278): undefined reference to `__muldi3'
+fs/built-in.o: In function `.L27':
+readdir.c:(.text+0x1328c): undefined reference to `__divdi3'
+fs/built-in.o: In function `.LBB960':
+select.c:(.text+0x139a4): undefined reference to `__muldi3'
+fs/built-in.o: In function `.L70':
+select.c:(.text+0x13a94): undefined reference to `__moddi3'
+fs/built-in.o: In function `.LVL47':
+select.c:(.text+0x13aa4): undefined reference to `__muldi3'
+select.c:(.text+0x13ab8): undefined reference to `__divdi3'
+fs/built-in.o: In function `.LVL327':
+select.c:(.text+0x14dc8): undefined reference to `__muldi3'
+fs/built-in.o: In function `.L31':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/dcache.c:1078: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM573':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:44: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB3344':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/dcache.c:3150: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L907':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/dcache.c:2269: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/dcache.c:2768: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.LBE7093':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/buffer.c:3078: undefined reference to `__divdi3'
+fs/built-in.o: In function `.LM2156':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/buffer.c:1844: undefined reference to `__moddi3'
+fs/built-in.o: In function `.LBE7359':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/buffer.c:2799: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB1642':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mempool.h:46: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL535':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/block_dev.c:958: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM81':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/direct-io.c:254: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM305':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/direct-io.c:924: undefined reference to `__muldi3'
+fs/built-in.o: In function `dio_bio_submit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:28: undefined reference to `__divdi3'
+fs/built-in.o: In function `dio_bio_submit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/direct-io.c:406: undefined reference to `__moddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/direct-io.c:409: undefined reference to `__muldi3'
+fs/built-in.o: In function `dio_pages_present':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/direct-io.c:158: undefined reference to `__muldi3'
+fs/built-in.o: In function `mounts_open_common':
+proc_namespace.c:(.text+0x3c140): undefined reference to `__muldi3'
+proc_namespace.c:(.text+0x3c16c): undefined reference to `__muldi3'
+fs/built-in.o: In function `ep_unregister_pollwait.isra.2':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:533: undefined reference to `__umoddi3'
+fs/built-in.o: In function `path_count_inc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:1152: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L90':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:1179: undefined reference to `__umoddi3'
+fs/built-in.o: In function `ep_free':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:735: undefined reference to `__umoddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:756: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:784: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.L115':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:794: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBB1941':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/wait.h:103: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM596':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:935: undefined reference to `__muldi3'
+fs/built-in.o: In function `ep_alloc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:947: undefined reference to `__muldi3'
+fs/built-in.o: In function `ep_modify':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:1447: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/eventpoll.c:1743: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.LBB1765':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:2211: undefined reference to `__divdi3'
+fs/built-in.o: In function `.LVL380':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:2211: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L450':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:2211: undefined reference to `__divdi3'
+fs/built-in.o: In function `.LM856':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:2211: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:2211: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LVL47':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/root.c:141: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L383':
+kmsg.c:(.text+0x4a050): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL563':
+kmsg.c:(.text+0x4a064): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM796':
+kmsg.c:(.text+0x4a078): undefined reference to `__muldi3'
+fs/built-in.o: In function `proc_pident_instantiate':
+base.c:(.text+0x4aac0): undefined reference to `__muldi3'
+base.c:(.text+0x4aad0): undefined reference to `__umoddi3'
+base.c:(.text+0x4aadc): undefined reference to `__divdi3'
+base.c:(.text+0x4aaf0): undefined reference to `__udivdi3'
+base.c:(.text+0x4ab04): undefined reference to `__divdi3'
+fs/built-in.o: In function `.LVL33':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_tty.c:95: undefined reference to `__muldi3'
+fs/built-in.o: In function `interrupts_open':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/interrupts.c:37: undefined reference to `__muldi3'
+fs/built-in.o: In function `.L6':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/meminfo.c:49: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM32':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/meminfo.c:54: undefined reference to `__muldi3'
+fs/built-in.o: In function `atomic_long_read':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:31: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/meminfo.c:88: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.LVL16':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/stat.c:124: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LVL17':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/stat.c:124: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.L7':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/stat.c:164: undefined reference to `__udivdi3'
+fs/built-in.o: In function `kmalloc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/slab.h:367: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LVL102':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/stat.c:210: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM81':
+kmsg.c:(.text+0x4ff68): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM149':
+kmsg.c:(.text+0x50224): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL18':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/self.c:37: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL50':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/self.c:79: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:975: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.L222':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:195: undefined reference to `__udivdi3'
+fs/built-in.o: In function `insert_entry':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:113: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.L247':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:954: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LM462':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:536: undefined reference to `__udivdi3'
+fs/built-in.o: In function `proc_sys_lookup':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:437: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:447: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:443: undefined reference to `__divdi3'
+fs/built-in.o: In function `proc_sys_lookup':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/dcache.h:287: undefined reference to `__udivdi3'
+fs/built-in.o: In function `unuse_table':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:222: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:477: undefined reference to `__moddi3'
+fs/built-in.o: In function `.LM552':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:694: undefined reference to `__moddi3'
+fs/built-in.o: In function `unuse_table':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:709: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.L326':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:708: undefined reference to `__moddi3'
+fs/built-in.o: In function `.LVL387':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:743: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL420':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:597: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LM621':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:656: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LVL423':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:663: undefined reference to `__muldi3'
+fs/built-in.o: In function `unuse_table':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:222: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:649: undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LVL460':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:664: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL589':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/slab.h:458: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM920':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_sysctl.c:1320: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL64':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_net.c:168: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM105':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/proc/proc_net.c:206: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/devpts/inode.c:391: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.L5':
+symlink.c:(.text+0x53da8): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LBB664':
+symlink.c:(.text+0x554fc): undefined reference to `__muldi3'
+fs/built-in.o: In function `.L145':
+symlink.c:(.text+0x55f50): undefined reference to `__udivdi3'
+fs/built-in.o: In function `ext2_add_link':
+(.text+0x55f64): undefined reference to `__umoddi3'
+fs/built-in.o: In function `ext2_add_link':
+(.text+0x5624c): undefined reference to `__udivdi3'
+fs/built-in.o: In function `ext2_add_link':
+(.text+0x56280): undefined reference to `__udivdi3'
+fs/built-in.o: In function `ext2_add_link':
+(.text+0x5629c): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.L220':
+symlink.c:(.text+0x56554): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.L205':
+symlink.c:(.text+0x56568): undefined reference to `__umoddi3'
+fs/built-in.o: In function `.LBE968':
+symlink.c:(.text+0x56648): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LVL286':
+symlink.c:(.text+0x56668): undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LM492':
+symlink.c:(.text+0x566dc): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LM496':
+symlink.c:(.text+0x56704): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL294':
+symlink.c:(.text+0x567a0): undefined reference to `__muldi3'
+fs/built-in.o: In function `.LVL312':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:423: undefined reference to `__muldi3'
+fs/built-in.o: In function `total_mapping_size':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:380: undefined reference to `__muldi3'
+fs/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/binfmt_elf.c:381: more undefined references to `__muldi3' follow
+fs/built-in.o: In function `.LM82':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/file_table.c:361: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LM798':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/dcache.c:3423: undefined reference to `__muldi3'
+fs/built-in.o: In function `init_mount_tree':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/namespace.c:2890: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/namespace.c:2891: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/namespace.c:2891: undefined reference to `__muldi3'
+fs/built-in.o: In function `.LBE1675':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/bio.c:2029: undefined reference to `__udivdi3'
+fs/built-in.o: In function `.LVL709':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/fs/bio.c:2029: undefined reference to `__udivdi3'
+crypto/built-in.o: In function `crypto_inc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/crypto/algapi.c:924: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL270':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-core.c:750: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL282':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-core.c:692: undefined reference to `__muldi3'
+block/built-in.o: In function `part_round_stats_single':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/genhd.h:399: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL480':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-core.c:2531: undefined reference to `__muldi3'
+block/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-core.c:1444: more undefined references to `__muldi3' follow
+block/built-in.o: In function `.LM309':
+blk-flush.c:(.text+0x74a0): undefined reference to `__umoddi3'
+block/built-in.o: In function `.LBB552':
+blk-flush.c:(.text+0x74c4): undefined reference to `__umoddi3'
+block/built-in.o: In function `.LM323':
+blk-flush.c:(.text+0x750c): undefined reference to `__umoddi3'
+block/built-in.o: In function `.LVL185':
+blk-flush.c:(.text+0x7620): undefined reference to `__umoddi3'
+block/built-in.o: In function `.LM38':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-settings.c:117: undefined reference to `__umoddi3'
+block/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-settings.c:124: more undefined references to `__umoddi3' follow
+block/built-in.o: In function `.LM45':
+blk-map.c:(.text+0x8af0): undefined reference to `__muldi3'
+block/built-in.o: In function `.L18':
+blk-map.c:(.text+0x8b4c): undefined reference to `__muldi3'
+block/built-in.o: In function `.LM155':
+blk-map.c:(.text+0x8f04): undefined reference to `__muldi3'
+block/built-in.o: In function `.LBE162':
+blk-map.c:(.text+0x8f48): undefined reference to `__muldi3'
+block/built-in.o: In function `.L72':
+blk-merge.c:(.text+0x98b4): undefined reference to `__muldi3'
+block/built-in.o:blk-merge.c:(.text+0x9a5c): more undefined references to `__muldi3' follow
+block/built-in.o: In function `.LBE1004':
+blk-merge.c:(.text+0xa974): undefined reference to `__umoddi3'
+block/built-in.o: In function `.LBE1005':
+blk-merge.c:(.text+0xa998): undefined reference to `__umoddi3'
+block/built-in.o: In function `blk_done_softirq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-softirq.c:22: undefined reference to `__umoddi3'
+block/built-in.o: In function `blk_done_softirq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:127: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:27: undefined reference to `__muldi3'
+block/built-in.o: In function `.L234':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-mq.c:928: undefined reference to `__muldi3'
+block/built-in.o: In function `__blk_mq_drain_queue':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-mq.c:135: undefined reference to `__muldi3'
+block/built-in.o: In function `blk_mq_stop_hw_queue':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/blk-mq.c:635: undefined reference to `__udivdi3'
+block/built-in.o: In function `blk_mq_stop_hw_queue':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/atomic.h:72: undefined reference to `__muldi3'
+block/built-in.o: In function `.LM290':
+ioctl.c:(.text+0xf6f4): undefined reference to `__umoddi3'
+block/built-in.o: In function `.L71':
+ioctl.c:(.text+0xf7f0): undefined reference to `__umoddi3'
+block/built-in.o: In function `.L65':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:328: undefined reference to `__umoddi3'
+block/built-in.o: In function `.LVL67':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:339: undefined reference to `__umoddi3'
+block/built-in.o: In function `.LVL71':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:376: undefined reference to `__umoddi3'
+block/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:351: more undefined references to `__umoddi3' follow
+block/built-in.o: In function `.L207':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:555: undefined reference to `__muldi3'
+block/built-in.o: In function `.L232':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:711: undefined reference to `__muldi3'
+block/built-in.o: In function `.LBB1396':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/scsi_ioctl.c:711: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL14':
+partition-generic.c:(.text+0x12854): undefined reference to `__muldi3'
+block/built-in.o: In function `.LM17':
+partition-generic.c:(.text+0x12874): undefined reference to `__muldi3'
+block/built-in.o:(.text+0x12b7c): more undefined references to `__muldi3' follow
+block/built-in.o: In function `.L128':
+msdos.c:(.text+0x14228): undefined reference to `__udivdi3'
+block/built-in.o: In function `cfq_activate_request':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2296: undefined reference to `__divdi3'
+block/built-in.o: In function `cfq_init_icq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3428: undefined reference to `__divdi3'
+block/built-in.o: In function `cfq_target_latency_store':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4537: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4479: undefined reference to `__muldi3'
+block/built-in.o: In function `.L24':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4533: undefined reference to `__udivdi3'
+block/built-in.o: In function `cfq_fifo_expire_async_store':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4525: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4525: undefined reference to `__muldi3'
+block/built-in.o: In function `.LBE1728':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4523: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL127':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4523: undefined reference to `__muldi3'
+block/built-in.o: In function `cfq_quantum_store':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4522: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4479: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4522: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4522: undefined reference to `__udivdi3'
+block/built-in.o: In function `.LVL213':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:1397: undefined reference to `__divdi3'
+block/built-in.o: In function `.L294':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2066: undefined reference to `__divdi3'
+block/built-in.o: In function `.LM563':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2068: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL344':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2093: undefined reference to `__muldi3'
+block/built-in.o: In function `cfq_prio_slice':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:927: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:923: undefined reference to `__muldi3'
+block/built-in.o: In function `.LM597':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2044: undefined reference to `__udivdi3'
+block/built-in.o: In function `.LM599':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2044: undefined reference to `__muldi3'
+block/built-in.o: In function `.LVL350':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2044: undefined reference to `__udivdi3'
+block/built-in.o: In function `.LM814':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3447: undefined reference to `__udivdi3'
+block/built-in.o: In function `cfq_cic_lookup':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:874: undefined reference to `__muldi3'
+block/built-in.o: In function `cfq_async_queue_prio':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3644: undefined reference to `__muldi3'
+block/built-in.o: In function `.L545':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3402: undefined reference to `__muldi3'
+block/built-in.o: In function `.L546':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3410: undefined reference to `__muldi3'
+block/built-in.o: In function `.LM949':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3422: undefined reference to `__udivdi3'
+block/built-in.o: In function `.LM951':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3415: undefined reference to `__muldi3'
+block/built-in.o: In function `.LM953':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:911: undefined reference to `__udivdi3'
+block/built-in.o: In function `cfq_exit_icq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:3432: undefined reference to `__muldi3'
+block/built-in.o: In function `cic_to_cfqd':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:891: undefined reference to `__udivdi3'
+block/built-in.o: In function `cfqq_process_refs':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2847: undefined reference to `__muldi3'
+block/built-in.o: In function `split_cfqq':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4182: undefined reference to `__muldi3'
+block/built-in.o: In function `.LM1013':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4217: undefined reference to `__muldi3'
+block/built-in.o: In function `cfqq_process_refs':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:2847: undefined reference to `__muldi3'
+block/built-in.o: In function `.L762':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:4030: undefined reference to `__udivdi3'
+block/built-in.o: In function `cfqq_type':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/block/cfq-iosched.c:833: undefined reference to `__udivdi3'
+lib/lib.a(idr.o): In function `kmalloc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/slab.h:447: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/slab.h:341: undefined reference to `__umoddi3'
+lib/lib.a(idr.o): In function `.LVL342':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/idr.c:1013: undefined reference to `__udivdi3'
+lib/lib.a(idr.o): In function `.L395':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/idr.c:960: undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LM7':
+bcd.c:(.text+0xdc): undefined reference to `__udivdi3'
+bcd.c:(.text+0xf0): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LM21':
+sort.c:(.text+0x1d0): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LVL6':
+sort.c:(.text+0x1e4): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LBB120':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:111: undefined reference to `__umoddi3'
+lib/built-in.o: In function `prandom_bytes':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:127: undefined reference to `__muldi3'
+lib/built-in.o: In function `.LBE24':
+hexdump.c:(.text+0x1208): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LVL389':
+bitmap.c:(.text+0x2ddc): undefined reference to `__moddi3'
+lib/built-in.o: In function `.LVL421':
+bitmap.c:(.text+0x2f48): undefined reference to `__moddi3'
+lib/built-in.o: In function `.LVL464':
+bitmap.c:(.text+0x313c): undefined reference to `__moddi3'
+lib/built-in.o: In function `.LVL71':
+scatterlist.c:(.text+0x3a68): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LBB356':
+scatterlist.c:(.text+0x3a84): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L100':
+scatterlist.c:(.text+0x3b2c): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LBB369':
+scatterlist.c:(.text+0x3b50): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L103':
+scatterlist.c:(.text+0x3b88): undefined reference to `__muldi3'
+lib/built-in.o:scatterlist.c:(.text+0x3bb4): more undefined references to `__muldi3' follow
+lib/built-in.o: In function `.LBE479':
+scatterlist.c:(.text+0x4164): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LBE488':
+scatterlist.c:(.text+0x41d4): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LVL164':
+scatterlist.c:(.text+0x41f4): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.L22':
+list_sort.c:(.text+0x46c8): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L47':
+list_sort.c:(.text+0x475c): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LBE12':
+uuid.c:(.text+0x47c8): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LM26':
+uuid.c:(.text+0x4830): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L9':
+flex_array.c:(.text+0x48d0): undefined reference to `__muldi3'
+lib/built-in.o: In function `flex_array_alloc':
+(.text+0x48f4): undefined reference to `__muldi3'
+lib/built-in.o: In function `flex_array_alloc':
+(.text+0x4938): undefined reference to `__muldi3'
+lib/built-in.o:(.text+0x4948): more undefined references to `__muldi3' follow
+lib/built-in.o: In function `.LVL12':
+kfifo.c:(.text+0x5bd8): undefined reference to `__udivdi3'
+lib/built-in.o: In function `kfifo_copy_out.isra.2':
+kfifo.c:(.text+0x5bec): undefined reference to `__muldi3'
+kfifo.c:(.text+0x5c78): undefined reference to `__muldi3'
+kfifo.c:(.text+0x5c8c): undefined reference to `__muldi3'
+kfifo.c:(.text+0x5ca0): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LM42':
+kfifo.c:(.text+0x5d88): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LM44':
+kfifo.c:(.text+0x5d9c): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L30':
+kfifo.c:(.text+0x5ec8): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L29':
+kfifo.c:(.text+0x5eec): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LM106':
+kfifo.c:(.text+0x6048): undefined reference to `__muldi3'
+lib/built-in.o: In function `.LVL84':
+kfifo.c:(.text+0x605c): undefined reference to `__muldi3'
+lib/built-in.o:kfifo.c:(.text+0x6070): more undefined references to `__muldi3' follow
+lib/built-in.o: In function `.L56':
+kfifo.c:(.text+0x62fc): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LVL141':
+kfifo.c:(.text+0x6564): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LVL159':
+kfifo.c:(.text+0x6640): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LM18':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/jhash.h:83: undefined reference to `__umoddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/jhash.h:83: undefined reference to `__udivdi3'
+lib/built-in.o: In function `.L12':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/jhash.h:95: undefined reference to `__muldi3'
+lib/built-in.o: In function `.L11':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/jhash.h:96: undefined reference to `__udivdi3'
+lib/built-in.o: In function `.L18':
+string_helpers.c:(.text+0x80d4): undefined reference to `__muldi3'
+lib/built-in.o: In function `.L17':
+string_helpers.c:(.text+0x8128): undefined reference to `__udivdi3'
+lib/built-in.o: In function `.LM24':
+inflate_syms.c:(.text+0xa4f4): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LVL12':
+inflate_syms.c:(.text+0xa508): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.L197':
+inflate_syms.c:(.text+0xaa3c): undefined reference to `__umoddi3'
+inflate_syms.c:(.text+0xaa50): undefined reference to `__umoddi3'
+lib/built-in.o: In function `.LM339':
+inflate_syms.c:(.text+0xb214): undefined reference to `__umoddi3'
+lib/built-in.o:inflate_syms.c:(.text+0xb89c): more undefined references to `__umoddi3' follow
+lib/built-in.o: In function `.LBE104':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:161: undefined reference to `__muldi3'
+lib/built-in.o: In function `.LM100':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:162: undefined reference to `__muldi3'
+lib/built-in.o: In function `.L24':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:163: undefined reference to `__muldi3'
+lib/built-in.o: In function `.L25':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/lib/random32.c:164: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM351':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:188: undefined reference to `__umoddi3'
+drivers/built-in.o: In function `fb_pan_display':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:884: undefined reference to `__umoddi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:891: undefined reference to `__umoddi3'
+drivers/built-in.o: In function `list_del':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/list.h:89: undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM893':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:1897: undefined reference to `__muldi3'
+drivers/built-in.o: In function `fb_get_options':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:1924: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:1924: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:1924: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/video/fbmem.c:1929: undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LVL48':
+fbcvt.c:(.text+0x4080): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM88':
+fbcvt.c:(.text+0x408c): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM108':
+fbcvt.c:(.text+0x40fc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM112':
+fbcvt.c:(.text+0x4114): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM288':
+fbcvt.c:(.text+0x4790): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM291':
+fbcvt.c:(.text+0x47a0): undefined reference to `__divdi3'
+drivers/built-in.o: In function `.LM292':
+fbcvt.c:(.text+0x47b4): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM295':
+fbcvt.c:(.text+0x47c4): undefined reference to `__divdi3'
+drivers/built-in.o: In function `.LM331':
+fbcvt.c:(.text+0x4930): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LBB208':
+fbcvt.c:(.text+0x4954): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LVL157':
+fbcvt.c:(.text+0x496c): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM342':
+fbcvt.c:(.text+0x499c): undefined reference to `__udivdi3'
+fbcvt.c:(.text+0x49b4): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LM348':
+fbcvt.c:(.text+0x49f4): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM352':
+fbcvt.c:(.text+0x4a1c): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_destroy_modelist':
+(.text+0x4a64): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_destroy_modelist':
+(.text+0x4a8c): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_destroy_modelist':
+(.text+0x4ac4): undefined reference to `__muldi3'
+drivers/built-in.o: In function `fb_destroy_modelist':
+(.text+0x4adc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM375':
+fbcvt.c:(.text+0x4b08): undefined reference to `__muldi3'
+fbcvt.c:(.text+0x4b24): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LVL173':
+fbcvt.c:(.text+0x4b4c): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4b68): undefined reference to `__muldi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4b84): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4b9c): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4bac): undefined reference to `__muldi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4bcc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4c30): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `fb_find_best_display':
+(.text+0x4c48): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM3':
+fbcvt.c:(.text+0x4cfc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.L3':
+fbcvt.c:(.text+0x4d1c): undefined reference to `__udivdi3'
+drivers/built-in.o:fbcvt.c:(.text+0x4d3c): more undefined references to `__udivdi3' follow
+drivers/built-in.o: In function `.L14':
+fbcvt.c:(.text+0x4df8): undefined reference to `__muldi3'
+fbcvt.c:(.text+0x4e08): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM33':
+fbcvt.c:(.text+0x4e20): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.L18':
+fbcvt.c:(.text+0x4e4c): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LVL7':
+fbcvt.c:(.text+0x4e70): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM43':
+fbcvt.c:(.text+0x4e98): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM47':
+fbcvt.c:(.text+0x4eac): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LM52':
+fbcvt.c:(.text+0x4ecc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM55':
+fbcvt.c:(.text+0x4ee4): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LM72':
+fbcvt.c:(.text+0x4fac): undefined reference to `__udivdi3'
+fbcvt.c:(.text+0x4fbc): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.L25':
+fbcvt.c:(.text+0x4fdc): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LBB201':
+fbcvt.c:(.text+0x4ff0): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LBB206':
+fbcvt.c:(.text+0x5004): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `tty_name':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/tty/tty_io.c:1793: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LBE3051':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/tty/tty_io.c:2943: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LVL649':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/tty/tty_io.c:2963: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LBE3106':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/tty/tty_io.c:3033: undefined reference to `__muldi3'
+drivers/built-in.o: In function `kref_get':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/kref.h:47: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.L1070':
+pty.c:(.text+0xddd0): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LVL952':
+pty.c:(.text+0xde00): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `tty_buffer_unlock_exclusive':
+(.text+0x11024): undefined reference to `__muldi3'
+drivers/built-in.o: In function `tty_buffer_unlock_exclusive':
+(.text+0x11040): undefined reference to `__udivdi3'
+drivers/built-in.o: In function `.LM474':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/bitops/atomic.h:72: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM36':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/char/mem.c:860: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.L70':
+misc.c:(.text+0x1482c): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.L158':
+firmware_class.c:(.text+0x1b608): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LM18':
+firmware_class.c:(.text+0x1b74c): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LVL13':
+firmware_class.c:(.text+0x1b824): undefined reference to `__umoddi3'
+drivers/built-in.o: In function `.LM55':
+firmware_class.c:(.text+0x1da1c): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.L138':
+firmware_class.c:(.text+0x1df90): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LVL181':
+firmware_class.c:(.text+0x1e3e8): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM430':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/input/input.c:1134: undefined reference to `__muldi3'
+drivers/built-in.o: In function `is_event_supported':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/input/input.c:56: undefined reference to `__muldi3'
+drivers/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/input/input.c:56: more undefined references to `__muldi3' follow
+drivers/built-in.o: In function `.LBB1081':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__divdi3'
+drivers/built-in.o: In function `.LM114':
+ff-core.c:(.text+0x26d74): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LVL72':
+ff-core.c:(.text+0x26eec): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LVL38':
+ff-core.c:(.text+0x27670): undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LVL28':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/hid/hid-core.c:1453: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.L55':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/hid/hid-core.c:724: undefined reference to `__muldi3'
+drivers/built-in.o: In function `item_sdata':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/hid/hid-core.c:310: undefined reference to `__divdi3'
+drivers/built-in.o: In function `.L378':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/hid/hid-core.c:338: undefined reference to `__muldi3'
+drivers/built-in.o: In function `.LM531':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/drivers/hid/hid-core.c:433: undefined reference to `__divdi3'
+drivers/built-in.o: In function `.LM798':
+hid-generic.c:(.text+0x2d234): undefined reference to `__divdi3'
+net/built-in.o: In function `sock_create_lite':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/socket.c:1121: undefined reference to `__divdi3'
+net/built-in.o: In function `.LBE2306':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/socket.c:3363: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM405':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:1011: undefined reference to `__divdi3'
+net/built-in.o: In function `.LVL250':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:1011: undefined reference to `__moddi3'
+net/built-in.o: In function `.L291':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:1011: undefined reference to `__muldi3'
+net/built-in.o: In function `cred_to_ucred':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:980: undefined reference to `__divdi3'
+net/built-in.o: In function `.L378':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:1249: undefined reference to `__udivdi3'
+net/built-in.o: In function `__skb_fill_page_desc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/skbuff.h:1416: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1171':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:2056: undefined reference to `__muldi3'
+net/built-in.o: In function `sock_valbool_flag':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/sock.c:656: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM33':
+net-procfs.c:(.text+0x7a94): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM217':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/skbuff.c:748: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: more undefined references to `__muldi3' follow
+net/built-in.o: In function `.LVL335':
+net-procfs.c:(.text+0x10ad8): undefined reference to `__umoddi3'
+net/built-in.o: In function `.LM286':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/net_namespace.c:253: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM15':
+net-procfs.c:(.text+0x13bc8): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL178':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dev.c:3656: undefined reference to `__muldi3'
+net/built-in.o: In function `__netdev_adjacent_dev_unlink':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dev.c:4843: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL324':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dev.c:3277: undefined reference to `__muldi3'
+net/built-in.o: In function `.L858':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sch_generic.h:387: undefined reference to `__udivdi3'
+net/built-in.o: In function `__preempt_count_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/preempt.h:56: undefined reference to `__muldi3'
+net/built-in.o: In function `.L1323':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dev.c:4069: undefined reference to `__muldi3'
+net/built-in.o: In function `default_device_exit':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dev.c:6937: undefined reference to `__umoddi3'
+net/built-in.o: In function `ethtool_self_test':
+ethtool.c:(.text+0x1e614): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM585':
+net-procfs.c:(.text+0x1ea40): undefined reference to `__divdi3'
+net/built-in.o: In function `.L687':
+net-procfs.c:(.text+0x204d0): undefined reference to `__divdi3'
+net/built-in.o: In function `dev_mc_add':
+(.text+0x214dc): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM371':
+net-procfs.c:(.text+0x2151c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM92':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dst.c:199: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM176':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/dst.c:267: undefined reference to `__udivdi3'
+net/built-in.o: In function `.L170':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/neighbour.c:315: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LBB3703':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/neighbour.c:2763: undefined reference to `__umoddi3'
+net/built-in.o: In function `neigh_forced_gc':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/neighbour.c:154: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LBB4669':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/neighbour.c:120: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LVL918':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/neighbour.c:478: undefined reference to `__umoddi3'
+net/built-in.o: In function `nla_type':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/netlink.h:661: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM27':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/rtnetlink.c:1332: undefined reference to `__muldi3'
+net/built-in.o: In function `.L998':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/rtnetlink.c:2036: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LVL1041':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/rtnetlink.c:1849: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM1545':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/rtnetlink.c:2161: undefined reference to `__muldi3'
+net/built-in.o: In function `.LBE3150':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/rtnetlink.c:2161: undefined reference to `__muldi3'
+net/built-in.o: In function `__preempt_count_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/preempt.h:56: undefined reference to `__udivdi3'
+net/built-in.o: In function `.L75':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/core/net-procfs.c:367: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM35':
+eth.c:(.text+0x302e0): undefined reference to `__muldi3'
+net/built-in.o: In function `eth_rebuild_header':
+(.text+0x30400): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM123':
+eth.c:(.text+0x306fc): undefined reference to `__muldi3'
+net/built-in.o: In function `.LBE1306':
+sch_mq.c:(.text+0x30e7c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL182':
+sch_mq.c:(.text+0x31530): undefined reference to `__muldi3'
+net/built-in.o:sch_mq.c:(.text+0x31578): more undefined references to `__muldi3' follow
+net/built-in.o: In function `__build_flow_key':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/route.c:518: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/route.c:516: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/route.c:519: undefined reference to `__divdi3'
+net/built-in.o: In function `.LM655':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/route.c:1000: undefined reference to `__muldi3'
+net/built-in.o: In function `inet_putpeer':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/inetpeer.c:506: undefined reference to `__moddi3'
+net/built-in.o: In function `inet_putpeer':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:28: undefined reference to `__muldi3'
+net/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__divdi3'
+net/built-in.o: In function `.LM17':
+tcp_cubic.c:(.text+0x3d314): undefined reference to `__moddi3'
+net/built-in.o: In function `.LVL5':
+tcp_cubic.c:(.text+0x3d320): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL8':
+tcp_cubic.c:(.text+0x3d338): undefined reference to `__divdi3'
+net/built-in.o: In function `.L58':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ip_fragment.c:851: undefined reference to `__muldi3'
+net/built-in.o: In function `ip_frag_reasm':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ip_fragment.c:586: undefined reference to `__muldi3'
+net/built-in.o: In function `.L141':
+tcp_cubic.c:(.text+0x400e0): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL253':
+tcp_cubic.c:(.text+0x40a34): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1385':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ip_output.c:1335: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ip_output.c:314: more undefined references to `__muldi3' follow
+net/built-in.o: In function `csum_add':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/checksum.h:64: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LM254':
+tcp_cubic.c:(.text+0x44f04): undefined reference to `__divdi3'
+net/built-in.o: In function `.LBB1740':
+tcp_cubic.c:(.text+0x455b4): undefined reference to `__umoddi3'
+net/built-in.o: In function `.L576':
+tcp_cubic.c:(.text+0x46314): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L577':
+tcp_cubic.c:(.text+0x46324): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM297':
+tcp_cubic.c:(.text+0x46f4c): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM301':
+tcp_cubic.c:(.text+0x46f60): undefined reference to `__muldi3'
+net/built-in.o: In function `.L128':
+tcp_cubic.c:(.text+0x46f90): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL174':
+tcp_cubic.c:(.text+0x46fb8): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L190':
+tcp_cubic.c:(.text+0x46ff0): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL140':
+tcp_cubic.c:(.text+0x48190): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM325':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:587: undefined reference to `__divdi3'
+net/built-in.o: In function `.LM339':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:549: undefined reference to `__muldi3'
+net/built-in.o: In function `sk_wmem_schedule':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sock.h:1416: undefined reference to `__muldi3'
+net/built-in.o: In function `do_tcp_sendpages':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:894: undefined reference to `__muldi3'
+net/built-in.o: In function `.LBB3734':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:28: undefined reference to `__divdi3'
+net/built-in.o: In function `.LBE4111':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sock.h:1470: undefined reference to `__muldi3'
+net/built-in.o: In function `sk_mem_uncharge':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sock.h:1464: undefined reference to `__udivdi3'
+net/built-in.o: In function `__access_ok':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/uaccess.h:70: undefined reference to `__muldi3'
+net/built-in.o: In function `compound_head':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/mm.h:411: undefined reference to `__muldi3'
+net/built-in.o: In function `.L637':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:1535: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LVL471':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:1535: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1016':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:1554: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM1019':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:1557: undefined reference to `__muldi3'
+net/built-in.o: In function `.L732':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:1954: undefined reference to `__divdi3'
+net/built-in.o: In function `__skb_unlink':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/skbuff.h:1326: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL730':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:2094: undefined reference to `__udivdi3'
+net/built-in.o: In function `atomic_long_read':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic-long.h:31: undefined reference to `__udivdi3'
+net/built-in.o: In function `tcp_out_of_memory':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/tcp.h:313: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM1515':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:2132: undefined reference to `__udivdi3'
+net/built-in.o: In function `sk_mem_reclaim':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sock.h:1441: undefined reference to `__udivdi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:2528: more undefined references to `__udivdi3' follow
+net/built-in.o: In function `.LM231':
+tcp_cubic.c:(.text+0x4f228): undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL112':
+tcp_cubic.c:(.text+0x4f3a4): undefined reference to `__divdi3'
+net/built-in.o: In function `.LVL113':
+tcp_cubic.c:(.text+0x4f3b4): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM308':
+tcp_cubic.c:(.text+0x4f524): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LVL159':
+tcp_cubic.c:(.text+0x4f720): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LVL272':
+tcp_cubic.c:(.text+0x4ff8c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1316':
+tcp_cubic.c:(.text+0x517a4): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1320':
+tcp_cubic.c:(.text+0x517c0): undefined reference to `__muldi3'
+net/built-in.o: In function `.L874':
+tcp_cubic.c:(.text+0x517dc): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LBE6248':
+tcp_cubic.c:(.text+0x51ba4): undefined reference to `__muldi3'
+net/built-in.o: In function `.LBB6253':
+tcp_cubic.c:(.text+0x51bc0): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L936':
+tcp_cubic.c:(.text+0x51c78): undefined reference to `__muldi3'
+net/built-in.o: In function `.L1111':
+tcp_cubic.c:(.text+0x52328): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1485':
+tcp_cubic.c:(.text+0x534dc): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1336':
+tcp_cubic.c:(.text+0x53684): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM2159':
+tcp_cubic.c:(.text+0x53698): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM2160':
+tcp_cubic.c:(.text+0x536b4): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1606':
+tcp_cubic.c:(.text+0x53e90): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LVL1081':
+tcp_cubic.c:(.text+0x54540): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LBB7542':
+tcp_cubic.c:(.text+0x545cc): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1642':
+tcp_cubic.c:(.text+0x545dc): undefined reference to `__muldi3'
+net/built-in.o: In function `.L1835':
+tcp_cubic.c:(.text+0x5466c): undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1830':
+tcp_cubic.c:(.text+0x5468c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LBB7822':
+tcp_cubic.c:(.text+0x55260): undefined reference to `__divdi3'
+net/built-in.o: In function `.LM2892':
+tcp_cubic.c:(.text+0x5526c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM3114':
+tcp_cubic.c:(.text+0x55d3c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM3140':
+tcp_cubic.c:(.text+0x55e78): undefined reference to `__muldi3'
+net/built-in.o: In function `.L2293':
+tcp_cubic.c:(.text+0x55ecc): undefined reference to `__umoddi3'
+net/built-in.o: In function `.L2314':
+tcp_cubic.c:(.text+0x5600c): undefined reference to `__muldi3'
+net/built-in.o: In function `.L2324':
+tcp_cubic.c:(.text+0x56068): undefined reference to `__muldi3'
+net/built-in.o: In function `.L2351':
+tcp_cubic.c:(.text+0x560e4): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM3204':
+tcp_cubic.c:(.text+0x5613c): undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM3247':
+tcp_cubic.c:(.text+0x56334): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM3627':
+tcp_cubic.c:(.text+0x572e4): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM638':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_output.c:2235: undefined reference to `__udivdi3'
+net/built-in.o: In function `tcp_transmit_skb':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_output.c:854: undefined reference to `__muldi3'
+net/built-in.o: In function `tcp_transmit_skb':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/skbuff.h:2176: undefined reference to `__muldi3'
+net/built-in.o: In function `tcp_transmit_skb':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_output.c:885: undefined reference to `__muldi3'
+net/built-in.o: In function `get_tcp4_sock':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_ipv4.c:2592: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL299':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_ipv4.c:127: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_ipv4.c:2405: more undefined references to `__muldi3' follow
+net/built-in.o: In function `sk_backlog_rcv':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/sock.h:818: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LBE1318':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp_metrics.c:126: undefined reference to `__muldi3'
+net/built-in.o: In function `dst_metric_raw':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/dst.h:174: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM9':
+tcp_cubic.c:(.text+0x64f6c): undefined reference to `__muldi3'
+net/built-in.o: In function `.LM16':
+tcp_cubic.c:(.text+0x64f9c): undefined reference to `__muldi3'
+net/built-in.o: In function `__fswab32':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/uapi/linux/swab.h:64: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/checksum.h:56: more undefined references to `__muldi3' follow
+net/built-in.o: In function `spin_unlock_bh':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/spinlock.h:348: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM355':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1354: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1449':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1469: undefined reference to `__moddi3'
+net/built-in.o: In function `.L828':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1512: undefined reference to `__muldi3'
+net/built-in.o: In function `udp_lib_checksum_complete':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/skbuff.h:2665: undefined reference to `__divdi3'
+net/built-in.o: In function `pskb_may_pull':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/skbuff.h:1547: undefined reference to `__udivdi3'
+net/built-in.o: In function `__udp4_lib_lookup_skb':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:565: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM1751':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1769: undefined reference to `__udivdi3'
+net/built-in.o: In function `sock_put':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/asm-generic/atomic.h:95: undefined reference to `__muldi3'
+net/built-in.o: In function `arch_local_irq_restore':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/irqflags.h:46: undefined reference to `__udivdi3'
+net/built-in.o: In function `udp_rcv':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1960: undefined reference to `__muldi3'
+net/built-in.o: In function `udp_encap_enable':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:1986: undefined reference to `__udivdi3'
+net/built-in.o: In function `.L1284':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:2067: undefined reference to `__muldi3'
+net/built-in.o: In function `.LBB4843':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:2092: undefined reference to `__muldi3'
+net/built-in.o: In function `copy_to_user':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/include/asm/uaccess.h:423: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM465':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/arp.c:655: undefined reference to `__muldi3'
+net/built-in.o: In function `.L526':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/devinet.c:2250: undefined reference to `__muldi3'
+net/built-in.o: In function `nla_put_s32':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/netlink.h:912: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/net/netlink.h:912: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL884':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/devinet.c:1281: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/igmp.c:2124: more undefined references to `__muldi3' follow
+net/built-in.o: In function `.LM1035':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/igmp.c:2424: undefined reference to `__udivdi3'
+net/built-in.o: In function `.L752':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/igmp.c:2428: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM1042':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/igmp.c:2433: undefined reference to `__umoddi3'
+net/built-in.o: In function `.LM870':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1170: undefined reference to `__muldi3'
+net/built-in.o: In function `.LBB2086':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/uapi/linux/swab.h:64: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL484':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1329: undefined reference to `__muldi3'
+net/built-in.o: In function `.LVL488':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1329: undefined reference to `__divdi3'
+net/built-in.o: In function `.L690':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/rculist.h:102: undefined reference to `__muldi3'
+net/built-in.o: In function `.LBE2106':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1317: undefined reference to `__divdi3'
+net/built-in.o: In function `.LM931':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1236: undefined reference to `__divdi3'
+net/built-in.o: In function `check_tnode':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:341: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:341: undefined reference to `__divdi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:455: undefined reference to `__udivdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:460: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:210: undefined reference to `__muldi3'
+net/built-in.o: In function `tkey_extract_bits':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:245: undefined reference to `__muldi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:485: undefined reference to `__udivdi3'
+net/built-in.o: In function `tkey_extract_bits':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:245: undefined reference to `__muldi3'
+net/built-in.o: In function `.L649':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1243: undefined reference to `__udivdi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:186: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LVL536':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1268: undefined reference to `__muldi3'
+net/built-in.o: In function `.L657':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1271: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1271: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1271: undefined reference to `__muldi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1081: undefined reference to `__muldi3'
+net/built-in.o:/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:245: more undefined references to `__muldi3' follow
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1121: undefined reference to `__udivdi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/include/linux/rcutiny.h:68: undefined reference to `__muldi3'
+net/built-in.o: In function `fib_insert_node':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1145: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/fib_trie.c:1151: undefined reference to `__divdi3'
+net/built-in.o: In function `.LM343':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/unix/af_unix.c:2086: undefined reference to `__udivdi3'
+net/built-in.o: In function `.LM1005':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/netlink/af_netlink.c:3141: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM2210':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/tcp.c:3168: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM2112':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/udp.c:2454: undefined reference to `__muldi3'
+net/built-in.o: In function `.L270':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ping.c:1218: undefined reference to `__divdi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/ping.c:1218: undefined reference to `__divdi3'
+net/built-in.o: In function `gre_offload_init':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/gre_offload.c:291: undefined reference to `__muldi3'
+net/built-in.o: In function `.LM4':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/net/ipv4/sysctl_net_ipv4.c:907: undefined reference to `__udivdi3'
+lib/lib.a(flex_proportions.o): In function `.LBB281':
+flex_proportions.c:(.text+0x388): undefined reference to `__muldi3'
+lib/lib.a(vsprintf.o): In function `.LM16':
+vsprintf.c:(.text+0x9c): undefined reference to `__muldi3'
+lib/lib.a(vsprintf.o): In function `.LM20':
+vsprintf.c:(.text+0xc8): undefined reference to `__muldi3'
+lib/lib.a(vsprintf.o): In function `.LM24':
+vsprintf.c:(.text+0xf4): undefined reference to `__muldi3'
+lib/lib.a(vsprintf.o): In function `.LM28':
+vsprintf.c:(.text+0x120): undefined reference to `__muldi3'
+lib/lib.a(vsprintf.o):vsprintf.c:(.text+0x14c): more undefined references to `__muldi3' follow
+lib/lib.a(vsprintf.o): In function `.L24':
+vsprintf.c:(.text+0x41c): undefined reference to `__umoddi3'
+vsprintf.c:(.text+0x430): undefined reference to `__udivdi3'
+lib/lib.a(vsprintf.o): In function `.LM1191':
+vsprintf.c:(.text+0x3088): undefined reference to `__divdi3'
+lib/lib.a(vsprintf.o): In function `.LM1267':
+vsprintf.c:(.text+0x3358): undefined reference to `__udivdi3'
+arch/riscv/lib/lib.a(delay.o): In function `.LM12':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:18: undefined reference to `__muldi3'
+arch/riscv/lib/lib.a(delay.o): In function `.LM13':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:22: undefined reference to `__muldi3'
+arch/riscv/lib/lib.a(delay.o): In function `__const_udelay':
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:22: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:22: undefined reference to `__muldi3'
+/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:22: undefined reference to `__muldi3'
+arch/riscv/lib/lib.a(delay.o):/home/ambhave/riscv-bluespec/programs/linux/linux-3.14.29/arch/riscv/lib/delay.c:22: more undefined references to `__muldi3' follow
+lib/lib.a(reciprocal_div.o): In function `.LBB10':
+reciprocal_div.c:(.text+0x9c): undefined reference to `__udivdi3'
+make: *** [vmlinux] Error 1
