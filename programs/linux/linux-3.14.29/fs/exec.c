@@ -19,7 +19,7 @@
  * current->executable is only used by the procfs.  This allows a dispatch
  * table to check for several different types  of binary formats.  We keep
  * trying until we recognize the file or we run out of supported binary
- * formats. 
+ * formats.
  */
 
 #include <linux/slab.h>
@@ -1449,9 +1449,11 @@ static int do_execve_common(struct filename *filename,
 	struct files_struct *displaced;
 	int retval;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (IS_ERR(filename))
 		return PTR_ERR(filename);
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	/*
 	 * We move the actual failure in case of RLIMIT_NPROC excess from
 	 * set*uid() to execve() because too many poorly written programs
@@ -1464,69 +1466,86 @@ static int do_execve_common(struct filename *filename,
 		goto out_ret;
 	}
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	/* We're below the limit (still or again), so we don't want to make
 	 * further execve() calls fail. */
 	current->flags &= ~PF_NPROC_EXCEEDED;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = unshare_files(&displaced);
 	if (retval)
 		goto out_ret;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = -ENOMEM;
 	bprm = kzalloc(sizeof(*bprm), GFP_KERNEL);
 	if (!bprm)
 		goto out_files;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = prepare_bprm_creds(bprm);
 	if (retval)
 		goto out_free;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	check_unsafe_exec(bprm);
 	current->in_execve = 1;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	file = do_open_exec(filename);
 	retval = PTR_ERR(file);
 	if (IS_ERR(file))
 		goto out_unmark;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	sched_exec();
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	bprm->file = file;
 	bprm->filename = bprm->interp = filename->name;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = bprm_mm_init(bprm);
 	if (retval)
 		goto out_unmark;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	bprm->argc = count(argv, MAX_ARG_STRINGS);
 	if ((retval = bprm->argc) < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	bprm->envc = count(envp, MAX_ARG_STRINGS);
 	if ((retval = bprm->envc) < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = prepare_binprm(bprm);
 	if (retval < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = copy_strings_kernel(1, &bprm->filename, bprm);
 	if (retval < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	bprm->exec = bprm->p;
 	retval = copy_strings(bprm->envc, envp, bprm);
 	if (retval < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = copy_strings(bprm->argc, argv, bprm);
 	if (retval < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	retval = exec_binprm(bprm);
 	if (retval < 0)
 		goto out;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s %d\n",__FUNCTION__,__LINE__,__FILE__,retval);
 	/* execve succeeded */
 	current->fs->in_exec = 0;
 	current->in_execve = 0;
@@ -1536,25 +1555,32 @@ static int do_execve_common(struct filename *filename,
 	putname(filename);
 	if (displaced)
 		put_files_struct(displaced);
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s %d\n",__FUNCTION__,__LINE__,__FILE__,retval);
 	return retval;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 out:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (bprm->mm) {
 		acct_arg_size(bprm, 0);
 		mmput(bprm->mm);
 	}
 
 out_unmark:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	current->fs->in_exec = 0;
 	current->in_execve = 0;
 
 out_free:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	free_bprm(bprm);
 
 out_files:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (displaced)
 		reset_files_struct(displaced);
 out_ret:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	putname(filename);
 	return retval;
 }

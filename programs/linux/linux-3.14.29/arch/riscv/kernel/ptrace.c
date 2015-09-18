@@ -23,3 +23,7 @@ long arch_ptrace(struct task_struct *child, long request,
 {
 	return 0;
 }
+
+void print_syscall_no(int n) {
+    printk("AMOLOS SYSCALL: %d\n", n);
+}

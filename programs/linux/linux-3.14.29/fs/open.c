@@ -677,6 +677,7 @@ static int do_dentry_open(struct file *f,
 	if (unlikely(f->f_flags & O_PATH))
 		f->f_mode = FMODE_PATH;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	path_get(&f->f_path);
 	inode = f->f_inode = f->f_path.dentry->d_inode;
 	if (f->f_mode & FMODE_WRITE && !special_file(inode->i_mode)) {
@@ -688,39 +689,48 @@ static int do_dentry_open(struct file *f,
 
 	f->f_mapping = inode->i_mapping;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (unlikely(f->f_mode & FMODE_PATH)) {
 		f->f_op = &empty_fops;
 		return 0;
 	}
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	/* POSIX.1-2008/SUSv4 Section XSI 2.9.7 */
 	if (S_ISREG(inode->i_mode))
 		f->f_mode |= FMODE_ATOMIC_POS;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	f->f_op = fops_get(inode->i_fop);
 	if (unlikely(WARN_ON(!f->f_op))) {
 		error = -ENODEV;
 		goto cleanup_all;
 	}
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	error = security_file_open(f, cred);
 	if (error)
 		goto cleanup_all;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	error = break_lease(inode, f->f_flags);
 	if (error)
 		goto cleanup_all;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (!open)
 		open = f->f_op->open;
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (open) {
 		error = open(inode, f);
 		if (error)
 			goto cleanup_all;
 	}
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if ((f->f_mode & (FMODE_READ | FMODE_WRITE)) == FMODE_READ)
 		i_readcount_inc(inode);
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	f->f_flags &= ~(O_CREAT | O_EXCL | O_NOCTTY | O_TRUNC);
 
 	file_ra_state_init(&f->f_ra, f->f_mapping->host->i_mapping);
@@ -728,6 +738,7 @@ static int do_dentry_open(struct file *f,
 	return 0;
 
 cleanup_all:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	fops_put(f->f_op);
 	if (f->f_mode & FMODE_WRITE) {
 		if (!special_file(inode->i_mode)) {
@@ -743,6 +754,7 @@ cleanup_all:
 		}
 	}
 cleanup_file:
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	path_put(&f->f_path);
 	f->f_path.mnt = NULL;
 	f->f_path.dentry = NULL;
@@ -969,21 +981,27 @@ long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 	if (fd)
 		return fd;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s %s\n",__FUNCTION__,__LINE__,__FILE__,filename);
 	tmp = getname(filename);
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	fd = get_unused_fd_flags(flags);
 	if (fd >= 0) {
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 		struct file *f = do_filp_open(dfd, tmp, &op);
 		if (IS_ERR(f)) {
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 			put_unused_fd(fd);
 			fd = PTR_ERR(f);
 		} else {
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 			fsnotify_open(f);
 			fd_install(fd, f);
 		}
 	}
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	putname(tmp);
 	return fd;
 }

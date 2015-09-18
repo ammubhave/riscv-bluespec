@@ -6,7 +6,7 @@
  *  GK 2/5/95  -  Changed to support mounting root fs via NFS
  *  Added initrd & change_root: Werner Almesberger & Hans Lermen, Feb '96
  *  Moan early if gcc is old, avoiding bogus kernels - Paul Gortmaker, May '96
- *  Simplified starting of init:  Michael A. Griffith <grif@acm.org> 
+ *  Simplified starting of init:  Michael A. Griffith <grif@acm.org>
  */
 
 #define DEBUG		/* Enable initcall_debug */
@@ -851,14 +851,18 @@ static int __ref kernel_init(void *unused)
 
 	flush_delayed_fput();
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (ramdisk_execute_command) {
 		ret = run_init_process(ramdisk_execute_command);
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s %d\n",__FUNCTION__,__LINE__,__FILE__,ret);
 		if (!ret)
 			return 0;
 		pr_err("Failed to execute %s (error %d)\n",
 		       ramdisk_execute_command, ret);
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	}
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	/*
 	 * We try each of these until one succeeds.
 	 *
@@ -866,18 +870,24 @@ static int __ref kernel_init(void *unused)
 	 * trying to recover a really broken machine.
 	 */
 	if (execute_command) {
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 		ret = run_init_process(execute_command);
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 		if (!ret)
 			return 0;
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 		pr_err("Failed to execute %s (error %d).  Attempting defaults...\n",
 			execute_command, ret);
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	}
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (!try_to_run_init_process("/sbin/init") ||
 	    !try_to_run_init_process("/etc/init") ||
 	    !try_to_run_init_process("/bin/init") ||
 	    !try_to_run_init_process("/bin/sh"))
 		return 0;
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	panic("No working init found.  Try passing init= option to kernel. "
 	      "See Linux Documentation/init.txt for guidance.");
 }
@@ -917,6 +927,7 @@ static noinline void __init kernel_init_freeable(void)
 	if (sys_open((const char __user *) "/dev/console", O_RDWR, 0) < 0)
 		pr_err("Warning: unable to open an initial console.\n");
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	(void) sys_dup(0);
 	(void) sys_dup(0);
 	/*
@@ -924,14 +935,17 @@ static noinline void __init kernel_init_freeable(void)
 	 * the work
 	 */
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (!ramdisk_execute_command)
 		ramdisk_execute_command = "/init";
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	if (sys_access((const char __user *) ramdisk_execute_command, 0) != 0) {
 		ramdisk_execute_command = NULL;
 		prepare_namespace();
 	}
 
+printk(KERN_ALERT "AMOLOS DEBUG: Passed %s %d %s\n",__FUNCTION__,__LINE__,__FILE__);
 	/*
 	 * Ok, we have completed the initial bootup, and
 	 * we're essentially up and running. Get rid of the
