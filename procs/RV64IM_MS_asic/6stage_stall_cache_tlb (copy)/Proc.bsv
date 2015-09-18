@@ -3,7 +3,7 @@
 
 import AddrPred::*;
 import BuildVector::*;
-import Cache::*;
+import RegfileCache::*;
 import CsrFile::*;
 import ClientServer::*;
 import Connectable::*;

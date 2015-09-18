@@ -24,7 +24,7 @@ interface Cache;
   interface Client#(WideMemReq, WideMemResp) to_mem;
 endinterface
 
-typedef 1024 CacheEntries;
+typedef 256 CacheEntries;
 typedef Bit#(TLog#(CacheEntries)) CacheIndex;
 typedef Bit#(TSub#(TSub#(AddrSz, TLog#(CacheEntries)), 3)) CacheTag;
 

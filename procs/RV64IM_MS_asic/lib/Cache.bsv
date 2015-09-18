@@ -46,13 +46,13 @@ module mkCache(Cache);
 
   Fifo#(2, WideMemReq) memReqQ <- mkCFFifo;
   Fifo#(2, WideMemResp) memRespQ <- mkCFFifo;
+  Fifo#(2, Bit#(TLog#(TAdd#(CacheEntries, 1)))) flush_init_fifo <- mkCFFifo;
 
   function CacheIndex getIdx(Addr addr) = truncate(addr >> valueOf(IndxShamt));
   function CacheTag getTag(Addr addr) = truncateLSB(addr);
 
-  let inited = truncateLSB(init) == 1'b1;
+  let inited = truncateLSB(init) == 1'b1 && !flush_init_fifo.notEmpty;
   let flushed = truncateLSB(flush_init) == 1'b1;
-  Fifo#(2, Bit#(TLog#(TAdd#(CacheEntries, 1)))) flush_init_fifo <- mkCFFifo;
 
   rule initialize(!inited && flushed);
     init <= init + 1;
@@ -134,7 +134,7 @@ module mkCache(Cache);
     $display("cache flushCache part 1 %x", flush_init);
   endrule
 
-  rule flushCache_part2(!flushed && status == Ready);
+  rule flushCache_part2(status == Ready);
     let tag <- tagArray.response.get;
     let dirty <- dirtyArray.response.get;
     let data <- dataArray.response.get;
@@ -190,7 +190,7 @@ module mkCache(Cache);
 
     let currTag <- tagArray.response.get;
     let currData <- dataArray.response.get;
-    let currDirty <- dirtyArray.response.get;G
+    let currDirty <- dirtyArray.response.get;
 
     if (Valid(tag) == currTag) begin  // hit
       hitQ.enq(currData);
