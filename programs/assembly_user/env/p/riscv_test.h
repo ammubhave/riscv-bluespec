@@ -111,10 +111,7 @@
 
 #define RVTEST_CODE_BEGIN                                               \
         .text;                                                          \
-        .align  6;                                                      \
-        .align  6;                                                      \
-        .align  6;                                                      \
-        .align  6;                                                      \
+        .align  9;                                                     \
 _start:                                                                 \
         init;                                                           \
         EXTRA_INIT;                                                     \
@@ -134,13 +131,13 @@ finish:  csrw mtohost, TESTNUM;                                         \
 //-----------------------------------------------------------------------
 
 #define RVTEST_PASS                                                     \
-        fence;                                                          \
+        //fence;                                                          \
         li TESTNUM, 0;                                                  \
         j finish
 
 #define TESTNUM x28
 #define RVTEST_FAIL                                                     \
-        fence;                                                          \
+        //fence;                                                          \
 1:      beqz TESTNUM, 1b;                                               \
         j finish
 

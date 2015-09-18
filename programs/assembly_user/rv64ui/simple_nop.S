@@ -18,7 +18,6 @@ RVTEST_CODE_BEGIN
   nop
   nop
   nop
-  fence
   nop
   nop
   nop

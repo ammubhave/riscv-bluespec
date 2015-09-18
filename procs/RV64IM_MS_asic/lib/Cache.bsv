@@ -17,7 +17,7 @@ typedef 1024 CacheEntries;
 typedef Bit#(TLog#(CacheEntries)) CacheIndex;
 typedef Bit#(TSub#(TSub#(AddrSz, TLog#(CacheEntries)), 3)) CacheTag;
 
-typedef enum {Ready, StartMiss, SendFillReq, WaitFillResp, WaitBramResp} CacheStatus deriving (Bits, Eq);
+typedef enum {Ready, StartMiss, SendFillReq, WaitFillResp, WaitBramResp, WaitFillWriteResp} CacheStatus deriving (Bits, Eq);
 
 (* synthesize *)
 module mkCache(Cache);
@@ -107,12 +107,21 @@ module mkCache(Cache);
       hitQ.enq(data);
     end
 
-    dataArray.request.put( BRAMRequest{ write: True, responseOnWrite: False,address: idx, datain: data });
-    tagArray.request.put( BRAMRequest{ write: True, responseOnWrite: False,address: idx, datain: Valid(tag) });
-    dirtyArray.request.put( BRAMRequest{ write: True, responseOnWrite: False,address: idx, datain: dirty});
+    dataArray.request.put( BRAMRequest{ write: True, responseOnWrite: True,address: idx, datain: data });
+    tagArray.request.put( BRAMRequest{ write: True, responseOnWrite: True,address: idx, datain: Valid(tag) });
+    dirtyArray.request.put( BRAMRequest{ write: True, responseOnWrite: True,address: idx, datain: dirty});
     memRespQ.deq;
-    status <= Ready;
+    status <= WaitFillWriteResp;
     $display("cache waitfillresp %x %x idx: %x tag: %x", miss.addr, data, idx, Valid(tag));
+  endrule
+
+  rule waitFillWriteResp(status == WaitFillWriteResp);
+    let d1 <- dataArray.response.get;
+    let d2 <- tagArray.response.get;
+    let d3 <- dirtyArray.response.get;
+
+    $display("cache waitfillwriteresp %x", d2);
+    status <= Ready;
   endrule
 
   rule flushCache(!flushed && status == Ready);
@@ -163,7 +172,7 @@ module mkCache(Cache);
       $display("cache req: st hit %x %x", r.addr, r.data);
       status <= Ready;
     end else begin  // miss
-            $display("cache req: enq to mem %x", r.addr);
+            $display("cache req: st miss %x", r.addr);
       miss <= r;
       miss_tag <= currTag;
       miss_data <= currData;
@@ -181,23 +190,31 @@ module mkCache(Cache);
 
     let currTag <- tagArray.response.get;
     let currData <- dataArray.response.get;
-    let currDirty <- dirtyArray.response.get;
+    let currDirty <- dirtyArray.response.get;G
 
     if (Valid(tag) == currTag) begin  // hit
       hitQ.enq(currData);
       status <= Ready;
+
+      $display("cache req: ld hit %x %x", r.addr, currData);
     end else begin  // miss
       miss <= r;
       miss_tag <= currTag;
       miss_data <= currData;
       miss_dirty <= currDirty;
       status <= StartMiss;
+
+            $display("cache req: ld miss %x", r.addr);
     end
   endrule
 
   method Action flush if (status == Ready && flushed);
     flush_init <= 0;
     init <= 0;
+    req_1to2_fifo.clear;
+    tagArrayBRAM.portAClear;
+    dataArrayBRAM.portAClear;
+    dirtyArrayBRAM.portAClear;
   endmethod
 
   interface Server to_proc;
@@ -210,6 +227,8 @@ module mkCache(Cache);
         dirtyArray.request.put( BRAMRequest { write: False, responseOnWrite: False, address: idx, datain: ? } );
         req_1to2_fifo.enq(r);
         status <= WaitBramResp;
+
+        $display("cache to_proc put() %x %x", r.addr, idx);
       endmethod
     endinterface
 

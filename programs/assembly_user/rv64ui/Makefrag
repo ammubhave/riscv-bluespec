@@ -4,8 +4,8 @@
 ##
 
 rv64ui_sc_tests = \
+    simple_nop \
 	j jal jalr \
-    csr_hazard simple_nop \
 	wfi \
 	add addi addiw addw \
 	and andi \

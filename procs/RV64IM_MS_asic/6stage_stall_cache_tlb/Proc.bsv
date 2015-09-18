@@ -3,7 +3,7 @@
 
 import AddrPred::*;
 import BuildVector::*;
-import Cache::*;
+import RegfileCache::*;
 import CsrFile::*;
 import ClientServer::*;
 import Connectable::*;
@@ -115,7 +115,7 @@ module mkProc#(ProcIndication indication)(Proc);
                 (!execRedirect.notEmpty ||
                  (execRedirect.notEmpty &&
                     (!isSystem(tpl_1(execRedirect.first).brType) ||
-                     (isSystem(tpl_1(execRedirect.first).brType) && !ex2m.notEmpty && !m12m2.notEmpty)))));
+                     (isSystem(tpl_1(execRedirect.first).brType) && !f12f2.notEmpty && !f2d.notEmpty && !d2rf.notEmpty && !rf2ex.notEmpty && !ex2m.notEmpty && !m12m2.notEmpty && !m2wb.notEmpty)))));
     if(execRedirect.notEmpty)
     begin
       if (tpl_1(execRedirect.first).brType != Interrupt && tpl_1(execRedirect.first).brType != Priv && tpl_1(execRedirect.first).brType != Fence)
