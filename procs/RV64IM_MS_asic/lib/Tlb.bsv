@@ -16,7 +16,7 @@ interface Tlb;
   interface Client#(MemReq, MemResp) to_mem;
 endinterface
 
-typedef 32 TlbEntries;
+typedef 8 TlbEntries;
 
 typedef 27 VpnSz;
 typedef Bit#(27) Vpn;

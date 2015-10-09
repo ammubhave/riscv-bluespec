@@ -3,7 +3,7 @@
 #include <bitset>
 #include <cassert>
 #include <fcntl.h>
-#include <string>
+#include <string.h>
 #include <iostream>
 #include <sys/stat.h>
 #include <vector>
@@ -66,6 +66,12 @@ void blk_write(uint64_t v) {
 
 class ProcIndication : public ProcIndicationWrapper {
  public:
+    virtual void debug_pc(uint64_t pc) {
+        printf("PC: %p\n", (void*)pc);
+    }
+    virtual void debug_excep(uint64_t ex) {
+        printf("Mem1: Load Access Exception: %p\n", (void*)ex);
+    }
     virtual void to_host(uint64_t v) {
         uint8_t device = v >> 56;
         uint8_t cmd = v >> 48;
@@ -75,7 +81,7 @@ class ProcIndication : public ProcIndicationWrapper {
         uint8_t what = payload & 0xFF;
 
         if (device != 1 || cmd != 1)
-            fprintf(stderr, "{%d %d %lx %lx}\n", device, cmd, payload, addr);
+            fprintf(stderr, "{%d %d %" PRIx64 " %" PRIx64 "}\n", device, cmd, payload, addr);
         switch (device) {
             case 0:  // dev EXIT
                 switch (cmd) {
@@ -90,17 +96,17 @@ class ProcIndication : public ProcIndicationWrapper {
                             strcpy((char*)&memBuffer[addr / 8], "ext");
                         else
                             memBuffer[addr / 8] = 0;
-                        fprintf(stderr, "Identified {%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "Identified {%d %d %" PRIx64 "}\n", device, cmd, payload);
                         to_host_respond(v, 1);
                         break;
                     default:
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                 }
                 break;
             case 1:  // dev CONSOLE
                 switch (cmd) {
                     case 0:  // cmd READ CHAR
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                         call_from_host(0);
                         break;
                     case 1:  // cmd PUT CHAR
@@ -116,11 +122,11 @@ class ProcIndication : public ProcIndicationWrapper {
                             strcpy((char*)&memBuffer[addr / 8], "write");
                         else
                             memBuffer[addr / 8] = 0;
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                         to_host_respond(v, 1);
                         break;
                     default:
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                 }
                 break;
             /*case 2:  // dev BLK
@@ -150,13 +156,13 @@ class ProcIndication : public ProcIndicationWrapper {
                 switch (cmd) {
                     case 0xFF:
                         memBuffer[addr / 8] = 0;
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                         to_host_respond(v, 1);
                         break;
                     default:
-                        fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                        fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
                 }
-                fprintf(stderr, "{%d %d %lx}\n", device, cmd, payload);
+                fprintf(stderr, "{%d %d %" PRIx64 "}\n", device, cmd, payload);
         }
         usleep(50);
        // call_from_host(false, 0);

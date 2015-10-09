@@ -44,6 +44,9 @@ endinterface
 
 interface ProcIndication;
   method Action to_host(Bit#(64) v);
+
+  method Action debug_pc(Bit#(64) pc);
+  method Action debug_excep(Bit#(64) ex);
 endinterface
 
 interface Proc;
@@ -265,8 +268,10 @@ module mkProc#(ProcIndication indication)(Proc);
         $finish();
       end
 
-      if(eInst.iType == J || eInst.iType == Jr || eInst.iType == Br || isSystem(eInst.iType))
+      if(eInst.iType == J || eInst.iType == Jr || eInst.iType == Br || isSystem(eInst.iType)) begin
         execRedirect.enq(tuple2(Redirect{pc: pc, nextPc: eInst.addr, brType: eInst.iType, taken: eInst.brTaken, mispredict: eInst.mispredict}, eInst.csrState));
+        indication.debug_pc(eInst.addr);
+      end
       if(eInst.mispredict || isSystem(eInst.iType))
         eEpoch <= !eEpoch;
 
@@ -319,6 +324,7 @@ module mkProc#(ProcIndication indication)(Proc);
         match {.d, .mcause} <- dTlb.to_proc.response.get;
         if (isValid(mcause)) begin
           $fwrite(stderr, "Load access exception at %x. Exiting\n", addr);
+          indication.debug_excep(addr);
           $finish();
         end
         data = gatherLoad(addr, byteEn, unsignedLd, d);

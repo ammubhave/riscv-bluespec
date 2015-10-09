@@ -2,6 +2,58 @@
 #include <stdlib.h>
 #include "GeneratedTypes.h"
 
+size_t getline(char **lineptr, size_t *n, FILE *stream) {
+    char *bufptr = NULL;
+    char *p = bufptr;
+    size_t size;
+    int c;
+
+    if (lineptr == NULL) {
+        return -1;
+    }
+    if (stream == NULL) {
+        return -1;
+    }
+    if (n == NULL) {
+        return -1;
+    }
+    bufptr = *lineptr;
+    size = *n;
+
+    c = fgetc(stream);
+    if (c == EOF) {
+        return -1;
+    }
+    if (bufptr == NULL) {
+        bufptr = (char*)malloc(128);
+        if (bufptr == NULL) {
+            return -1;
+        }
+        size = 128;
+    }
+    p = bufptr;
+    while(c != EOF) {
+        if ((p - bufptr) > (size - 1)) {
+            size = size + 128;
+            bufptr = (char*)realloc(bufptr, size);
+            if (bufptr == NULL) {
+                return -1;
+            }
+        }
+        *p++ = c;
+        if (c == '\n') {
+            break;
+        }
+        c = fgetc(stream);
+    }
+
+    *p++ = '\0';
+    *lineptr = bufptr;
+    *n = size;
+
+    return p - bufptr - 1;
+}
+
 /* load image into memory */
 bool vmhLoadImage(const char *filename, void *memory, uint64_t memsize)
 {
@@ -44,7 +96,7 @@ bool vmhLoadImage(const char *filename, void *memory, uint64_t memsize)
                 /* read in the 64-bit aligned data element
                    and store it in memory at the current
                    address
-                   
+
                    NOTE: at the moment, since we only allow
                    64-bit aligned loads/stores, we do not
                    care about endianness.
