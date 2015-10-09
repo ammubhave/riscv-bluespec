@@ -51,6 +51,20 @@ sudo apt-get update
 sudo apt-get install connectal
 ```
 
+### Installing Android NDK
+
+```
+cd vendor
+wget http://dl.google.com/android/android-sdk_r24.3.4-linux.tgz
+tar zxvf android-sdk_r24.3.4-linux.tgz
+rm android-sdk_r24.3.4-linux.tgz
+
+wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin
+chmod +x android-ndk-r10e-linux-x86_64.bin
+./android-ndk-r10e-darwin-x86_64.bin
+rm android-ndk-r10e-linux-x86_64.bin
+```
+
 ## Running Programs
 
 All runnable programs reside in the `programs` directory. You will first need to compile the programs. The following example uses the `assembly` program.
