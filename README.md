@@ -51,7 +51,7 @@ sudo apt-get update
 sudo apt-get install connectal
 ```
 
-### Installing Android NDK
+### Installing Android NDK (Not needed if vendor/android-sdk and vendor/android-ndk-r10e exist
 
 ```
 cd vendor
