@@ -61,7 +61,7 @@ rm android-sdk_r24.3.4-linux.tgz
 
 wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin
 chmod +x android-ndk-r10e-linux-x86_64.bin
-./android-ndk-r10e-darwin-x86_64.bin
+./android-ndk-r10e-linux-x86_64.bin
 rm android-ndk-r10e-linux-x86_64.bin
 ```
 
